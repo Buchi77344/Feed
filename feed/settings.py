@@ -122,8 +122,21 @@ STATIC_FILES = [
     os.path.join(BASE_DIR,'static')
 ]
 
+MEDIA_URL = "media/" 
+MEDIA_root = [
+    os.path.join(BASE_DIR,'media')
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL= "base.User"
+AUTH_USER_MODEL= "base.CustomUser"
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'vacan400@zohomail.com'  # Replace with your Zoho email
+EMAIL_HOST_PASSWORD = 'w3ZdgYZr1aSN'    # Replace with your email password
+ # Use an App Password for security
