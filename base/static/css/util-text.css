@@ -1,0 +1,99 @@
+.page-head {
+  font-weight: 700;
+  font-size: 4rem;
+  margin: 0px 0px 10px;
+}
+
+.page-sub-h3-head {
+  font-weight: 700;
+  font-size: 3.125rem;
+  margin: 0px;
+  line-height: 1.3;
+}
+
+.page-sub-head {
+  font-weight: 600;
+  font-size: 2.4rem;
+  margin: 0px;
+  line-height: 1.3;
+}
+
+.page-sub-h5-head {
+  font-weight: 600;
+  font-size: 2.2rem;
+  margin: 0px;
+  line-height: 1.3;
+}
+
+.page-mini-head {
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin: 0px;
+  line-height: 1.3;
+}
+
+@media (max-width: 460px) {
+  .page-head {
+    font-size: 2.2rem;
+  }
+
+  .page-sub-h3-head {
+    font-size: 2rem;
+  }
+
+  .page-sub-head {
+    font-size: 1.8rem;
+  }
+
+  .page-mini-head {
+    font-size: 1.4rem;
+  }
+
+  .page-sub-h5-head {
+    font-size: 1.2rem;
+  }
+}
+
+/* .page-mini-sm-head {
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin: 0px;
+  line-height: 1.3;
+} */
+
+.mac-text-large,
+.mac-text-sm {
+  font-family: var(--montserrat-font);
+}
+
+.mac-text-large {
+  font-weight: 500;
+  font-size: 1.6rem;
+}
+
+.mac-text-sm {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.mac-light-text {
+  color: hsla(0, 0%, 10%, 0.8);
+  margin: 0;
+}
+
+.mac-light-text-900 {
+  color: hsla(0, 0%, 10%, 0.9);
+  margin: 0;
+}
+
+.mac-lighter-text {
+  color: hsla(0, 0%, 10%, 0.6);
+  margin: 0;
+}
+
+.bold-p {
+  color: hsla(0, 0%, 10%, 0.9);
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.1rem;
+}

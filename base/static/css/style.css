@@ -1,0 +1,227 @@
+@import url("./util-text.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+:root{
+  --primary-clr : #76B30F;
+  --nav-bg-clr : #FFFCFC;
+  --main-light-clr : #FDFDFD;
+  --inter-font: "Inter", serif;
+  --montserrat-font : "Montserrat", serif;
+  --light-text-clr : #ffffff;
+  --light-theme-clr : #ffffff;
+  --dark-text-clr : #424040;
+  --purple-clr : #9835EF;
+  
+}
+
+body{
+  font-family : var(--inter-font);
+  color : var(--light-text-clr)
+}
+
+h1, 
+h2,
+h3,
+h4,
+h5,
+p{
+  color : var(--dark-text-clr);
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  font-family: var(--montserrat-font);
+}
+
+svg{
+  width : 20px;
+  height : 20px;
+}
+/* Navbar */
+.navbar{
+  background-color: var(--nav-bg-clr);
+}
+
+.logo-img{
+  width : 180px;
+  height : 80px;
+
+}
+
+.search-icon{
+  width: 25px;
+  height : 25px;
+}
+
+.start-camp-cta {
+  padding: 7px 20px;
+  color: var(--primary-clr);
+  border: 2px solid;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease ;
+}
+
+.start-camp-cta:hover{
+    background-color: var(--primary-clr);
+    color: white;
+    border-color: transparent;
+}
+
+.nav-cta-container{
+  gap : 200px;
+}
+
+.profile-icon{
+  width : 35px;
+  height : 35px;
+}
+
+.down-arrow{
+  width: 20px;
+  height : 15px;
+}
+
+.hamburger{
+  width : 60px;
+  height : 50px;
+  display: flex;
+  flex-direction: column;
+  gap : 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.hamburger > span{
+  width : 80%;
+  height: 3px;
+  background-color: #76B30F;
+}
+
+/* Navbar */
+
+main{
+  background-color: var(--main-light-clr);
+}
+
+/* Hero section */
+
+.bg-img-default{
+  background-repeat: no-repeat;
+  background-size : cover;
+  background-position : center;
+}
+
+.pos-rel{
+  position: relative;
+}
+
+.hero-section{
+  background-image: url("../img/hero-banner-\(1\).jpeg");
+  height : 80vh;
+  display : flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-highlight-span{
+  position: absolute;
+  top : 0;
+  left : 80px;
+  background-color: var(--primary-clr);
+  color : var(--light-text-clr);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 12px 17px;
+}
+
+.welcome-container{
+  background-color : hsla(82, 85%, 38%, 0.9);
+  padding : 40px;
+  width : 750px;
+  border-radius: 20px;
+}
+
+.welcome-container .page-head{
+  color : var(--light-text-clr)
+}
+
+.small-text{
+  font-size: 1.5rem;
+  display: block; 
+}
+
+.campaign-container{
+  padding : 35px 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  background-color: #F8F8F8;
+  width : fit-content;
+  position: absolute;
+  bottom: -62px;
+  left : 50%;
+  transform : translateX(-50%);
+  gap : 40px;
+  box-shadow: 2px 4px 4px hsla(0, 0%, 0%, 0.251);
+}
+
+.campaign-container a{
+  padding : 15px 30px;
+  border-radius: 50px;
+  color: var(--light-text-clr);
+
+}
+
+.start-campaign{
+  background-color : var(--purple-clr);
+}
+
+.find-campaign{
+  background-color: var(--primary-clr);
+}
+
+/* Hero section */
+
+/* Feed needs section */
+
+.feed-needs-section{
+  margin-top: 90px;
+}
+
+.feed-init-text{
+  font-size : 1.8rem;
+  color : var(--primary-clr);
+  font-weight: 500;
+  text-align: center;
+}
+
+.feed-init-text span{
+  font-weight : 700;
+}
+
+.donate-cta{
+  padding : 12px 30px;
+  border-radius: 50px;
+  color : var(--purple-clr);
+  border: 1px solid var(--primary-clr);
+  font-weight : 700;
+}
+
+.feature-container{
+  background-color: var(--light-theme-clr);
+  padding : 30px 40px;
+  border-radius: 40px;
+  box-shadow: 2px 4px 6px 0px #a19b9b;
+}
+
+.feature-container .head-div{
+  padding : 10px 0px;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+/* Feed needs section */
