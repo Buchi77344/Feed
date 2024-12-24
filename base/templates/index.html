@@ -20,37 +20,71 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="page">
+    <div class="overlay"></div>
+    <div class="mobile-nav">
+      <div class="flex-between">
+        <a href="#" class="login-cta">Login/Register</a>
+        <span class="cancel-icon flex-center">
+          <svg
+            width="54"
+            height="54"
+            viewBox="0 0 54 54"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
+              fill="#9835EF"
+            />
+          </svg>
+        </span>
+      </div>
+
+      <ul class="mobile-nav-links-container flex-column gp-15 mt-5">
+        <li><a href="#" class="mobile-nav-link">Home</a></li>
+        <li><a href="#" class="mobile-nav-link">Find campaign</a></li>
+        <li><a href="#" class="mobile-nav-link">Start campaign</a></li>
+        <li><a href="#" class="mobile-nav-link">Profile</a></li>
+        <li><a href="#" class="mobile-nav-link">About</a></li>
+        <li><a href="#" class="mobile-nav-link">FAQ</a></li>
+        <li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
+        <li><a href="#" class="mobile-nav-link">Support</a></li>
+      </ul>
+    </div>
+    <div class="home page">
       <nav class="navbar sticky-top align-items-center">
         <div class="container">
-          <img class="logo-img" src="static/img/Feed-logo.png" alt="logo img" />
-          <div class="nav-cta-container d-flex">
-            <div class="nav-util-cta-container d-flex align-items-center gap-4">
+          <img class="logo-img" src="../static/img/Feed-logo.png" alt="logo img" />
+          <div
+            class="nav-util-cta-container ms-md-3 d-flex align-items-center gap-4"
+          >
+            <img
+              class="search-icon"
+              src="../static/img/svg/search-icon.svg"
+              alt="search icon"
+            />
+            <a href="#" class="start-camp-cta">START CAMPAIGN</a>
+            <div class="profile-cta-container">
               <img
-                class="search-icon"
-                src="../static/img/search-icon.svg"
-                alt="search icon"
+                class="profile-icon"
+                src="../static/img/profile-icon.png"
+                alt="profile icon"
               />
-              <a href="#" class="start-camp-cta">START CAMPAIGN</a>
-              <div class="profile-cta-container">
-                <img
-                  class="profile-icon"
-                  src="../static/img/profile-icon.png"
-                  alt="profile icon"
-                />
-                <img
-                  class="down-arrow"
-                  src="../static/img/down-arrow.svg"
-                  alt="down arrow icon"
-                />
-              </div>
-            </div>
-            <div class="hamburger">
-              <span></span>
-              <span></span>
-              <span></span>
+              <img
+                class="down-arrow"
+                src="../static/img/svg/down-arrow.svg"
+                alt="down arrow icon"
+              />
             </div>
           </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <!-- <div class="nav-cta-container d-flex">
+          </div> -->
         </div>
       </nav>
 
@@ -58,7 +92,7 @@
         <section class="hero-section bg-img-default pos-rel">
           <div class="container">
             <span class="page-highlight-span">Home</span>
-            <div class="welcome-container">
+            <div class="welcome-container mt-3">
               <span class="welcome small-text">Welcome to</span>
               <h2 class="page-head mt-1">
                 Where connection is created and kindness is served
@@ -76,29 +110,657 @@
             <h4 class="feed-init-text">
               How does <span>Feed Needs Without Borders</span> works?
             </h4>
-            <div class="desc-feature-wrapper row justify-content-between mt-5">
-              <div class="col-md-6 desc-container">
-                <h3 class="page-sub-h3-head ">Who are Feed Needs Without Borders?</h3>
-                <p class="mac-text-large">
-                  Feed Needs without Borders is a non-profit organization
-                  crowfunding platform focus on raising funds for urgent medical
-                  emergencies and critical social causes.
-                </p>
-                <a href="#" class="donate-cta">DONATE NOW</a>
-              </div>
-              <div class="col-md-6 feature-wrapper">
-                <div class="feature-container">
+            <div class="desc-feature-wrapper">
+              <div class="desc-feature-container mt-3">
+                <div class="feature-desc-item">
+                  <h3 class="page-sub-h3-head">
+                    Who are Feed Needs Without Borders?
+                  </h3>
+                  <p class="my-3 mac-text-large">
+                    Feed Needs without Borders is a non-profit organization
+                    crowfunding platform focus on raising funds for urgent
+                    medical emergencies and critical social causes.
+                  </p>
+                  <a href="#" class="donate-cta">DONATE NOW</a>
+                </div>
+
+                <div class="feature-campaign-item-container">
                   <div class="head-div">
                     <h4 class="page-sub-head">Featured Campaigns</h4>
                   </div>
 
-                  
+                  <div class="feature-item d-sm-flex gap-3">
+                    <img
+                      class="feature-img mt-2"
+                      src="../static/img/hero-banner-(1).jpeg"
+                      alt="feature image"
+                    />
+                    <div class="feature-desc-container">
+                      <h5 class="page-sub-h5-head">
+                        Helping children to school
+                      </h5>
+                      <p class="mac-text-sm my-2">
+                        Helping children to admissions to school getting Helping
+                        children to admissions to school ang getting
+                      </p>
+
+                      <div class="d-sm-flex justify-content-between">
+                        <div class="location-container pe-2">
+                          <div class="location-val-container d-flex gap-2">
+                            <img
+                              class="location-icon"
+                              src="../static/img/location-icon.png"
+                              alt="location icon"
+                            />
+                            <p class="location-name page-mini-head d-flex">
+                              <span class="highlight-span-clr me-1"
+                                >Accra,</span
+                              >
+                              Ghana
+                            </p>
+                          </div>
+
+                          <div class="mt-3">
+                            <p class="bold-p">$23, 000</p>
+                            <span class="bold-p highlight-span-clr">
+                              30% FUNDED
+                            </span>
+                          </div>
+                        </div>
+                        <div class="donation-container ps-2">
+                          <p class="mac-text-sm">Last donation</p>
+                          <span
+                            class="donation-time mac-text-sm highlight-span-clr mt-1"
+                            >12 HOURS AGO</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="feature-item d-sm-flex gap-3">
+                    <img
+                      class="feature-img mt-2"
+                      src="../static/img/hero-banner-(1).jpeg"
+                      alt="feature image"
+                    />
+                    <div class="feature-desc-container">
+                      <h5 class="page-sub-h5-head">
+                        Helping children to school
+                      </h5>
+                      <p class="mac-text-sm my-2">
+                        Helping children to admissions to school getting Helping
+                        children to admissions to school ang getting
+                      </p>
+
+                      <div class="d-sm-flex justify-content-between">
+                        <div class="location-container pe-2">
+                          <div class="location-val-container d-flex gap-2">
+                            <img
+                              class="location-icon"
+                              src="../static/img/location-icon.png"
+                              alt="location icon"
+                            />
+                            <p class="location-name page-mini-head d-flex">
+                              <span class="highlight-span-clr me-1"
+                                >Accra,</span
+                              >
+                              Ghana
+                            </p>
+                          </div>
+
+                          <div class="mt-3">
+                            <p class="bold-p">$23, 000</p>
+                            <span class="bold-p highlight-span-clr">
+                              30% FUNDED
+                            </span>
+                          </div>
+                        </div>
+                        <div class="donation-container ps-2">
+                          <p class="mac-text-sm">Last donation</p>
+                          <span
+                            class="donation-time mac-text-sm highlight-span-clr mt-1"
+                            >12 HOURS AGO</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="feature-item d-sm-flex gap-3">
+                    <img
+                      class="feature-img mt-2"
+                      src="../static/img/hero-banner-(1).jpeg"
+                      alt="feature image"
+                    />
+                    <div class="feature-desc-container">
+                      <h5 class="page-sub-h5-head">
+                        Helping children to school
+                      </h5>
+                      <p class="mac-text-sm my-2">
+                        Helping children to admissions to school getting Helping
+                        children to admissions to school ang getting
+                      </p>
+
+                      <div class="d-sm-flex justify-content-between">
+                        <div class="location-container pe-2">
+                          <div class="location-val-container d-flex gap-2">
+                            <img
+                              class="location-icon"
+                              src="../static/img/location-icon.png"
+                              alt="location icon"
+                            />
+                            <p class="location-name page-mini-head d-flex">
+                              <span class="highlight-span-clr me-1"
+                                >Accra,</span
+                              >
+                              Ghana
+                            </p>
+                          </div>
+
+                          <div class="mt-3">
+                            <p class="bold-p">$23, 000</p>
+                            <span class="bold-p highlight-span-clr">
+                              30% FUNDED
+                            </span>
+                          </div>
+                        </div>
+                        <div class="donation-container ps-2">
+                          <p class="mac-text-sm">Last donation</p>
+                          <span
+                            class="donation-time mac-text-sm highlight-span-clr mt-1"
+                            >12 HOURS AGO</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="feature-desc-item sec">
+                  <h3 class="page-sub-h3-head">Impact Lives</h3>
+                  <p class="my-3 mac-text-large">
+                    To create a global support system for individuals and
+                    communities facing life-threatening medical emergencies or
+                    social hardships, regardless of geographical boundaries.
+                  </p>
+                  <a href="#" class="donate-cta">DONATE NOW</a>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        <section class="discover-section mt-5">
+          <div class="container">
+            <div class="row justify-content-between">
+              <div class="col-md-6">
+                <div class="text-center">
+                  <span class="page-sub-h5-head highlight-span-clr"
+                    >DISCOVER</span
+                  >
+                  <h3 class="page-sub-h3-head">How it works</h3>
+                </div>
+
+                <div class="discover-items-container pos-rel mt-3">
+                  <div class="discover-item flex-column gp-20">
+                    <span class="flex-center discover-item-icon">
+                      <svg
+                        width="35"
+                        height="36"
+                        viewBox="0 0 35 36"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M21 22.3536L33 34.3536M2.35355 13.5C2.35355 19.8513 7.50228 25 13.8536 25C20.2048 25 25.3536 19.8513 25.3536 13.5C25.3536 7.14873 20.2048 2 13.8536 2C7.50228 2 2.35355 7.14873 2.35355 13.5Z"
+                          stroke="#76B30F"
+                          stroke-width="3"
+                        />
+                      </svg>
+                    </span>
+
+                    <a href="#" class="discover cta-btn">Find a campaign</a>
+                  </div>
+
+                  <div class="discover-item flex-column gp-20">
+                    <span class="flex-center discover-item-icon">
+                      <img
+                        src="../static/img/profile-icon.png"
+                        alt="profile icon"
+                      />
+                    </span>
+
+                    <a href="#" class="discover cta-btn">Enter your details</a>
+                  </div>
+
+                  <div class="discover-item flex-column gp-20">
+                    <span class="flex-center discover-item-icon">
+                      <svg
+                        width="78"
+                        height="83"
+                        viewBox="0 0 78 83"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M53.2636 62.4912C52.9183 62.4912 52.5787 62.4116 52.2543 62.2535L42.7649 58.1403L24.6303 50.1502C21.1738 48.7317 18.6193 47.132 14.2739 42.3621L14.2132 42.2923L8.97149 36.0183L8.90699 35.924C7.58564 33.9825 5.36886 32.8237 2.97753 32.8237L2.84758 32.8176L0 32.5665V0.601135H41.473C44.4145 0.601135 47.3085 1.89587 49.6221 4.24526L63.048 17.8871C65.2857 20.1593 66.5691 23.572 66.5691 27.2516V42.3401L64.0725 41.2646C63.9985 41.2328 63.9273 41.2022 63.8543 41.1715L63.8344 41.1642C63.7983 41.1495 63.7623 41.136 63.7272 41.1213L63.7044 41.1127C63.6371 41.087 63.5688 41.0601 63.5005 41.0343L63.4881 41.0294C63.4056 40.9976 63.3221 40.9682 63.2396 40.9388C63.1429 40.9045 63.0528 40.8739 62.9617 40.8445L62.9408 40.8371C62.8592 40.8114 62.7786 40.7845 62.6961 40.7612L62.6743 40.7551C62.5851 40.7281 62.4941 40.7024 62.4039 40.6791L62.3821 40.673C62.3148 40.6546 62.2455 40.6375 62.1763 40.6203L62.1602 40.6166C62.09 40.5983 62.0198 40.5811 61.9477 40.5664L61.9202 40.5603C61.8538 40.5444 61.7874 40.5309 61.7219 40.5174L61.6394 40.5003C61.6024 40.4929 61.5654 40.4844 61.5284 40.4782L61.5123 40.4758C61.4222 40.4586 61.334 40.4439 61.2439 40.4292L61.2135 40.4243C61.1376 40.4109 61.0598 40.4011 60.983 40.39C60.9545 40.3876 60.9261 40.3827 60.8967 40.379C60.8426 40.3717 60.7885 40.3655 60.7335 40.3594L60.5789 40.3435C60.5476 40.3386 60.5182 40.3361 60.4935 40.3349L60.3294 40.3214C60.3218 40.3202 60.3143 40.3202 60.3067 40.3202L60.2204 40.3153C60.0876 40.3043 59.9462 40.2982 59.8125 40.2933C59.7888 40.2933 59.765 40.292 59.7423 40.2908L59.711 40.2896C59.5896 40.2859 59.4653 40.2859 59.3458 40.2871C59.3031 40.2871 59.2604 40.2884 59.2187 40.2884C59.1456 40.2908 59.0745 40.2933 59.0033 40.2969C58.9464 40.2994 58.9009 40.3018 58.8544 40.3043L58.6998 40.3129C58.5812 40.319 58.4646 40.33 58.3479 40.3398L58.3118 40.3435C58.29 40.3459 58.2682 40.3472 58.2454 40.3508L58.198 40.357C57.9334 40.3864 57.6896 40.4219 57.4524 40.466L57.2836 40.4978C57.2257 40.5089 57.1688 40.5199 57.111 40.5334L57.074 40.5419C57.0284 40.5517 56.9839 40.5615 56.9402 40.5726L56.8729 40.5872C56.834 40.5946 56.7951 40.6056 56.7562 40.6154L56.7315 40.6216C56.5352 40.6693 56.3284 40.7269 56.0989 40.7979L56.0827 40.8028C56.0476 40.8139 56.0116 40.8249 55.9755 40.8359L53.5178 41.9984V29.6524L48.1585 24.2052C46.6379 22.6618 44.5112 22.6582 42.9888 24.1954L40.8782 26.3256C39.1547 28.0662 38.4177 30.9508 39.0029 33.6751C39.2496 34.8228 39.703 35.9007 40.3138 36.7937C40.9247 37.683 41.6997 38.3946 42.5515 38.8479L50.3771 43.015C53.8413 44.861 56.2373 49 56.631 53.8163C56.8074 55.9771 56.5589 58.1856 55.9139 60.203C55.469 61.5921 54.4294 62.4912 53.2636 62.4912ZM52.4033 58.3363C52.4033 58.3375 52.4023 58.3387 52.4023 58.3387C52.4023 58.3375 52.4033 58.3363 52.4033 58.3363ZM43.9848 53.5003L52.6802 57.2694C52.8747 56.3103 52.9345 55.312 52.8548 54.3308C52.6082 51.3053 51.1028 48.7048 48.9277 47.5448L41.1021 43.3776C39.72 42.6414 38.4642 41.4888 37.4701 40.0422C36.4769 38.5931 35.7418 36.8451 35.3424 34.9833C34.3474 30.3433 35.6014 25.4302 38.5372 22.4646L40.6468 20.3345C43.5475 17.4033 47.5997 17.4094 50.4995 20.3517L56.0524 25.9961C56.8511 26.8106 57.3073 28.0257 57.3073 29.334V35.5467C57.4809 35.5198 57.6592 35.4965 57.8433 35.4757C57.9002 35.4683 57.9571 35.4622 58.014 35.4561L58.0728 35.45C58.2075 35.4377 58.3583 35.4242 58.5177 35.4157C58.5547 35.4132 58.5936 35.4108 58.6315 35.4083L58.6789 35.4059C58.7444 35.4022 58.8089 35.3985 58.8753 35.3961C58.9635 35.3924 59.0565 35.3887 59.1494 35.3863H59.1912C59.2272 35.3863 59.2633 35.3863 59.3002 35.385C59.4549 35.3826 59.6123 35.3838 59.7688 35.3875C59.7954 35.3875 59.822 35.3887 59.8485 35.3899L59.8988 35.3912C60.0619 35.3973 60.2374 35.4046 60.4214 35.4193C60.4822 35.4218 60.5429 35.4255 60.6036 35.4316C60.6377 35.434 60.6719 35.4365 60.707 35.4402C60.7743 35.4451 60.8426 35.4512 60.9119 35.4598C60.9451 35.4622 60.9783 35.4659 61.0124 35.4696L61.0693 35.4757C61.1262 35.4818 61.1822 35.4892 61.2391 35.4965H61.241C61.2533 35.4977 61.2666 35.5002 61.2789 35.5014L61.3491 35.5112C61.4601 35.5259 61.5863 35.5431 61.7191 35.5663C61.8367 35.5847 61.9505 35.6043 62.0672 35.6263C62.1232 35.6361 62.1791 35.6484 62.2341 35.6594L62.3024 35.6729C62.3945 35.6913 62.4836 35.7109 62.5718 35.7305C62.6401 35.7452 62.7084 35.7611 62.7758 35.777V27.2492C62.7758 25.0835 62.0207 23.0734 60.7032 21.7358L47.2753 8.09639C45.6286 6.42315 43.5674 5.50079 41.473 5.50079H3.79424V27.9559C6.94916 28.2009 9.7882 29.8582 11.6882 32.591L16.7611 38.6629C20.9812 43.2894 23.1696 44.4114 25.7971 45.4881L25.836 45.5041L43.9848 53.5003ZM55.8778 40.8641H55.8769C55.8778 40.8641 55.8778 40.8641 55.8778 40.8641ZM60.872 40.3741C60.873 40.3741 60.873 40.3741 60.8739 40.3741C60.8739 40.3741 60.873 40.3741 60.872 40.3741Z"
+                          fill="#76B30F"
+                        />
+                        <path
+                          d="M59.4538 82.2319C49.4522 82.2319 41.3154 71.7246 41.3154 58.8091C41.3154 57.6908 41.3771 56.5688 41.4995 55.4737L41.8248 52.567L52.6811 57.2706C53.0349 55.53 52.94 53.7 52.3965 52.0133C51.7401 49.975 50.5079 48.39 48.9286 47.5473L44.4523 45.1611L46.3817 42.5704C48.7218 39.4273 51.6775 37.1967 54.9311 36.1188C54.9576 36.1102 54.9832 36.1017 55.0089 36.0943C55.0411 36.0833 55.0734 36.0735 55.1056 36.0625L55.2156 36.0269C55.5002 35.9387 55.763 35.8665 56.0162 35.804C56.0684 35.7905 56.1225 35.7783 56.1756 35.766L56.2325 35.7526C56.3188 35.7317 56.3976 35.7146 56.4734 35.6999C56.5579 35.6803 56.6432 35.6631 56.7295 35.6472L56.9221 35.6105C57.2351 35.5541 57.5472 35.5088 57.8479 35.4757C57.9029 35.4684 57.9589 35.4622 58.0148 35.4561L58.0604 35.4512C58.2159 35.4353 58.3734 35.423 58.528 35.4133L58.5593 35.4108C58.5973 35.4084 58.6352 35.4059 58.6731 35.4047L58.6997 35.4035C58.7614 35.3998 58.8221 35.3961 58.8837 35.3949C58.9805 35.3912 59.0772 35.3875 59.1721 35.3851C59.3694 35.3826 59.5686 35.3814 59.7678 35.3863C59.7868 35.3863 59.8048 35.3863 59.8238 35.3875L59.9015 35.3888C60.0694 35.3949 60.2506 35.4022 60.4394 35.4182C60.4802 35.4206 60.52 35.4231 60.5608 35.4267L60.5921 35.4292C60.6234 35.4304 60.6689 35.4341 60.723 35.4402C60.7998 35.4463 60.8691 35.4524 60.9279 35.4598C60.9592 35.4622 60.9933 35.4659 61.0322 35.472C61.1252 35.4818 61.2172 35.4929 61.3101 35.5051L61.3244 35.5063C61.4429 35.521 61.5691 35.5394 61.7218 35.5651C61.8309 35.5823 61.9457 35.6019 62.0624 35.6239C62.1307 35.6362 62.1999 35.6497 62.2672 35.6631L62.3014 35.6705C62.3991 35.6889 62.4949 35.7097 62.5898 35.7317C62.6818 35.7513 62.7719 35.7734 62.8629 35.7954L62.88 35.7991C62.9768 35.8224 63.0678 35.8469 63.1579 35.8701L63.1798 35.8763C63.2974 35.9081 63.415 35.9412 63.5307 35.9767C63.6503 36.011 63.7717 36.049 63.8912 36.0882C63.9955 36.1213 64.0999 36.1568 64.2052 36.1935L64.264 36.2143C64.3645 36.2499 64.466 36.2854 64.5647 36.3246C64.633 36.3503 64.7013 36.3773 64.7696 36.403L64.9033 36.4557C64.9251 36.4655 64.9479 36.474 64.9697 36.4826L65.1404 36.5536C65.1793 36.5708 65.2182 36.5867 65.2581 36.6039L65.2875 36.6161C72.6464 39.8474 77.5922 48.766 77.5922 58.8091C77.5922 71.7246 69.4554 82.2319 59.4538 82.2319ZM45.1125 59.1594C45.2577 69.2123 51.6358 77.3323 59.4538 77.3323C67.3629 77.3323 73.798 69.0225 73.798 58.8091C73.798 50.8704 69.8927 43.8223 64.0781 41.2622C64.0325 41.2426 63.987 41.223 63.9415 41.2046L63.8447 41.163C63.8077 41.1483 63.7698 41.1324 63.7318 41.1177L63.6702 41.0932C63.6152 41.0711 63.5592 41.0503 63.5032 41.0295L63.4691 41.016C63.4017 40.9891 63.3325 40.9658 63.2632 40.9413L63.2196 40.9266C63.138 40.8984 63.0574 40.8702 62.9768 40.8445L62.9493 40.8359C62.8639 40.8078 62.7785 40.7808 62.6932 40.7563L62.678 40.7514C62.5869 40.7245 62.4949 40.6975 62.4019 40.6718C62.3242 40.651 62.2521 40.6326 62.179 40.6142L62.1677 40.6118C62.0946 40.5946 62.0225 40.5763 61.9485 40.5616L61.8954 40.5493C61.847 40.5371 61.7977 40.5273 61.7484 40.5175L61.6725 40.5028C61.6336 40.4942 61.5938 40.4868 61.5539 40.4795L61.5112 40.4721C61.4211 40.455 61.331 40.4403 61.2419 40.4256C61.146 40.4097 61.0569 40.3962 60.9677 40.3852L60.9231 40.3791C60.8425 40.368 60.7628 40.3595 60.6822 40.3509L60.6073 40.3423C60.5693 40.3374 60.5333 40.3337 60.4953 40.3313L60.3293 40.3178C60.3104 40.3166 60.2923 40.3141 60.2734 40.3141L60.2203 40.3105C60.0884 40.2994 59.948 40.2933 59.8152 40.2884C59.8 40.2884 59.7839 40.2884 59.7687 40.2872L59.7099 40.286C59.5439 40.2823 59.3798 40.2823 59.2138 40.2847C59.1417 40.286 59.0687 40.2896 58.9966 40.2921L58.9615 40.2933C58.9359 40.2933 58.9103 40.2958 58.8856 40.297L58.7035 40.308C58.5859 40.3154 58.4664 40.3252 58.3478 40.3362L58.3051 40.3411C58.2852 40.3435 58.2653 40.3448 58.2453 40.3472L58.1865 40.3546C57.9475 40.3803 57.699 40.4158 57.4467 40.4611L57.2996 40.4893C57.2351 40.5015 57.1716 40.515 57.1071 40.5297L57.0426 40.5432C57.0046 40.5505 56.9676 40.5591 56.9297 40.5677L56.8472 40.5873C56.8159 40.5946 56.7855 40.602 56.7552 40.6093L56.7343 40.6142C56.5379 40.6632 56.3312 40.7208 56.1035 40.7906L55.8398 40.8751C54.2064 41.4215 52.6669 42.3377 51.2886 43.5736C55.854 46.7155 57.9238 53.9021 55.9109 60.2043C55.4708 61.5921 54.4312 62.4912 53.2645 62.4912C52.9163 62.4912 52.5749 62.4104 52.2495 62.2499L45.1125 59.1594ZM52.4032 58.3388C52.4032 58.34 52.4022 58.3412 52.4022 58.3437C52.4022 58.3412 52.4022 58.34 52.4032 58.3388Z"
+                          fill="#76B30F"
+                        />
+                        <path
+                          d="M61.3509 67.2781H57.5566V72.1606H61.3509V67.2781Z"
+                          fill="#76B30F"
+                        />
+                        <path
+                          d="M61.3509 45.4563H57.5566V50.2629H61.3509V45.4563Z"
+                          fill="#76B30F"
+                        />
+                        <path
+                          d="M60.6423 69.728H58.2671C55.4859 69.728 53.2226 66.869 53.2226 63.356H57.0169C57.0169 64.1681 57.5775 64.8283 58.2671 64.8283H60.6423C61.4789 64.8283 62.16 64.0186 62.16 63.024C62.16 62.5585 62.011 62.1176 61.7398 61.7795C61.4504 61.4194 61.0606 61.2209 60.6432 61.2209H58.268C55.3398 61.2209 52.957 58.2138 52.957 54.517C52.957 52.7102 53.5186 51.0162 54.5373 49.7472C55.5371 48.5014 56.8623 47.8142 58.268 47.8142H60.6432C63.4253 47.8142 65.6886 50.6732 65.6886 54.1862H61.8944C61.8944 53.3741 61.3328 52.7139 60.6432 52.7139H58.268C57.8497 52.7139 57.4608 52.9123 57.1715 53.2725C56.9011 53.6093 56.7513 54.0515 56.7513 54.517C56.7513 55.5116 57.4314 56.3213 58.268 56.3213H60.6432C62.049 56.3213 63.3741 57.0072 64.3739 58.2542C65.3927 59.5232 65.9542 61.2173 65.9542 63.0252C65.9542 66.7208 63.5714 69.728 60.6423 69.728Z"
+                          fill="#76B30F"
+                        />
+                      </svg>
+                    </span>
+
+                    <a href="#" class="discover cta-btn">Become a donor</a>
+                  </div>
+
+                  <div class="discover-item flex-column gp-20">
+                    <span class="flex-center discover-item-icon">
+                      <svg
+                        width="49"
+                        height="47"
+                        viewBox="0 0 49 47"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M24.5 0L30.2251 17.6201L48.7519 17.6201L33.7634 28.5099L39.4885 46.1299L24.5 35.2401L9.51148 46.1299L15.2366 28.5099L0.248058 17.6201L18.7749 17.6201L24.5 0Z"
+                          fill="#76B30F"
+                        />
+                      </svg>
+                    </span>
+
+                    <a href="#" class="discover cta-btn">Make a difference</a>
+                  </div>
+
+                  <span class="long-arrow">
+                    <svg
+                      width="24"
+                      height="686"
+                      viewBox="0 0 24 686"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.9393 685.061C11.5251 685.646 12.4748 685.646 13.0606 685.061L22.6066 675.515C23.1924 674.929 23.1924 673.979 22.6066 673.393C22.0208 672.808 21.071 672.808 20.4853 673.393L12 681.879L3.51469 673.393C2.9289 672.808 1.97916 672.808 1.39337 673.393C0.807582 673.979 0.807582 674.929 1.39337 675.515L10.9393 685.061ZM10.5 -6.5567e-08L10.5 684L13.5 684L13.5 6.5567e-08L10.5 -6.5567e-08Z"
+                        fill="#9835EF"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="feature-campaign-item-container">
+                  <div class="head-div">
+                    <h4 class="page-sub-head">Trending Campaigns</h4>
+                  </div>
+
+                  <div class="feature-item d-sm-flex gap-3">
+                    <img
+                      class="feature-img mt-2"
+                      src="../static/img/hero-banner-(1).jpeg"
+                      alt="feature image"
+                    />
+                    <div class="feature-desc-container">
+                      <h5 class="page-sub-h5-head">
+                        Helping children to school
+                      </h5>
+                      <p class="mac-text-sm my-2">
+                        Helping children to admissions to school getting Helping
+                        children to admissions to school ang getting
+                      </p>
+
+                      <div class="d-sm-flex justify-content-between">
+                        <div class="location-container pe-2">
+                          <div class="location-val-container d-flex gap-2">
+                            <img
+                              class="location-icon"
+                              src="../static/img/location-icon.png"
+                              alt="location icon"
+                            />
+                            <p class="location-name page-mini-head d-flex">
+                              <span class="highlight-span-clr me-1"
+                                >Accra,</span
+                              >
+                              Ghana
+                            </p>
+                          </div>
+
+                          <div class="mt-3">
+                            <p class="bold-p">$23, 000</p>
+                            <span class="bold-p highlight-span-clr">
+                              30% FUNDED
+                            </span>
+                          </div>
+                        </div>
+                        <div class="donation-container ps-2">
+                          <p class="mac-text-sm">Last donation</p>
+                          <span
+                            class="donation-time mac-text-sm highlight-span-clr mt-1"
+                            >12 HOURS AGO</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="feature-item d-sm-flex gap-3">
+                    <img
+                      class="feature-img mt-2"
+                      src="../static/img/hero-banner-(1).jpeg"
+                      alt="feature image"
+                    />
+                    <div class="feature-desc-container">
+                      <h5 class="page-sub-h5-head">
+                        Helping children to school
+                      </h5>
+                      <p class="mac-text-sm my-2">
+                        Helping children to admissions to school getting Helping
+                        children to admissions to school ang getting
+                      </p>
+
+                      <div class="d-sm-flex justify-content-between">
+                        <div class="location-container pe-2">
+                          <div class="location-val-container d-flex gap-2">
+                            <img
+                              class="location-icon"
+                              src="../static/img/location-icon.png"
+                              alt="location icon"
+                            />
+                            <p class="location-name page-mini-head d-flex">
+                              <span class="highlight-span-clr me-1"
+                                >Accra,</span
+                              >
+                              Ghana
+                            </p>
+                          </div>
+
+                          <div class="mt-3">
+                            <p class="bold-p">$23, 000</p>
+                            <span class="bold-p highlight-span-clr">
+                              30% FUNDED
+                            </span>
+                          </div>
+                        </div>
+                        <div class="donation-container ps-2">
+                          <p class="mac-text-sm">Last donation</p>
+                          <span
+                            class="donation-time mac-text-sm highlight-span-clr mt-1"
+                            >12 HOURS AGO</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="feature-item d-sm-flex gap-3">
+                    <img
+                      class="feature-img mt-2"
+                      src="../static/img/hero-banner-(1).jpeg"
+                      alt="feature image"
+                    />
+                    <div class="feature-desc-container">
+                      <h5 class="page-sub-h5-head">
+                        Helping children to school
+                      </h5>
+                      <p class="mac-text-sm my-2">
+                        Helping children to admissions to school getting Helping
+                        children to admissions to school ang getting
+                      </p>
+
+                      <div class="d-sm-flex justify-content-between">
+                        <div class="location-container pe-2">
+                          <div class="location-val-container d-flex gap-2">
+                            <img
+                              class="location-icon"
+                              src="../static/img/location-icon.png"
+                              alt="location icon"
+                            />
+                            <p class="location-name page-mini-head d-flex">
+                              <span class="highlight-span-clr me-1"
+                                >Accra,</span
+                              >
+                              Ghana
+                            </p>
+                          </div>
+
+                          <div class="mt-3">
+                            <p class="bold-p">$23, 000</p>
+                            <span class="bold-p highlight-span-clr">
+                              30% FUNDED
+                            </span>
+                          </div>
+                        </div>
+                        <div class="donation-container ps-2">
+                          <p class="mac-text-sm">Last donation</p>
+                          <span
+                            class="donation-time mac-text-sm highlight-span-clr mt-1"
+                            >12 HOURS AGO</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="donation-section mt-5">
+          <div class="container">
+            <div class="donation-items-container flex-wrap">
+              <div class="donation-item flex-column gp-20">
+                <div class="graphics">
+                  <span class="item-icon flex-center">
+                    <img src="../static/img/donate-banner-1.png" alt="" />
+                  </span>
+                  <h5 class="page-sub-h5-head">Easy</h5>
+                </div>
+
+                <p class="mac-text-sm">
+                  Create your page in minutes and start accepting donations
+                  right away
+                </p>
+              </div>
+
+              <div class="donation-item flex-column gp-20">
+                <div class="graphics">
+                  <span class="item-icon flex-center">
+                    <img src="../static/img/donate-banner-2.png" alt="" />
+                  </span>
+                  <h5 class="page-sub-h5-head">Trusted</h5>
+                </div>
+
+                <p class="mac-text-sm">
+                  We have helped thousands of people raise millions online
+                </p>
+              </div>
+
+              <div class="donation-item flex-column gp-20">
+                <div class="graphics">
+                  <span class="item-icon flex-center">
+                    <img src="../static/img/donate-banner-3.png" alt="" />
+                  </span>
+                  <h5 class="page-sub-h5-head">No donor fees</h5>
+                </div>
+
+                <p class="mac-text-sm">
+                  Our low platform fees means we do not bug our donors for tips
+                  on checkout
+                </p>
+              </div>
+
+              <div class="donation-item flex-column gp-20">
+                <div class="graphics">
+                  <span class="item-icon flex-center">
+                    <img src="../static/img/donate-banner-1.png" alt="" />
+                  </span>
+                  <h5 class="page-sub-h5-head">Fundraising coach</h5>
+                </div>
+
+                <p class="mac-text-sm">
+                  Our expert fundraising coaches are available for truly
+                  personal campaign support
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="newsletter-section mt-5">
+          <div class="container">
+            <h5 class="page-sub-h5-head">Newsletter</h5>
+            <p class="mac-text-italic mt-2">
+              Curious about the latest trends? Stay informed. Stay ahead with
+              our daily dose of news and insights.
+            </p>
+            <input
+              class="newsletter-input d-block"
+              type="text"
+              placeholder=""
+            />
+            <a href="#" class="subscribe-cta">Suscribe Now!</a>
+          </div>
+        </section>
       </main>
+
+      <footer class="pos-rel mt-5">
+        <div class="campaign-container">
+          <a href="#" class="start-campaign">START CAMPAIGN</a>
+          <a href="#" class="find-campaign">FIND CAMPAIGN</a>
+        </div>
+
+        <div class="footer-bottom-wrapper">
+          <div class="w-100">
+            <ul class="footer-links-container grid">
+              <li><a href="#" class="footer-links">FAQ</a></li>
+              <li><a href="#" class="footer-links">Contact us</a></li>
+              <li>
+                <a href="#" class="footer-links">Online fundraising Ideas</a>
+              </li>
+              <li><a href="#" class="footer-links">Bitcoin Fundraising</a></li>
+              <li><a href="#" class="footer-links">Learn More</a></li>
+              <li><a href="#" class="footer-links">Countries</a></li>
+              <li><a href="#" class="footer-links">Read Blog</a></li>
+              <li><a href="#" class="footer-links">How to fundraise</a></li>
+              <li><a href="#" class="footer-links">Facebook Fundraising</a></li>
+              <li><a href="#" class="footer-links">Facebook Fundraising</a></li>
+              <li><a href="#" class="footer-links">About</a></li>
+              <li><a href="#" class="footer-links">Help center</a></li>
+            </ul>
+
+            <div class="flex-wrap gp-20 footer-bottom-link-container mt-5">
+              <a href="#" class="footer-bottom-link">Privacy Policy</a>
+              <a href="#" class="footer-bottom-link">Terms & Conditions</a>
+              <div class="social-media-container flex-wrap">
+                <a href="#" class="flex-center">
+                  <img
+                    class="social-icon"
+                    src="../static/img/svg/socials/facebook.svg"
+                    alt="Facebook icon"
+                  />
+                </a>
+
+                <a href="#" class="flex-center">
+                  <img
+                    class="social-icon"
+                    src="../static/img/svg/socials/twitter.svg"
+                    alt="Twitter icon"
+                  />
+                </a>
+
+                <a href="#" class="flex-center">
+                  <img
+                    class="social-icon"
+                    src="../static/img/svg/socials/instagram.svg"
+                    alt="Instagram icon"
+                  />
+                </a>
+
+                <a href="#" class="flex-center">
+                  <img
+                    class="social-icon"
+                    src="../static/img/svg/socials/linkedIn.svg"
+                    alt="LinkedIn icon"
+                  />
+                </a>
+
+                <a href="#" class="flex-center">
+                  <img
+                    class="social-icon"
+                    src="../static/img/svg/socials/tiktok.svg"
+                    alt="Tiktok icon"
+                  />
+                </a>
+
+                <a href="#" class="flex-center">
+                  <img
+                    class="social-icon"
+                    src="../static/img/svg/socials/whatsapp.svg"
+                    alt="Whatsapp icon"
+                  />
+                </a>
+
+                <a href="#" class="flex-center">
+                  <img
+                    class="social-icon"
+                    src="../static/img/svg/socials/telegram.svg"
+                    alt="Telegram icon"
+                  />
+                </a>
+
+                <a href="#" class="flex-center">
+                  <img
+                    class="social-icon"
+                    src="../static/img/svg/socials/youtube.svg"
+                    alt="Youtube icon"
+                  />
+                </a>
+              </div>
+              <div class="copyright-container pos-rel flex gp-15">
+                <p class="copyright-text">2024 Feed Needs</p>
+                <span class="dash"></span>
+                <p class="copyright-text">All rights reserved</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
+
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
+      const overlay = document.querySelector(".overlay");
+      const mobileNav = document.querySelector(".mobile-nav");
+
+      hamburger.addEventListener("click", function () {
+        overlay.classList.add("visible");
+        mobileNav.classList.add("slideIn");
+        document.body.classList.add("hide-overflow");
+      });
+
+      cancelIcon.addEventListener("click", function () {
+        overlay.classList.remove("visible");
+        mobileNav.classList.remove("slideIn");
+        document.body.classList.remove("hide-overflow");
+      });
+    </script>
   </body>
 </html>
