@@ -23,34 +23,34 @@
 		<div class="overlay"></div>
 		<div class="mobile-nav">
 			<div class="flex-between">
-				<a href="#" class="login-cta">Login/Register</a>
-				<span class="cancel-icon flex-center">
-					<svg
-						width="54"
-						height="54"
-						viewBox="0 0 54 54"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
-							fill="#9835EF"
-						/>
-					</svg>
-				</span>
+			  <a href="{% url 'login' %}" class="login-cta">Login/Register</a>
+			  <span class="cancel-icon flex-center">
+				<svg
+				  width="54"
+				  height="54"
+				  viewBox="0 0 54 54"
+				  fill="none"
+				  xmlns="http://www.w3.org/2000/svg"
+				>
+				  <path
+					d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
+					fill="#9835EF"
+				  />
+				</svg>
+			  </span>
 			</div>
-
+	  
 			<ul class="mobile-nav-links-container flex-column gp-15 mt-5">
-				<li><a href="/" class="mobile-nav-link">Home</a></li>
-				<li><a href="#" class="mobile-nav-link">Find campaign</a></li>
-				<li><a href="#" class="mobile-nav-link">Start campaign</a></li>
-				<li><a href="#" class="mobile-nav-link">Profile</a></li>
-				<li><a href="#" class="mobile-nav-link">About</a></li>
-				<li><a href="#" class="mobile-nav-link">FAQ</a></li>
-				<li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
-				<li><a href="#" class="mobile-nav-link">Support</a></li>
+			  <li><a href="/" class="mobile-nav-link">Home</a></li>
+			  <li><a href="{% url "find_campaign" %}" class="mobile-nav-link">Find campaign</a></li>
+			  <li><a href="{% url "start_campaign" %}" class="mobile-nav-link">Start campaign</a></li>
+			  <li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
+			  <li><a href="#" class="mobile-nav-link">About</a></li>
+			  <li><a href="#" class="mobile-nav-link">FAQ</a></li>
+			  <li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
+			  <li><a href="#" class="mobile-nav-link">Support</a></li>
 			</ul>
-		</div>
+		  </div>
 		<div class="login acct page">
 			<nav class="navbar bos sticky-top align-items-center">
 				<div class="container">
@@ -94,7 +94,8 @@
 					<h3 class="page-sub-head highlight-span-clr text-center">
 						Profile Details
 					</h3>
-					<form action="" class="acct-form flex-column gp-20 mt-4">
+					<form  method="post" class="acct-form flex-column gp-20 mt-4">
+						{% csrf_token %}
 						<input
 							class="acct-input"
 							type="email"
@@ -105,10 +106,10 @@
 							class="acct-input"
 							type="password"
 							name="password"
-							placeholder="Password *"
+							placeholder="password *"
 						/>
 					</form>
-					<a href="#" class="forgot-pass-cta">Forgot password?</a>
+					<a href="{% url 'forget' %}" class="forgot-pass-cta">Forgot password?</a>
 				</div>
 
 				<button class="cta-btn submit-btn">LOG IN TO YOUR PROFILE</button>

@@ -10,6 +10,9 @@ urlpatterns = [
     path('reset-password/<uidb64>/<token>/', reset_password, name='reset_password'),
     path('profile',profile,name="profile"),
     path('start_campaign',start_campaign,name="start_campaign"),
+    path('find_campaign',find_campaign,name="find_campaign"),
+    path('about',about,name="about"),
+    path('faq',faq,name="faq"),
 ]
 
 

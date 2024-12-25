@@ -42,7 +42,7 @@
 
       <ul class="mobile-nav-links-container flex-column gp-15 mt-5">
         <li><a href="/" class="mobile-nav-link">Home</a></li>
-        <li><a href="" class="mobile-nav-link">Find campaign</a></li>
+        <li><a href="{% url "find_campaign" %}" class="mobile-nav-link">Find campaign</a></li>
         <li><a href="{% url "start_campaign" %}" class="mobile-nav-link">Start campaign</a></li>
         <li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
         <li><a href="#" class="mobile-nav-link">About</a></li>
@@ -100,7 +100,7 @@
             </div>
             <div class="campaign-container">
               <a href="{% url "start_campaign" %}" class="start-campaign">START CAMPAIGN</a>
-              <a href="#" class="find-campaign">FIND CAMPAIGN</a>
+              <a href="{% url "find_campaign" %}" class="find-campaign">FIND CAMPAIGN</a>
             </div>
           </div>
         </section>

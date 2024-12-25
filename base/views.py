@@ -251,8 +251,9 @@ def start_campaign(request):
             return render(request, 'start_campaign.html', status=400)
 
     return render(request, 'start_campaign.html')
+from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url="login")
 def profile(request):
     campaign =  Campaign.objects.filter(profile__user=request.user)
     profile = get_object_or_404(Profile, user=request.user)
@@ -303,3 +304,10 @@ def donate_to_campaign(request, campaign_id):
 
 
 
+def find_campaign(request):
+    return render (request, 'find_campaign.html')
+
+def about(request):
+    return render (request, 'about.html')
+def faq(request):
+    return render (request, 'faq.html')
