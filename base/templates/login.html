@@ -17,7 +17,7 @@
 			crossorigin="anonymous"
 		/>
 		<link rel="stylesheet" href="../static/css/style.css" />
-		<title>Document</title>
+		<title>Login</title>
 	</head>
 	<body>
 		<div class="overlay"></div>
@@ -51,8 +51,8 @@
 				<li><a href="#" class="mobile-nav-link">Support</a></li>
 			</ul>
 		</div>
-		<div class="login page">
-			<nav class="navbar sticky-top align-items-center pos-rel">
+		<div class="login acct page">
+			<nav class="navbar bos sticky-top align-items-center">
 				<div class="container">
 					<img
 						class="logo-img"
@@ -74,14 +74,14 @@
 					</div>
 
 					<!-- <div class="nav-cta-container d-flex">
-          </div> -->
+		</div> -->
 				</div>
 				<span class="page-highlight-span">Login</span>
 			</nav>
 
 			<main class="light-bg-clr">
 				<h2 class="page-head">Log in to your profile</h2>
-				<p class="mac-text-large login-desc">
+				<p class="mac-text-large acct-desc">
 					Log in to your Feed Needs Without Borders profile below. Don’t have
 					one? <a href="{% url 'signup' %}" class="highlight-span-clr">Sign up here.</a>
 				</p>
@@ -90,19 +90,19 @@
 					<a href="#" class="highlight-span-clr"> Set new password here.</a>
 				</p>
 
-				<div class="login-form-container">
+				<div class="acct-form-container">
 					<h3 class="page-sub-head highlight-span-clr text-center">
 						Profile Details
 					</h3>
-					<form action="" class="flex-column gp-20 mt-4">
+					<form action="" class="acct-form flex-column gp-20 mt-4">
 						<input
-							class="login-input"
+							class="acct-input"
 							type="email"
 							name="email"
 							placeholder="Email *"
 						/>
 						<input
-							class="login-input"
+							class="acct-input"
 							type="password"
 							name="password"
 							placeholder="Password *"
@@ -217,18 +217,30 @@
 			const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
 			const overlay = document.querySelector(".overlay");
 			const mobileNav = document.querySelector(".mobile-nav");
+			const submitBtn = document.querySelector(".cta-btn.submit-btn");
+			const acctForm = document.querySelector(".acct-form");
+			if (hamburger) {
+				hamburger.addEventListener("click", function () {
+					overlay.classList.add("visible");
+					mobileNav.classList.add("slideIn");
+					document.body.classList.add("hide-overflow");
+				});
+			}
 
-			hamburger.addEventListener("click", function () {
-				overlay.classList.add("visible");
-				mobileNav.classList.add("slideIn");
-				document.body.classList.add("hide-overflow");
-			});
+			if (cancelIcon)
+				[
+					cancelIcon.addEventListener("click", function () {
+						overlay.classList.remove("visible");
+						mobileNav.classList.remove("slideIn");
+						document.body.classList.remove("hide-overflow");
+					}),
+				];
 
-			cancelIcon.addEventListener("click", function () {
-				overlay.classList.remove("visible");
-				mobileNav.classList.remove("slideIn");
-				document.body.classList.remove("hide-overflow");
-			});
+			if (submitBtn && acctForm) {
+				submitBtn.addEventListener("click", function () {
+					acctForm.submit();
+				});
+			}
 		</script>
 	</body>
 </html>

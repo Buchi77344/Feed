@@ -16,7 +16,7 @@
 			crossorigin="anonymous"
 		/>
 		<link rel="stylesheet" href="../static/css/style.css" />
-		<title>Sign Up</title>
+		<title>Reset Success</title>
 	</head>
 	<body>
 		<div class="overlay"></div>
@@ -50,8 +50,8 @@
 				<li><a href="#" class="mobile-nav-link">Support</a></li>
 			</ul>
 		</div>
-		<div class="signup acct page">
-			<nav class="bos navbar sticky-top align-items-center">
+		<div class="pass-reset acct page">
+			<nav class="navbar bos sticky-top align-items-center">
 				<div class="container">
 					<img
 						class="logo-img"
@@ -73,209 +73,30 @@
 					</div>
 
 					<!-- <div class="nav-cta-container d-flex">
-		</div> -->
+                </div> -->
 				</div>
 				<span class="page-highlight-span">Login</span>
 			</nav>
 
 			<main class="light-bg-clr">
-				<h2 class="page-head">Create your profile</h2>
-				<p class="mac-text-large acct-desc">
-					Fill in your details below to set up your Feed Needs Without Borders
-					profile?
+				<h2 class="page-head">Request Password Reset</h2>
+				<p class="mac-text-large return-desc">
+					Enter your Feed Needs Without Borders Email below
 				</p>
-				<p class="mac-text-large acct-desc">
-					Already have a Feed Needs Without Borders profile?
-					<a href="#" class="highlight-span-clr">Log in here.</a>
+				<p class="mac-text-large return-desc mt-2">
+					<a href="#" class="highlight-span-clr"> Go back to login</a>
 				</p>
 
-				<div class="acct-form-container">
-					<h3 class="page-sub-head highlight-span-clr text-center">
-						Personal Details
-					</h3>
-					<!-- {% if messages %}
-					<div class="mb-3">
-						{% for message in messages %}
-						<div
-							class="alert alert-{{ message.tags }} alert-dismissible fade show"
-							role="alert"
-						>
-							{{ message }}
-							<button
-								type="button"
-								class="btn-close"
-								data-bs-dismiss="alert"
-								aria-label="Close"
-							></button>
-						</div>
-						{% endfor %}
-					</div>
-					{% endif %} -->
-					<form action="" class="signup acct-form gp-20 mt-4">
-						<!-- {% csrf_token %} -->
-						<input
-							class="acct-input"
-							type="text"
-							name="first_name"
-							placeholder="First name*"
-						/>
-
-						<input
-							class="acct-input"
-							type="password"
-							name="password"
-							placeholder="Password *"
-						/>
-
-						<input
-							class="acct-input"
-							type="text"
-							name="surname"
-							placeholder="Surname*"
-						/>
-
-						<input
-							class="acct-input"
-							type="password"
-							name="confirm_password"
-							placeholder="Re-enter Password *"
-						/>
-
-						<input
-							class="acct-input"
-							type="number"
-							name="mobile_number"
-							placeholder="Mobile number"
-						/>
-
-						<div class="terms-container">
-							<label class="terms-label" for="terms-check">
-								I have read and understood the terms and conditions. *
-								<input id="terms-check" type="checkbox" />
-								<span class="terms-checkmark"></span>
-							</label>
-
-							<p class="terms-p mac-text-mid p-2 mb-2 highlight-span-clr">
-								Terms and conditions
-							</p>
-							<div class="require-div">
-								<p class="flex">
-									<span class="highlight-span-clr">*</span>
-									Indicates required information
-								</p>
-							</div>
-						</div>
-					</form>
+				<div class="acct-form-container reset success ">
+					<p class="mac-text-large return-desc highlight-span-clr mt-2">
+					    Reset link successfully sent
+                    </p>
+                    <p class="mac-text-mid mt-3">Check your email box!</p>
+					<!-- <a href="#" class="forgot-pass-cta">Forgot password?</a> -->
 				</div>
 
-				<button class="cta-btn submit-btn">CREATE YOUR PROFILE</button>
+				<!-- <button class="cta-btn submit-btn">REQUEST PASSWORD RESET</button> -->
 			</main>
-
-			<!-- <div class="container mt-5">
-				<div class="row justify-content-center">
-					<div class="col-md-6">
-						<!-- Display Django Messages 
-						{% if messages %}
-						<div class="mb-3">
-							{% for message in messages %}
-							<div
-								class="alert alert-{{ message.tags }} alert-dismissible fade show"
-								role="alert"
-							>
-								{{ message }}
-								<button
-									type="button"
-									class="btn-close"
-									data-bs-dismiss="alert"
-									aria-label="Close"
-								></button>
-							</div>
-							{% endfor %}
-						</div>
-						{% endif %}
-
-						<div class="card">
-							<div class="card-header text-center">
-								<h3>Signup</h3>
-							</div>
-							<div class="card-body">
-								<form method="post" action="{% url 'signup' %}">
-									{% csrf_token %}
-									<div class="mb-3">
-										<label for="first_name" class="form-label"
-											>First Name</label
-										>
-										<input
-											type="text"
-											class="form-control"
-											id="first_name"
-											name="first_name"
-											required
-										/>
-									</div>
-									<div class="mb-3">
-										<label for="last_name" class="form-label">Last Name</label>
-										<input
-											type="text"
-											class="form-control"
-											id="last_name"
-											name="last_name"
-											required
-										/>
-									</div>
-									<div class="mb-3">
-										<label for="email" class="form-label">Email</label>
-										<input
-											type="email"
-											class="form-control"
-											id="email"
-											name="email"
-											required
-										/>
-									</div>
-									<div class="mb-3">
-										<label for="phone_number" class="form-label"
-											>Phone Number</label
-										>
-										<input
-											type="text"
-											class="form-control"
-											id="phone_number"
-											name="phone_number"
-											required
-										/>
-									</div>
-									<div class="mb-3">
-										<label for="password" class="form-label">Password</label>
-										<input
-											type="password"
-											class="form-control"
-											id="password"
-											name="password"
-											required
-										/>
-									</div>
-									<div class="mb-3">
-										<label for="password1" class="form-label"
-											>Confirm Password</label
-										>
-										<input
-											type="password"
-											class="form-control"
-											id="password1"
-											name="password1"
-											required
-										/>
-									</div>
-									<button type="submit" class="btn btn-primary w-100">
-										Sign Up
-									</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> -->
 
 			<footer class="pos-rel mt-5">
 				<div class="footer-bottom-wrapper">
@@ -375,9 +196,6 @@
 				</div>
 			</footer>
 		</div>
-
-		<!-- Bootstrap JS -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script>
 			const hamburger = document.querySelector(".hamburger");
 			const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
@@ -401,11 +219,7 @@
 				})
 			]
 
-			if(submitBtn && acctForm){
-				submitBtn.addEventListener("click", function(){
-					acctForm.submit()
-				})
-			}
+			
 		</script>
 	</body>
 </html>
