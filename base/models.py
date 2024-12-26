@@ -84,6 +84,7 @@ class Campaign(models.Model):
     single_payment = models.BooleanField(default=False) 
     is_featured = models.BooleanField(default=False)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE,blank=True,null=True)
+    goal = models.DecimalField(max_digits=10, decimal_places=2,default=0.00)
 
 
 

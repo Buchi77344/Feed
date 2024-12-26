@@ -4,7 +4,9 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib import auth
 from  base.models  import *
+from django.db.models import Sum
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
     featured_campaigns = Campaign.objects.filter(is_featured=True)[:3]
@@ -13,9 +15,30 @@ def index(request):
     trending_campaigns = Campaign.objects.filter(
         end_date__gte=datetime.now()  # Campaigns still active
     ).order_by('-monetary')[:3]
+
+    campaigns = Campaign.objects.all()
+    campaigns_with_percentage = []
+
+    for campaign in campaigns:
+        # Calculate total donations for the campaign
+        total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
+
+        # Calculate percentage achieved
+        percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+
+        # Add campaign data and percentage to the list
+        campaigns_with_percentage.append({
+            'campaign': campaign,
+            'total_donations': total_donations,
+            'percentage_achieved': percentage_achieved,
+        })
+
+    # Calculate the percentage achieved
+    percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
     context = {
         'featured_campaigns': featured_campaigns,
         'trending_campaigns': trending_campaigns,
+        'campaigns_with_percentage':campaigns_with_percentage,
     }
     return render (request, 'index.html',context)
 
@@ -171,29 +194,30 @@ def reset_password(request, uidb64, token):
     return render(request, 'reset_password.html', {'uidb64': uidb64, 'token': token})
 
 
-def start_campaign(request):
-    if request.method == "POST":
-        campaign_name = request.POST.get('campaign_name')
-        monetary = request.POST.get('monetary')
-        category = request.POST.get('category')
-        story = request.POST.get('story')
-        event = request.POST.get('event')
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-        video_url = request.POST.get('video_url')
-        social_link = request.POST.get('social_link')
-        city = request.POST.get('city')
-        state = request.POST.get('state')
-        country = request.POST.get('country')
-        organization_payment = request.POST.get('organization_payment')
-        single_payment = request.POST.get('single_payment')
+# def start_campaign(request):
+#     if request.method == "POST":
+#         campaign_name = request.POST.get('campaign_name')
+#         monetary = request.POST.get('monetary')
+#         category = request.POST.get('category')
+#         story = request.POST.get('story')
+#         event = request.POST.get('event')
+#         start_date = request.POST.get('start_date')
+#         end_date = request.POST.get('end_date')
+#         video_url = request.POST.get('video_url')
+#         social_link = request.POST.get('social_link')
+#         city = request.POST.get('city')
+#         state = request.POST.get('state')
+#         country = request.POST.get('country')
+#         organization_payment = request.POST.get('organization_payment')
+#         single_payment = request.POST.get('single_payment')
 
-    return render (request, 'start_campaign.html')
+#     return render (request, 'start_campaign.html')
 
 from django.contrib import messages
 from .models import Campaign
 from datetime import datetime
 
+@login_required(login_url="login")
 def start_campaign(request):
     if request.method == 'POST':
         try:
@@ -293,6 +317,7 @@ def donate_to_campaign(request, campaign_id):
                 message=message
             )
 
+
             messages.success(request, f"Thank you for donating {amount} to {campaign.campaign_name}!")
             return redirect('campaign_detail', campaign_id=campaign.id)
 
@@ -305,6 +330,22 @@ def donate_to_campaign(request, campaign_id):
 
 
 def find_campaign(request):
+    campaigns = Campaign.objects.all()
+    campaigns_with_percentage = []
+
+    for campaign in campaigns:
+        # Calculate total donations for the campaign
+        total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
+
+        # Calculate percentage achieved
+        percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+
+        # Add campaign data and percentage to the list
+        campaigns_with_percentage.append({
+            'campaign': campaign,
+            'total_donations': total_donations,
+            'percentage_achieved': percentage_achieved,
+        })
     return render (request, 'find_campaign.html')
 
 def about(request):
