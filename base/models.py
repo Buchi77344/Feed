@@ -100,4 +100,8 @@ class Donation(models.Model):
     def __str__(self):
         return f"{self.user.username} donated {self.amount} to {self.campaign.campaign_name}"
 
-     
+class Newsletter(models.Model):
+     email = models.EmailField( max_length=400)
+
+     def __str__(self):
+         return  f"{self.email}"  

@@ -630,12 +630,22 @@
               Curious about the latest trends? Stay informed. Stay ahead with
               our daily dose of news and insights.
             </p>
+            {% for messages in  messages %}
+            <p>{{messages}}</p>
+            {% endfor %}
+            <form method="post">
+              {% csrf_token %}
             <input
               class="newsletter-input d-block"
               type="text"
               placeholder=""
+              name="email"
+              required
             />
+            <button type="submit">
             <a href="#" class="subscribe-cta">Suscribe Now!</a>
+          </button>
+          </form>
           </div>
         </section>
       </main>

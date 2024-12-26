@@ -35,6 +35,15 @@ def index(request):
 
     # Calculate the percentage achieved
     percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+    if request.method == "POST":
+        email = request.POST.get('email')
+        if Newsletter.objects.filter(email=email).exists():
+            messages.error(request, 'email already exist')
+            return redirect('index')
+        else:
+            Newsletter.objects.get_or_create(email=email)
+            messages.error(request, 'email added sucessfully')
+            return redirect('/')
     context = {
         'featured_campaigns': featured_campaigns,
         'trending_campaigns': trending_campaigns,
