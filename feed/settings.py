@@ -140,3 +140,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'vacan400@zohomail.com'  # Replace with your Zoho email
 EMAIL_HOST_PASSWORD = 'w3ZdgYZr1aSN'    # Replace with your email password
  # Use an App Password for security
+
+
+LOGIN_REQUIRED = "login"

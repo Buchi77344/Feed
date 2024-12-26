@@ -3,9 +3,21 @@ from .models import CustomUser
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib import auth
+from  base.models  import *
+from datetime import datetime
 # Create your views here.
 def index(request):
-    return render (request, 'index.html')
+    featured_campaigns = Campaign.objects.filter(is_featured=True)[:3]
+    
+    # Trending Campaigns: Define based on most recent or highest monetary goal
+    trending_campaigns = Campaign.objects.filter(
+        end_date__gte=datetime.now()  # Campaigns still active
+    ).order_by('-monetary')[:3]
+    context = {
+        'featured_campaigns': featured_campaigns,
+        'trending_campaigns': trending_campaigns,
+    }
+    return render (request, 'index.html',context)
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -157,3 +169,145 @@ def reset_password(request, uidb64, token):
             messages.error(request, "All fields are required.")
 
     return render(request, 'reset_password.html', {'uidb64': uidb64, 'token': token})
+
+
+def start_campaign(request):
+    if request.method == "POST":
+        campaign_name = request.POST.get('campaign_name')
+        monetary = request.POST.get('monetary')
+        category = request.POST.get('category')
+        story = request.POST.get('story')
+        event = request.POST.get('event')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        video_url = request.POST.get('video_url')
+        social_link = request.POST.get('social_link')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        country = request.POST.get('country')
+        organization_payment = request.POST.get('organization_payment')
+        single_payment = request.POST.get('single_payment')
+
+    return render (request, 'start_campaign.html')
+
+from django.contrib import messages
+from .models import Campaign
+from datetime import datetime
+
+def start_campaign(request):
+    if request.method == 'POST':
+        try:
+            # Extract data directly from request.POST and request.FILES
+            campaign_name = request.POST.get('campaign_name')
+            monetary = request.POST.get('monetary')
+            category = request.POST.get('category')
+            story = request.POST.get('story')
+            sector = request.POST.get('sector')
+            event = request.POST.get('event')
+            image = request.FILES.get('image')
+            video_url = request.POST.get('video_url')
+            social_link = request.POST.get('social_link')
+            address = request.POST.get('address')
+            address1 = request.POST.get('address1')
+            city = request.POST.get('city')
+            zipcode = request.POST.get('zipcode')
+            state = request.POST.get('state')
+            country = request.POST.get('country')
+            organization_payment = request.POST.get('organization_payment') == 'on'
+            single_payment = request.POST.get('single_payment') == 'on'
+            is_featured = request.POST.get('is_featured') == 'on'
+
+            # Create and save the campaign object
+            campaign = Campaign.objects.create(
+                campaign_name=campaign_name,
+                monetary=monetary,
+                category=category,
+                story=story,
+                sector=sector,
+                event=event,
+                images=image,
+                video_url=video_url,
+                social_link=social_link,
+                address=address,
+                address1=address1,
+                city=city,
+                zipcode=zipcode,
+                state=state,
+                country=country,
+                organization_payment=organization_payment,
+                single_payment=single_payment,
+                is_featured=is_featured,
+                start_date=datetime.now(),
+                end_date=datetime.now(),  # Update as needed
+            )
+            # profile = Profile.objects.get(user=request.user)
+            # profile.campaign = campaign
+            # profile.save()
+            messages.success(request, f'Campaign "{campaign_name}" created successfully!')
+            return redirect('profile')  # Adjust redirect as needed
+
+        except Exception as e:
+            messages.error(request, f"Error creating campaign: {str(e)}")
+            return render(request, 'start_campaign.html', status=400)
+
+    return render(request, 'start_campaign.html')
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url="login")
+def profile(request):
+    campaign =  Campaign.objects.filter(profile__user=request.user)
+    profile = get_object_or_404(Profile, user=request.user)
+
+    # Get all donations for campaigns created by this profile
+    donations = Donation.objects.filter(campaign__profile=profile).select_related("campaign", "user")
+    context = {
+        "campaign":campaign,
+        "donations":donations,
+        "profile":profile
+    }
+    return render (request, 'profile.html',context)
+
+
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
+
+@login_required
+def donate_to_campaign(request, campaign_id):
+    if request.method == 'POST':
+        campaign = get_object_or_404(campaign, id=campaign_id)
+        amount = request.POST.get('amount')
+        message = request.POST.get('message', '')
+
+        try:
+            amount = Decimal(amount)  # Validate and convert the amount
+            if amount <= 0:
+                raise ValueError("Donation amount must be greater than zero.")
+
+            # Create a new donation
+            Donation.objects.create(
+                user=request.user,
+                campaign=campaign,
+                amount=amount,
+                message=message
+            )
+
+            messages.success(request, f"Thank you for donating {amount} to {campaign.campaign_name}!")
+            return redirect('campaign_detail', campaign_id=campaign.id)
+
+        except Exception as e:
+            messages.error(request, f"Error processing donation: {e}")
+            return redirect('campaign_detail', campaign_id=campaign.id)
+
+    return redirect('campaign_detail', campaign_id=campaign_id)
+
+
+
+def find_campaign(request):
+    return render (request, 'find_campaign.html')
+
+def about(request):
+    return render (request, 'about.html')
+def faq(request):
+    return render (request, 'faq.html')

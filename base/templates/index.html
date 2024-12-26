@@ -23,7 +23,7 @@
     <div class="overlay"></div>
     <div class="mobile-nav">
       <div class="flex-between">
-        <a href="#" class="login-cta">Login/Register</a>
+        <a href="{% url 'login' %}" class="login-cta">Login/Register</a>
         <span class="cancel-icon flex-center">
           <svg
             width="54"
@@ -41,10 +41,10 @@
       </div>
 
       <ul class="mobile-nav-links-container flex-column gp-15 mt-5">
-        <li><a href="#" class="mobile-nav-link">Home</a></li>
-        <li><a href="#" class="mobile-nav-link">Find campaign</a></li>
-        <li><a href="#" class="mobile-nav-link">Start campaign</a></li>
-        <li><a href="#" class="mobile-nav-link">Profile</a></li>
+        <li><a href="/" class="mobile-nav-link">Home</a></li>
+        <li><a href="{% url "find_campaign" %}" class="mobile-nav-link">Find campaign</a></li>
+        <li><a href="{% url "start_campaign" %}" class="mobile-nav-link">Start campaign</a></li>
+        <li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
         <li><a href="#" class="mobile-nav-link">About</a></li>
         <li><a href="#" class="mobile-nav-link">FAQ</a></li>
         <li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
@@ -99,8 +99,8 @@
               </h2>
             </div>
             <div class="campaign-container">
-              <a href="#" class="start-campaign">START CAMPAIGN</a>
-              <a href="#" class="find-campaign">FIND CAMPAIGN</a>
+              <a href="{% url "start_campaign" %}" class="start-campaign">START CAMPAIGN</a>
+              <a href="{% url "find_campaign" %}" class="find-campaign">FIND CAMPAIGN</a>
             </div>
           </div>
         </section>

@@ -16,41 +16,42 @@
 			crossorigin="anonymous"
 		/>
 		<link rel="stylesheet" href="../static/css/style.css" />
+		<script defer src="../static/js/script.js"></script>
 		<title>Find Campaign</title>
 	</head>
 	<body>
 		<div class="overlay"></div>
 		<div class="mobile-nav">
 			<div class="flex-between">
-				<a href="#" class="login-cta">Login/Register</a>
-				<span class="cancel-icon flex-center">
-					<svg
-						width="54"
-						height="54"
-						viewBox="0 0 54 54"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
-							fill="#9835EF"
-						/>
-					</svg>
-				</span>
+			  <a href="{% url 'login' %}" class="login-cta">Login/Register</a>
+			  <span class="cancel-icon flex-center">
+				<svg
+				  width="54"
+				  height="54"
+				  viewBox="0 0 54 54"
+				  fill="none"
+				  xmlns="http://www.w3.org/2000/svg"
+				>
+				  <path
+					d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
+					fill="#9835EF"
+				  />
+				</svg>
+			  </span>
 			</div>
-
+	  
 			<ul class="mobile-nav-links-container flex-column gp-15 mt-5">
-				<li><a href="#" class="mobile-nav-link">Home</a></li>
-				<li><a href="#" class="mobile-nav-link">Find campaign</a></li>
-				<li><a href="#" class="mobile-nav-link">Start campaign</a></li>
-				<li><a href="#" class="mobile-nav-link">Profile</a></li>
-				<li><a href="#" class="mobile-nav-link">About</a></li>
-				<li><a href="#" class="mobile-nav-link">FAQ</a></li>
-				<li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
-				<li><a href="#" class="mobile-nav-link">Support</a></li>
+			  <li><a href="/" class="mobile-nav-link">Home</a></li>
+			  <li><a href="{% url "find_campaign" %}" class="mobile-nav-link">Find campaign</a></li>
+			  <li><a href="{% url "start_campaign" %}" class="mobile-nav-link">Start campaign</a></li>
+			  <li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
+			  <li><a href="#" class="mobile-nav-link">About</a></li>
+			  <li><a href="#" class="mobile-nav-link">FAQ</a></li>
+			  <li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
+			  <li><a href="#" class="mobile-nav-link">Support</a></li>
 			</ul>
-		</div>
-		<div class="login campaign page">
+		  </div>
+		<div class="find campaign page">
 			<nav class="navbar sticky-top bos align-items-center bos">
 				<div class="container">
 					<img
@@ -93,8 +94,394 @@
 			</nav>
 
 			<main class="light-bg-clr pd-down">
-				<h2 class="page-head">Search on Feed Needs Without Borders</h2>
-                
+				<section>
+					<h2 class="page-head">Search on Feed Needs Without Borders</h2>
+					<div class="search-util-wrapper">
+						<div class="search-bar flex-between">
+							<input placeholder="Type keyword/location" type="text" class="search-input">
+							<button class="search-btn">Search</button>
+						</div>
+	
+						<div data-select="category" class="category select-wrapper">
+							<div class="select-head flex-between gp-10">
+								<span class="mac-text-mid">Category</span>
+								<span class="flex-center">
+									<img class="down-arrow-icon" src="../static/img/svg/down-arrow-gray.svg" alt="down arrow icon">
+								</span>
+							</div>
+
+							<div data-select="category-dropdown" class="select-dropdown">
+								<div class="dropdown-item">
+									<label class="terms-label" name = "select-all" for="select-all">
+										Select all
+										<input id="select-all" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" name = "party" for="social-initiatives">
+										Social initiatives
+										<input id="social-initiatives" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="disaster-relief">
+										Disaster relief
+										<input id="disaster-relief" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="life-threatening">
+										Life threatening
+										<input id="life-threatening" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="medical-emergencies">
+										Medical Emergencies
+										<input id="medical-emergencies" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="organization">
+										Organization
+										<input id="organization" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="education">
+										Education
+										<input id="education" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="art&culture">
+										Art & Culture
+										<input id="art&culture" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+	
+						<div data-select="sector" class="sector select-wrapper ">
+							<div class="select-head flex-between gp-10">
+								<span class="mac-text-mid">Sector</span>
+								<span class="flex-center">
+									<img class="down-arrow-icon" src="../static/img/svg/down-arrow-gray.svg" alt="down arrow icon">
+								</span>
+							</div>
+
+							<div data-select="sector-dropdown" class="select-dropdown">
+								<div class="dropdown-item">
+									<label class="terms-label" name = "select-all" for="select-all-2">
+										Select all
+										<input id="select-all-2" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" name = "party" for="child-welfare">
+										Child welfare
+										<input id="child-welfare" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="education-2">
+										Education
+										<input id="education-2" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="Community-development">
+										Community development
+										<input id="Community-development" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="environmental">
+										Environmental
+										<input id="environmental" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="medical">
+										Medical
+										<input id="medical" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="education">
+										Education
+										<input id="education" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+
+									<label class="terms-label" for="art&culture">
+										Art & Culture
+										<input id="art&culture" type="checkbox" />
+										<span class="terms-checkmark"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<span class="category-highlight">Trending</span>
+				</section>
+
+				<section class="mt-5">
+					<div class="find-campaign-items-container">
+						<div class="find-campaign-item">
+							<img
+							class="feature-img mt-2"
+							src="../static/img/hero-banner-(1).jpeg"
+							alt="feature image"
+							/>
+							<div class="feature-desc-container">
+								<h5 class="page-sub-h5-head">
+									Helping children to school
+								</h5>
+								<p class="mac-text-sm my-2">
+									Helping children to admissions to school getting Helping
+									children to admissions to school ang getting
+								</p>
+
+								<div class="">
+									<div class="location-container pe-2">
+										<div class="location-val-container d-flex gap-2">
+											<img
+											class="location-icon"
+											src="../static/img/location-icon.png"
+											alt="location icon"
+											/>
+											<p class="location-name page-mini-head d-flex">
+											<span class="highlight-span-clr me-1"
+												>Accra,</span
+											>
+											Ghana
+											</p>
+										</div>
+
+										<div class="mt-3">
+											<p class="bold-p">$23, 000</p>
+											<span class="bold-p highlight-span-clr">
+											30% FUNDED
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="find-campaign-item">
+							<img
+							class="feature-img mt-2"
+							src="../static/img/hero-banner-(1).jpeg"
+							alt="feature image"
+							/>
+							<div class="feature-desc-container">
+								<h5 class="page-sub-h5-head">
+									Helping children to school
+								</h5>
+								<p class="mac-text-sm my-2">
+									Helping children to admissions to school getting Helping
+									children to admissions to school ang getting
+								</p>
+
+								<div class="">
+									<div class="location-container pe-2">
+										<div class="location-val-container d-flex gap-2">
+											<img
+											class="location-icon"
+											src="../static/img/location-icon.png"
+											alt="location icon"
+											/>
+											<p class="location-name page-mini-head d-flex">
+											<span class="highlight-span-clr me-1"
+												>Accra,</span
+											>
+											Ghana
+											</p>
+										</div>
+
+										<div class="mt-3">
+											<p class="bold-p">$23, 000</p>
+											<span class="bold-p highlight-span-clr">
+											30% FUNDED
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="find-campaign-item">
+							<img
+							class="feature-img mt-2"
+							src="../static/img/hero-banner-(1).jpeg"
+							alt="feature image"
+							/>
+							<div class="feature-desc-container">
+								<h5 class="page-sub-h5-head">
+									Helping children to school
+								</h5>
+								<p class="mac-text-sm my-2">
+									Helping children to admissions to school getting Helping
+									children to admissions to school ang getting
+								</p>
+
+								<div class="">
+									<div class="location-container pe-2">
+										<div class="location-val-container d-flex gap-2">
+											<img
+											class="location-icon"
+											src="../static/img/location-icon.png"
+											alt="location icon"
+											/>
+											<p class="location-name page-mini-head d-flex">
+											<span class="highlight-span-clr me-1"
+												>Accra,</span
+											>
+											Ghana
+											</p>
+										</div>
+
+										<div class="mt-3">
+											<p class="bold-p">$23, 000</p>
+											<span class="bold-p highlight-span-clr">
+											30% FUNDED
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="find-campaign-item">
+							<img
+							class="feature-img mt-2"
+							src="../static/img/hero-banner-(1).jpeg"
+							alt="feature image"
+							/>
+							<div class="feature-desc-container">
+								<h5 class="page-sub-h5-head">
+									Helping children to school
+								</h5>
+								<p class="mac-text-sm my-2">
+									Helping children to admissions to school getting Helping
+									children to admissions to school ang getting
+								</p>
+
+								<div class="">
+									<div class="location-container pe-2">
+										<div class="location-val-container d-flex gap-2">
+											<img
+											class="location-icon"
+											src="../static/img/location-icon.png"
+											alt="location icon"
+											/>
+											<p class="location-name page-mini-head d-flex">
+											<span class="highlight-span-clr me-1"
+												>Accra,</span
+											>
+											Ghana
+											</p>
+										</div>
+
+										<div class="mt-3">
+											<p class="bold-p">$23, 000</p>
+											<span class="bold-p highlight-span-clr">
+											30% FUNDED
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="find-campaign-item">
+							<img
+							class="feature-img mt-2"
+							src="../static/img/hero-banner-(1).jpeg"
+							alt="feature image"
+							/>
+							<div class="feature-desc-container">
+								<h5 class="page-sub-h5-head">
+									Helping children to school
+								</h5>
+								<p class="mac-text-sm my-2">
+									Helping children to admissions to school getting Helping
+									children to admissions to school ang getting
+								</p>
+
+								<div class="">
+									<div class="location-container pe-2">
+										<div class="location-val-container d-flex gap-2">
+											<img
+											class="location-icon"
+											src="../static/img/location-icon.png"
+											alt="location icon"
+											/>
+											<p class="location-name page-mini-head d-flex">
+											<span class="highlight-span-clr me-1"
+												>Accra,</span
+											>
+											Ghana
+											</p>
+										</div>
+
+										<div class="mt-3">
+											<p class="bold-p">$23, 000</p>
+											<span class="bold-p highlight-span-clr">
+											30% FUNDED
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="find-campaign-item">
+							<img
+							class="feature-img mt-2"
+							src="../static/img/hero-banner-(1).jpeg"
+							alt="feature image"
+							/>
+							<div class="feature-desc-container">
+								<h5 class="page-sub-h5-head">
+									Helping children to school
+								</h5>
+								<p class="mac-text-sm my-2">
+									Helping children to admissions to school getting Helping
+									children to admissions to school ang getting
+								</p>
+
+								<div class="">
+									<div class="location-container pe-2">
+										<div class="location-val-container d-flex gap-2">
+											<img
+											class="location-icon"
+											src="../static/img/location-icon.png"
+											alt="location icon"
+											/>
+											<p class="location-name page-mini-head d-flex">
+											<span class="highlight-span-clr me-1"
+												>Accra,</span
+											>
+											Ghana
+											</p>
+										</div>
+
+										<div class="mt-3">
+											<p class="bold-p">$23, 000</p>
+											<span class="bold-p highlight-span-clr">
+											30% FUNDED
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 			</main>
 
 			<footer class="pos-rel mt-5">
