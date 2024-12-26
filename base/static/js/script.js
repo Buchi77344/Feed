@@ -44,3 +44,20 @@ function allRemovePopup(highlightEl, dropEl) {
 				console.log(dropEl.dataset.select);
 	});
 }
+
+let profileUtilItemHead = document.querySelectorAll(".profile-util-item-head")
+profileUtilItemHead.forEach((el, index) => {
+	el.addEventListener("click", function(){
+		removeOtherOption(index)
+		profileUtilItemHead[index].classList.toggle("active");
+
+	})
+})
+
+function removeOtherOption(index) {
+	profileUtilItemHead.forEach((el, i) => {
+		if (i !== index) {
+			el.classList.remove("active");
+		}
+	});
+}

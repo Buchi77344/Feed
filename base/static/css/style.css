@@ -985,7 +985,21 @@ main.pd-down {
 }
 
 .profile-util-item-head::after{
+	content: "";
+	position: absolute;
+	right : 0;
+	width : 15px;
+	height: 100%;
+	background-color: var(--primary-clr);
+	display: none;
+}
 
+.profile-util-item-head.campaign::after{
+	background-color: var(--purple-clr);
+}
+
+.profile-util-item-head.active::after{
+	display: block;
 }
 
 .profile-util-item-head .icon{
