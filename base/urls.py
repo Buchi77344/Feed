@@ -13,6 +13,7 @@ urlpatterns = [
     path('find_campaign',find_campaign,name="find_campaign"),
     path('about',about,name="about"),
     path('faq',faq,name="faq"),
+    path('api/search/', search_campaigns, name='search_campaigns'),
 ]
 
 

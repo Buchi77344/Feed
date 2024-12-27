@@ -17,7 +17,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../static/css/style.css" />
-    <title>Document</title>
+    <title>FEED</title>
   </head>
   <body>
     <div class="overlay"></div>
@@ -42,8 +42,8 @@
 
       <ul class="mobile-nav-links-container flex-column gp-15 mt-5">
         <li><a href="/" class="mobile-nav-link">Home</a></li>
-        <li><a href="{% url "find_campaign" %}" class="mobile-nav-link">Find campaign</a></li>
-        <li><a href="{% url "start_campaign" %}" class="mobile-nav-link">Start campaign</a></li>
+        <li><a href="{% url 'find_campaign' %}" class="mobile-nav-link">Find campaign</a></li>
+        <li><a href="{% url 'start_campaign' %}" class="mobile-nav-link">Start campaign</a></li>
         <li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
         <li><a href="{% url 'about' %}" class="mobile-nav-link">About</a></li>
         <li><a href="{% url 'faq' %}" class="mobile-nav-link">FAQ</a></li>
@@ -63,7 +63,7 @@
               src="../static/img/svg/search-icon.svg"
               alt="search icon"
             />
-            <a href="#" class="start-camp-cta">START CAMPAIGN</a>
+            <a href="{% url 'start_campaign' %}" class="start-camp-cta">START CAMPAIGN</a>
             <div class="profile-cta-container">
               <img
                 class="profile-icon"
@@ -409,7 +409,61 @@
                   <div class="head-div">
                     <h4 class="page-sub-head">Trending Campaigns</h4>
                   </div>
+                  {% if campaigns_with_percentage %}
+                    {% for campaigns in campaigns_with_percentage  %}
+                    
+                  <div class="feature-item d-sm-flex gap-3">
+                    <img
+                      class="feature-img mt-2"
+                      src="../static/img/hero-banner-(1).jpeg"
+                      alt="feature image"
+                    />
+                    <div class="feature-desc-container">
+                      <h5 class="page-sub-h5-head">
+                        Helping children to school
+                      </h5>
+                      <p class="mac-text-sm my-2">
+                        Helping children to admissions to school getting Helping
+                        children to admissions to school ang getting
+                      </p>
 
+                      <div class="d-sm-flex justify-content-between">
+                        <div class="location-container pe-2">
+                          <div class="location-val-container d-flex gap-2">
+                            <img
+                              class="location-icon"
+                              src="../static/img/location-icon.png"
+                              alt="location icon"
+                            />
+                            <p class="location-name page-mini-head d-flex">
+                              <span class="highlight-span-clr me-1"
+                                >Accra,</span
+                              >
+                              Ghana
+                            </p>
+                          </div>
+
+                          <div class="mt-3">
+                            <p class="bold-p">$23, 000</p>
+                            <span class="bold-p highlight-span-clr">
+                              30% FUNDED
+                            </span>
+                          </div>
+                        </div>
+                        <div class="donation-container ps-2">
+                          <p class="mac-text-sm">Last donation</p>
+                          <span
+                            class="donation-time mac-text-sm highlight-span-clr mt-1"
+                            >12 HOURS AGO</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+
+                  {% else %}
+                 
                   <div class="feature-item d-sm-flex gap-3">
                     <img
                       class="feature-img mt-2"
@@ -507,7 +561,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="feature-item d-sm-flex gap-3">
                     <img
                       class="feature-img mt-2"
@@ -556,6 +609,7 @@
                       </div>
                     </div>
                   </div>
+                  {% endif %}
                 </div>
               </div>
             </div>

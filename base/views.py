@@ -18,8 +18,8 @@ def index(request):
 
     campaigns = Campaign.objects.all()
     campaigns_with_percentage = []
-
-    for campaign in campaigns:
+    if Campaign.objects.filter(profile__user =request.user).exists: 
+      for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
@@ -32,9 +32,10 @@ def index(request):
             'total_donations': total_donations,
             'percentage_achieved': percentage_achieved,
         })
-
+    
     # Calculate the percentage achieved
-    percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+    
+        percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
     if request.method == "POST":
         email = request.POST.get('email')
         if Newsletter.objects.filter(email=email).exists():
@@ -46,6 +47,7 @@ def index(request):
             return redirect('/')
     context = {
         'featured_campaigns': featured_campaigns,
+        'campaigns':campaigns, 
         'trending_campaigns': trending_campaigns,
         'campaigns_with_percentage':campaigns_with_percentage,
     }
@@ -326,7 +328,6 @@ def donate_to_campaign(request, campaign_id):
                 message=message
             )
 
-
             messages.success(request, f"Thank you for donating {amount} to {campaign.campaign_name}!")
             return redirect('campaign_detail', campaign_id=campaign.id)
 
@@ -337,12 +338,12 @@ def donate_to_campaign(request, campaign_id):
     return redirect('campaign_detail', campaign_id=campaign_id)
 
 
-
+@login_required(login_url="login")
 def find_campaign(request):
     campaigns = Campaign.objects.all()
     campaigns_with_percentage = []
-
-    for campaign in campaigns:
+    if Campaign.objects.filter(profile__user =request.user).exists: 
+      for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
@@ -355,9 +356,58 @@ def find_campaign(request):
             'total_donations': total_donations,
             'percentage_achieved': percentage_achieved,
         })
-    return render (request, 'find_campaign.html')
+    context ={
+            'campaigns_with_percentage':campaigns_with_percentage,
+        }
+    return render (request, 'find_campaign.html',context)
 
 def about(request):
     return render (request, 'about.html')
 def faq(request):
     return render (request, 'faq.html')
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import Campaign  # Assuming your model is named Campaign
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def search_campaigns(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            keyword = data.get('keyword', '')
+            categories = data.get('categories', [])
+            sectors = data.get('sectors', [])
+
+            # Validate input 
+            if not keyword and not categories and not sectors:
+                return JsonResponse([], safe=False)
+
+            # Query campaigns
+            campaigns = Campaign.objects.all()
+
+            if keyword:
+                campaigns = campaigns.filter(campaign_name__icontains=keyword)
+            # if keyword:
+            #     campaigns = campaigns.filter(country__icontains=keyword)
+            if categories:
+                campaigns = campaigns.filter(category__in=categories)
+            if sectors:
+                campaigns = campaigns.filter(sector__in=sectors)
+
+            results = list(campaigns.values(
+                'campaign_name', 'country', 'story', 'category', 'sector', 'start_date', 'end_date'
+            ))
+
+            return JsonResponse(results, safe=False)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid method'}, status=400)
+
+ 
