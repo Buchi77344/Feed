@@ -99,36 +99,125 @@
                         <img class="profile-page-img" src="../static/img/profile-img.png" alt="">
                         <span class="profile-camera-icon flex-center">
                             <img src="../static/img/svg/camera-icon.svg" alt="camera icon">
+							<form action="">
+								<input type="file">
+							</form>
                         </span>
                     </div>
 
-                    <h3 class="page-head">Name of profile</h3>
-                    <p class="mac-text-mid">Member since November 2024</p>
+                    <h3 class="page-head text-center">Name of profile</h3>
+                    <p class="mac-text-mid text-center">Member since November 2024</p>
                 </div>
-                <div class="">
-                    <div class="flex-column gap-4 align-items-start">
-                        <div class="profile-util-item">
-                            <div class="profile-util-item-head">
+                <div class="profile-main-content mt-3">
+                    <div class="profile-util-container flex-column gap-4 align-items-start">
+                        <div class="profile-util-item my-profile">
+                            <div data-profile_cta="my-profile" class="profile-util-item-head">
                                 <img class="icon" src="../static/img/profile-icon.png" alt="profile icon">
                                 <span class="mac-text-mid">My Profile</span>
                             </div>
                         </div>
+						
+						<!-- Mobile -->
+						<div data-profile_category="my-profile" class="info-item profile-details-container mobile w-100 bd p-4 br-10">
+							<div class="profile-details-item">
+								<span class="mac-text-sm fw-500">First Name</span>
+								<p class="mac-text-mid fw-600">Name of profile</p>
+							</div>
 
-                        <div class="profile-util-item">
-                            <div class="profile-util-item-head campaign">
+							<div class="profile-details-item">
+								<span class="mac-text-sm fw-500">Surname</span>
+								<p class="mac-text-mid fw-600">Surname of profile</p>
+							</div>
+
+							<div class="profile-details-item">
+								<span class="mac-text-sm fw-500">Mobile number</span>
+								<p class="mac-text-mid fw-600">9457932979753</p>
+							</div>
+
+							<div class="profile-details-item">
+								<span class="mac-text-sm fw-500">Address (optional)</span>
+								<p class="mac-text-mid fw-600">qibffbug, vrhwbw, USA</p>
+							</div>
+
+							<div class="edit-cta-container">
+								<span class="edit-text">Update your details</span>
+								<button class="edit-btn"><img src="../static/img/svg/pen.svg" alt=""></button>
+							</div>
+						</div>
+						<!-- Mobile -->
+
+                        <div  class="profile-util-item">
+                            <div data-profile_cta="my-donations" class="profile-util-item-head campaign">
                                 <img class="icon" src="../static/img/svg/megaphone.svg" alt="profile icon">
                                 <span class="mac-text-mid">My Campaigns</span>
                             </div>
+
+							
+							<div data-profile_category="my-donations" class="info-item profile-donations-container mobile text-center w-100 bd p-4 br-10">
+								<div class="flex-column gp-10 h-100">
+									<span class="donate-text mac-text-mid">You have not made any donations</span>
+									<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>								
+								</div>
+							</div>
                         </div>
 
-                        <div class="profile-util-item">
-                            <div class="profile-util-item-head">
+                        <div  class="profile-util-item">
+                            <div data-profile_cta="my-campaigns" class="profile-util-item-head">
                                 <img class="icon" src="../static/img/svg/donor-icon.svg" alt="profile icon">
                                 <span class="mac-text-mid">My Donations</span>
                             </div>
+
+							<div data-profile_category="my-donations" class="info-item profile-donations-container mobile text-center w-100 bd p-4 br-10">
+								<div class="flex-column gp-10 h-100">
+									<span class="donate-text mac-text-mid">You have not made any donations</span>
+									<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>								
+								</div>
+							</div>
                         </div>
                     </div>
 
+					<div class="profile-info-wrapper flex-column">
+						<div data-profile_category="my-profile" class="info-item profile-details-container w-100 bd p-4 br-10">
+							<div class="profile-details-item">
+								<span class="mac-text-sm fw-500">First Name</span>
+								<p class="mac-text-mid fw-600">Name of profile</p>
+							</div>
+
+							<div class="profile-details-item">
+								<span class="mac-text-sm fw-500">Surname</span>
+								<p class="mac-text-mid fw-600">Surname of profile</p>
+							</div>
+
+							<div class="profile-details-item">
+								<span class="mac-text-sm fw-500">Mobile number</span>
+								<p class="mac-text-mid fw-600">9457932979753</p>
+							</div>
+
+							<div class="profile-details-item">
+								<span class="mac-text-sm fw-500">Address (optional)</span>
+								<p class="mac-text-mid fw-600">qibffbug, vrhwbw, USA</p>
+							</div>
+
+							<div class="edit-cta-container">
+								<span class="edit-text">Update your details</span>
+								<button class="edit-btn"><img src="../static/img/svg/pen.svg" alt=""></button>
+							</div>
+						</div>
+
+						<div data-profile_category="my-donations" class="info-item profile-donations-container text-center w-100 bd p-4 br-10">
+							<div class="flex-column gp-10">
+								<span class="donate-text mac-text-mid">You have not made any donations</span>
+								<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>								
+							</div>
+						</div>
+
+						<div data-profile_category="my-campaigns" class="info-item profile-donations-container text-center w-100 bd p-4 br-10">
+							<div class="flex-column gp-10">
+								<span class="donate-text mac-text-mid">You have not made any donations</span>
+								<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>								
+							</div>
+						</div>
+					</div>
                 </div>
 			</main>
 

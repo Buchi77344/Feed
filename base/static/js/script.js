@@ -45,19 +45,47 @@ function allRemovePopup(highlightEl, dropEl) {
 	});
 }
 
-let profileUtilItemHead = document.querySelectorAll(".profile-util-item-head")
-profileUtilItemHead.forEach((el, index) => {
-	el.addEventListener("click", function(){
-		removeOtherOption(index)
-		profileUtilItemHead[index].classList.toggle("active");
 
-	})
-})
 
-function removeOtherOption(index) {
-	profileUtilItemHead.forEach((el, i) => {
-		if (i !== index) {
-			el.classList.remove("active");
-		}
+/** Profile Page script */
+
+if(document.querySelector(".profile.page")){
+	let profileUtilItemHead = document.querySelectorAll(
+		".profile-util-item-head"
+	);
+	let allProfileinfo = document.querySelectorAll(".profile-info-wrapper .info-item")
+
+	profileUtilItemHead[0].classList.add("active")
+
+	profileUtilItemHead.forEach((el, index) => {
+		el.addEventListener("click", function () {
+			removeOtherOption(index);
+			profileUtilItemHead[index].classList.toggle("active");
+			let ctaSet = this.dataset.profile_cta
+
+			allProfileinfo.forEach(info => {
+				info.classList.add("hide");
+				info.classList.remove("reveal");
+				if(ctaSet == info.dataset.profile_category){
+					info.classList.remove("hide")
+					info.classList.add("reveal");
+				}
+			})
+
+			let parent = this.parentElement
+			console.log(parent)
+			let mobileProfileInfo = parent.querySelector(".profile-donations-container.mobile")
+			mobileProfileInfo.classList.toggle("slide-down")
+		});
 	});
+
+	function removeOtherOption(index) {
+		profileUtilItemHead.forEach((el, i) => {
+			if (i !== index) {
+				el.classList.remove("active");
+			}
+		});
+	}
 }
+
+/** Profile Page script */
