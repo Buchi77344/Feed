@@ -11,6 +11,7 @@
 	--light-text-clr: #ffffff;
 	--light-theme-clr: #ffffff;
 	--dark-text-clr: #424040;
+	--dark-text-clr-600: hsla(0, 2%, 25%, 0.6);
 	--purple-clr: #9835ef;
 	--custom-easing: linear(
 		0,
@@ -367,6 +368,7 @@ main {
 	border: 1px solid var(--primary-clr);
 	font-weight: 700;
 	display: inline-block;
+	background-color: transparent;
 	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -700,14 +702,41 @@ main.pd-down {
 	text-align: center;
 }
 
-.acct-input {
-	padding: 7px 12px;
+.acct-input,
+.acct-select,
+.acct-text-area {
+	padding: 10px 15px;
 	border: 1px solid var(--dark-text-clr);
 	border-radius: 20px;
-	width: 95%;
+	width: 100%;
 	margin: 0 auto;
 	display: block;
 	font-size: 1.1rem;
+}
+
+.acct-text-area {
+	resize: none;
+	height: 50px;
+}
+
+.acct-select {
+	font-size: 1.2rem;
+	position: relative;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background: url("../img/svg/down-arrow-gray.svg") no-repeat right 15px center;
+	background-size: 20px;
+}
+
+.acct-input.large {
+	grid-column: 1/-1;
+}
+
+.start-campaign-item .acct-input,
+.start-campaign-item .acct-select {
+	padding: 10px 15px;
+	/* width : 100%; */
 }
 
 .forgot-pass-cta {
@@ -734,10 +763,11 @@ main.pd-down {
 	margin-top: 5px;
 }
 
-.signup.acct-form {
+.acct-form {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(46%, 1fr));
 	align-items: start;
+	gap: 20px;
 }
 
 .signup.acct.page .acct-form-container {
@@ -801,7 +831,8 @@ main.pd-down {
 	transition: scale 0.3s ease;
 }
 
-.dropdown-item .terms-checkmark::after {
+.dropdown-item .terms-checkmark::after,
+.emergency-cta-div .terms-checkmark::after {
 	background-color: transparent;
 	border: 2px solid var(--light-theme-clr);
 	border-top-color: transparent;
@@ -950,66 +981,160 @@ main.pd-down {
 	animation: scale-down-anim 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.profile-page-img{
-	width : 200px;
-	height : 200px;
+.profile-page-img {
+	width: 200px;
+	height: 200px;
 }
 
-
-.profile-camera-icon{
+.profile-camera-icon {
 	position: absolute;
 	bottom: -3px;
-	right : 15px;
+	right: 15px;
 	background-color: var(--purple-clr);
-	width : 45px;
+	width: 45px;
 	height: 45px;
 	border-radius: 50%;
 	cursor: pointer;
 }
 
-.profile-camera-icon img{
-	width : 25px;
-	height : 25px;
+.profile-camera-icon img {
+	width: 25px;
+	height: 25px;
 }
 
-.profile-util-item-head{
-	padding : 12px 20px;
+.profile-camera-icon input[type="file"] {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	/* visibility: hidden; */
+	cursor: pointer;
+}
+
+.profile-main-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.profile-util-container {
+	width: 40%;
+}
+
+.profile-util-item {
+	width: 100%;
+}
+
+.profile-util-item-head {
+	padding: 12px 20px;
 	box-shadow: 0px 4px 15px 0px #00000040;
 	display: flex;
-	gap : 20px;
+	gap: 20px;
 	align-items: center;
 	border-radius: 10px;
 	min-width: 300px;
 	overflow: hidden;
 	position: relative;
+	cursor: pointer;
 }
 
-.profile-util-item-head::after{
+.profile-util-item-head::after {
 	content: "";
 	position: absolute;
-	right : 0;
-	width : 15px;
+	right: 0;
+	width: 15px;
 	height: 100%;
 	background-color: var(--primary-clr);
 	display: none;
 }
 
-.profile-util-item-head.campaign::after{
+.profile-util-item-head.campaign::after {
 	background-color: var(--purple-clr);
 }
 
-.profile-util-item-head.active::after{
+.profile-util-item-head.active::after {
 	display: block;
 }
 
-.profile-util-item-head .icon{
+.profile-util-item-head .icon {
 	width: 35px;
 	height: 35px;
 }
 
-.profile-util-item-head .mac-text-mid{
+.profile-util-item-head .mac-text-mid {
 	font-weight: 600;
 }
+
+.profile-info-wrapper {
+	width: 40%;
+}
+
+.donate-text {
+	color: var(--purple-clr);
+}
+
+.profile-donations-container .cta-btn {
+	/* background-color: transparent; */
+	font-size: 1.2rem;
+}
+
+.profile-info-wrapper .info-item {
+	display: none;
+}
+
+.profile-info-wrapper .info-item:nth-of-type(1) {
+	display: block;
+}
+
+.hide {
+	display: none !important;
+}
+
+.reveal {
+	display: block !important;
+}
+
+.edit-cta-container {
+	padding: 12px 20px;
+	border-top: 1px solid rgba(0, 0, 0, 0.6);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 15px;
+}
+
+.edit-text {
+	color: hsl(0, 0%, 40%);
+	font-size: 1rem;
+}
+
+.edit-btn {
+	border: none;
+	background-color: transparent;
+}
+
+.edit-btn img {
+	width: 35px;
+	height: 35px;
+}
+
+.start-campaign-item .require-div {
+	padding-left: 0px;
+	width: 97%;
+}
+
+.headline-text {
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: var(--dark-text-clr-600);
+}
+
+.start-campaign-list li {
+	font-family: var(--montserrat-font);
+	font-size: 1.4rem;
+	font-weight: 500;
+	color: var(--dark-text-clr-600);
+}
+
 @keyframes scale-up {
 	0% {
 		scale: 0.5;
@@ -1048,6 +1173,93 @@ main.pd-down {
 	gap: 20px;
 }
 
+.profile-details-container.mobile {
+	display: none;
+}
+
+.profile-donations-container.mobile {
+	display: none;
+	margin-top: 20px;
+	padding: 0 !important;
+	border-color: transparent;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease;
+}
+
+.profile-donations-container.mobile.slide-down {
+	max-height: 220px;
+	height: 220px;
+	border-color: rgba(0, 0, 0, 0.6);
+}
+
+.start-campaign-item {
+	box-shadow: 0px 4px 15px 5px #00000040;
+	padding: 30px 35px;
+	border: 1px solid #b1b1b1;
+	border-radius: 20px;
+}
+
+.upload-div label {
+	color: var(--dark-text-clr);
+}
+
+.upload-input {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	width: 100%;
+	/* z-index: -1; */
+}
+
+.start-campaign-btn-container{
+	display: flex;
+	flex-direction: column;
+	width : 55%;
+	margin : 20px auto 0px;
+	padding : 20px 20px 30px;
+	border-bottom: 1px solid black;
+
+}
+
+.launch.start-campaign-btn-container{
+	border-bottom: none;
+}
+
+.secondary-cta-btn{
+	padding : 20px 30px;
+	background-color: transparent;
+	color : var(--purple-clr);
+	border: 2px solid var(--purple-clr);
+	border-radius: 40px;
+	font-weight: 500;
+	transition: background-color .5s ease, background-color .5s ease;
+	/* width: 100%; */
+}
+
+.secondary-cta-btn:hover{
+	background-color: var(--purple-clr);
+	color : var(--light-text-clr)
+}
+
+.start-campaign-btn-container .secondary-cta-btn{
+	font-size: 1.3rem;
+	font-weight: 600;
+	padding : 20px 10px;
+	width : 100%;
+}
+
+.launch.start-campaign-btn-container .secondary-cta-btn{
+	border-color: var(--primary-clr);
+	color : var(--primary-clr);
+
+}
+
+.launch.start-campaign-btn-container .secondary-cta-btn:hover{
+	background-color: var(--primary-clr);
+	color : var(--light-text-clr)
+}
+
 /*
 .terms-label input:checked ~ .terms-checkmark::after{
 	content: "";
@@ -1077,17 +1289,30 @@ main.pd-down {
 	main.pd-down {
 		padding: 80px 20px 10px;
 	}
-}
 
-@media (max-width: 650px) {
-	.signup.acct-form {
-		grid-template-columns: 1fr;
+	.profile-util-container {
+		width: 100%;
 	}
 
-	.terms-p {
-		text-align: left;
-		width: 95%;
-		margin-left: auto;
+	.profile-info-wrapper {
+		display: none;
+	}
+
+	.profile-util-item.my-profile {
+		display: none;
+	}
+
+	.profile-details-container.mobile {
+		display: block;
+	}
+
+	.profile-donations-container.mobile {
+		display: block;
+	}
+
+	.start-campaign-item .require-div.w-50{
+		text-align: center;
+		width : 100%!important;
 	}
 }
 
@@ -1103,6 +1328,26 @@ main.pd-down {
 
 	.find-campaign-item .feature-img {
 		width: 40%;
+	}
+}
+
+@media (max-width: 650px) {
+	.acct-form {
+		grid-template-columns: 1fr;
+	}
+
+	.terms-p {
+		text-align: left;
+		width: 95%;
+		margin-left: auto;
+	}
+
+	.start-campaign-btn-container{
+		width: 90%;
+	}
+
+	.start-campaign-btn-container .secondary-cta-btn{
+		font-size: 1.1rem;
 	}
 }
 
@@ -1129,6 +1374,10 @@ main.pd-down {
 
 	.find-campaign-item .feature-img {
 		width: 100%;
+	}
+
+	.start-campaign-list li{
+		font-size: 1rem;
 	}
 }
 
@@ -1184,6 +1433,28 @@ main.pd-down {
 	font-weight: 600;
 	font-size: 1.6rem;
 	color: var(--primary-clr);
+}
+
+.emergency-cta-div .terms-label{
+	color : var(--primary-clr);
+}
+
+.emergency-cta-div .terms-label input ~ .terms-checkmark {
+	width: 30px;
+	height: 30px;
+	border: 2px solid var(--primary-clr);
+	border-radius: 5px;
+}
+
+.emergency-cta-div .terms-checkmark::after{
+	top : 5px;
+	left : 7px;
+	width : 13px;
+	height : 10px;
+}
+
+.emergency-cta-div .terms-label input:checked ~ .terms-checkmark{
+	background-color: var(--primary-clr);
 }
 
 @media (max-width: 1300px) {

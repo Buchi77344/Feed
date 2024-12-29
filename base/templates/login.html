@@ -94,7 +94,7 @@
 					<h3 class="page-sub-head highlight-span-clr text-center">
 						Profile Details
 					</h3>
-					<form  method="post" class="acct-form flex-column gp-20 mt-4">
+					<form  method="post" class="flex-column gp-20 mt-4">
 						{% csrf_token %}
 						<input
 							class="acct-input"
@@ -108,11 +108,12 @@
 							name="password"
 							placeholder="password *"
 						/>
-					</form>
+					
 					<a href="{% url 'forget' %}" class="forgot-pass-cta">Forgot password?</a>
 				</div>
 
 				<button class="cta-btn submit-btn">LOG IN TO YOUR PROFILE</button>
+			</form>
 			</main>
 
 			<footer class="pos-rel mt-5">

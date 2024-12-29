@@ -18,8 +18,8 @@ def index(request):
 
     campaigns = Campaign.objects.all()
     campaigns_with_percentage = []
-    if Campaign.objects.filter(profile__user =request.user).exists: 
-      for campaign in campaigns:
+    # if Campaign.objects.filter(profile__user =request.user).exists: 
+    for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
