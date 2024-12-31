@@ -410,4 +410,7 @@ def search_campaigns(request):
 
     return JsonResponse({'error': 'Invalid method'}, status=400)
 
+
+def support(request):
+    return render (request, 'support.html')
  
