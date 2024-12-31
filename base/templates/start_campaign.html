@@ -97,10 +97,11 @@
                 <div class="start-campaign-content-wrapper">
                     <div class="start-campaign-item">
                         <p class="mac-text-mid highlight-span-clr fw-600">Campaign details</p>
-                        <form action="" class="acct-form mt-3">
-                            <input type="text" name="" id="" class="acct-input" placeholder="Campaign name *">
-                            <input type="text" name="" id="" class="acct-input" placeholder="Monetary target *">
-                            <select class="acct-select" id="" name = "campaign_category">
+                        <form method="post" class="acct-form mt-3">
+							{% csrf_token %}
+                            <input type="text" name="campaign_name" id="" class="acct-input" placeholder="Campaign name *">
+                            <input type="text" name="monetary" id="" class="acct-input" placeholder="Monetary target *">
+                            <select class="acct-select" id="" name = "category">
                                 <option>Select category *</option>
                                 <option value="volvo">Volvo</option>
                                 <option value="saab">Saab</option>

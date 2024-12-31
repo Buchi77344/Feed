@@ -175,22 +175,22 @@
 							</div>
                         </div>
                     </div>
-
+           {% if request.user.is_authenticated %}
 					<div class="profile-info-wrapper flex-column">
 						<div data-profile_category="my-profile" class="info-item profile-details-container w-100 bd p-4 br-10">
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">First Name</span>
-								<p class="mac-text-mid fw-600">Name of profile</p>
+								<p class="mac-text-mid fw-600">{{request.user.first_name}}</p>
 							</div>
 
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">Surname</span>
-								<p class="mac-text-mid fw-600">Surname of profile</p>
+								<p class="mac-text-mid fw-600">{{request.user.last_name}}</p>
 							</div>
 
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">Mobile number</span>
-								<p class="mac-text-mid fw-600">9457932979753</p>
+								<p class="mac-text-mid fw-600">{{request.user.phone_number}}</p>
 							</div>
 
 							<div class="profile-details-item">
@@ -203,7 +203,7 @@
 								<button class="edit-btn"><img src="../static/img/svg/pen.svg" alt=""></button>
 							</div>
 						</div>
-
+						{% endif %}
 						<div data-profile_category="my-donations" class="info-item profile-donations-container text-center w-100 bd p-4 br-10">
 							<div class="flex-column gp-10">
 								<span class="donate-text mac-text-mid">You have not made any donations</span>
