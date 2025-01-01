@@ -227,7 +227,7 @@ def reset_password(request, uidb64, token):
 from django.contrib import messages
 from .models import Campaign
 from datetime import datetime
-
+from django_countries import countries
 @login_required(login_url="login")
 def start_campaign(request):
     if request.method == 'POST':
@@ -237,7 +237,6 @@ def start_campaign(request):
             monetary = request.POST.get('monetary')
             category = request.POST.get('category')
             story = request.POST.get('story')
-            sector = request.POST.get('sector')
             event = request.POST.get('event')
             image = request.FILES.get('image')
             video_url = request.POST.get('video_url')
@@ -245,20 +244,21 @@ def start_campaign(request):
             address = request.POST.get('address')
             address1 = request.POST.get('address1')
             city = request.POST.get('city')
-            zipcode = request.POST.get('zipcode')
             state = request.POST.get('state')
             country = request.POST.get('country')
-            organization_payment = request.POST.get('organization_payment') == 'on'
-            single_payment = request.POST.get('single_payment') == 'on'
-            is_featured = request.POST.get('is_featured') == 'on'
-
+            start_date =request.POST.get('start_date')
+            end_date =request.POST.get('end_date')
+            # organization_payment = request.POST.get('organization_payment') == 'on'
+            # single_payment = request.POST.get('single_payment') == 'on'
+            # is_featured = request.POST.get('is_featured') == 'on'
+           
             # Create and save the campaign object
             campaign = Campaign.objects.create(
                 campaign_name=campaign_name,
                 monetary=monetary,
                 category=category,
                 story=story,
-                sector=sector,
+              
                 event=event,
                 images=image,
                 video_url=video_url,
@@ -266,41 +266,47 @@ def start_campaign(request):
                 address=address,
                 address1=address1,
                 city=city,
-                zipcode=zipcode,
+              
                 state=state,
                 country=country,
-                organization_payment=organization_payment,
-                single_payment=single_payment,
-                is_featured=is_featured,
-                start_date=datetime.now(),
-                end_date=datetime.now(),  # Update as needed
+               
+                start_date=start_date,
+                end_date=end_date, 
+                user =request.user
+                
             )
-            # profile = Profile.objects.get(user=request.user)
-            # profile.campaign = campaign
-            # profile.save()
+           
             messages.success(request, f'Campaign "{campaign_name}" created successfully!')
             return redirect('profile')  # Adjust redirect as needed
 
         except Exception as e:
             messages.error(request, f"Error creating campaign: {str(e)}")
             return render(request, 'start_campaign.html', status=400)
+    category = Campaign.CATEGORY_CHOICES
+    event =Campaign.EVENT_CHOICE
+    context = {
+        'countries':countries,
+        'category':category,
+        'event':event,
+    }
 
-    return render(request, 'start_campaign.html')
+    return render(request, 'start_campaign.html',context)
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="login")
 def profile(request):
-    campaign =  Campaign.objects.filter(profile__user=request.user)
+    campaign = Campaign.objects.filter(user=request.user)
     profile = get_object_or_404(Profile, user=request.user)
 
-    # Get all donations for campaigns created by this profile
-    donations = Donation.objects.filter(campaign__profile=profile).select_related("campaign", "user")
+    # Get all donations for campaigns created by this user
+    donations = Donation.objects.filter(campaign__user=request.user).select_related("campaign", "user")
+
     context = {
-        "campaign":campaign,
-        "donations":donations,
-        "profile":profile
+        "campaign": campaign,
+        "donations": donations,
+        "profile": profile,
     }
-    return render (request, 'profile.html',context)
+    return render(request, 'profile.html', context)
 
 
 from django.shortcuts import redirect, get_object_or_404
