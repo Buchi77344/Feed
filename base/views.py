@@ -301,6 +301,25 @@ def profile(request):
     # Get all donations for campaigns created by this user
     donations = Donation.objects.filter(campaign__user=request.user).select_related("campaign", "user")
 
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone_number = request.POST.get('phone_number')
+        address =request.POST.get('address')
+        
+
+        user = request.user
+        user.first_name = first_name
+        user.last_name = last_name
+        user.phone_number =phone_number
+        user.save()  
+        
+        profile.address = address
+        profile.save()
+     
+        return redirect('profile')
+        
+
     context = {
         "campaign": campaign,
         "donations": donations,
@@ -348,7 +367,7 @@ def donate_to_campaign(request, campaign_id):
 def find_campaign(request):
     campaigns = Campaign.objects.all()
     campaigns_with_percentage = []
-    if Campaign.objects.filter(profile__user =request.user).exists: 
+    if Campaign.objects.filter(user =request.user).exists: 
       for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
