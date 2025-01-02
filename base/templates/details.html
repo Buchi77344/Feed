@@ -1,0 +1,572 @@
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<link rel="preconnect" href="https://fonts.googleapis.com" />
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+			<link
+				href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap"
+				rel="stylesheet"
+			/>
+			<link
+				href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+				rel="stylesheet"
+				integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+				crossorigin="anonymous"
+			/>
+			<link rel="stylesheet" href="../static/css/style.css" />
+			<script defer src="../static/js/script.js"></script>
+			<title>Start campaign</title>
+		</head>
+		<body>
+			<div class="overlay"></div>
+			<div class="mobile-nav">
+				<div class="flex-between">
+				<a href="{% url 'login' %}" class="login-cta">Login/Register</a>
+				<span class="cancel-icon flex-center">
+					<svg
+					width="54"
+					height="54"
+					viewBox="0 0 54 54"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					>
+					<path
+						d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
+						fill="#9835EF"
+					/>
+					</svg>
+				</span>
+				</div>
+		
+				<ul class="mobile-nav-links-container flex-column gp-15 mt-5">
+				<li><a href="/" class="mobile-nav-link">Home</a></li>
+				<li><a href="{% url "find_campaign" %}" class="mobile-nav-link">Find campaign</a></li>
+				<li><a href="{% url "start_campaign" %}" class="mobile-nav-link">Start campaign</a></li>
+				<li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
+				<li><a href="#" class="mobile-nav-link">About</a></li>
+				<li><a href="#" class="mobile-nav-link">FAQ</a></li>
+				<li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
+				<li><a href="#" class="mobile-nav-link">Support</a></li>
+				</ul>
+			</div>
+
+			<div class="details campaign page">
+				<nav class="navbar sticky-top bos align-items-center bos">
+					<div class="container">
+						<img
+							class="logo-img"
+							src="../static/img/Feed-logo.png"
+							alt="logo img"
+						/>
+						<div
+							class="nav-util-cta-container ms-md-3 d-flex align-items-center gap-4"
+						>
+							<img
+								class="search-icon"
+								src="../static/img/svg/search-icon.svg"
+								alt="search icon"
+							/>
+							<a href="#" class="start-camp-cta">START CAMPAIGN</a>
+							<div class="profile-cta-container">
+								<img
+									class="profile-icon"
+									src="../static/img/profile-icon.png"
+									alt="profile icon"
+								/>
+								<img
+									class="down-arrow"
+									src="../static/img/svg/down-arrow.svg"
+									alt="down arrow icon"
+								/>
+							</div>
+						</div>
+						<div class="hamburger">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+
+						<!-- <div class="nav-cta-container d-flex">
+			</div> -->
+					</div>
+					<span class="page-highlight-span">CAMPAIGN</span>
+				</nav>
+
+				<main class="light-bg-clr pd-down">
+					<div class="details-wrapper">
+						<section>
+							<div class="row details-hero-section">
+								<div class="col-lg-6 content-div">
+									<div class="details-title-container">
+										<h1 class="details-title-text">Mission for Marlee: A Journey to Healing</h2>
+									</div>
+									<span class="details smaller-text fw-400 mt-2">Started 5 days ago</span>
+									<span class="details smaller-text fw-700">Open end-date</span>
+									<div class="details-donation-cta-section mt-3 px-md-3">
+										<div class="util-box-container">
+											<h3 class="text-center donation-price-head-text page-sub-head fw-700">R 158 492</h3>
+											<div class="percent-bar my-3">
+												<span class="percent-val flex-center">11%</span>
+											</div>
+											<p class="text-center donation-price-text">of R 1 500 000 goal</p>
+											<div class="btn-container flex-center gp-10 my-3">
+												<button class="donate-btn flex gp-5">
+													<span class="text">Donate</span>
+													<span class="icon flex-center">
+														<img src="../static/img/svg/love-icon.svg" alt="love icon by svgrepo">
+													</span>
+												</button>
+		
+												<button class="share-btn flex gp-5">
+													<span class="text">Share</span>
+													<span class="icon">
+														<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+															<g id="Communication / Share_iOS_Export">
+															<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+															</g>
+														</svg>
+													</span>
+												</button>
+											</div>
+											<div class="donors-details-wrapper px-2">
+												<div class="donors-details-container row">
+													<div class="donor-item pt-3 flex-column justify-center offline col-md-6">
+														<h5>R 0</h5>
+														<p class="donor-item-text">Offline donations</p>
+													</div>
+			
+													<div class="donor-item pt-3 flex-column justify-center unique col-md-6">
+														<h5>50</h5>
+														<p class="donor-item-text">Offline donations</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-6 details graphics-div">
+									<div class="img-container">
+										<img class="details-img" src="../static/img/hero-banner-(1).jpeg" alt="Details picture">
+									</div>
+									<div class="row mt-3">
+										<div class="col-sm-6 text-center details-location-container">
+											<span class="icon flex-center">
+												<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+												<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+												</svg>
+											</span>
+											<h5 class="page-micro-head my-2">Pretoria</h5>
+											<p class="smaller-text">South Africa</p>
+										</div>	
+										<div class="col-sm-6 text-center details-manage-container">
+											<span class="icon flex-center">
+												<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+												<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="hsl(0,0%,80%)"/>
+												</svg>
+											</span>
+											<h5 class="page-micro-head my-2">Self-managed</h5>
+											<p class="smaller-text">Funds go to campaign creator</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<section>
+							<div class="row about-section-wrapper">
+								<div class="col-lg-6 about-content-container">
+									<h5 class="about-campaign page-micro-head highlight-span-clr">STORY</h5>
+									<div class="details-title-container">
+										<h3 class="about-campaign details-title-text">About This Campaign</h3>
+									</div>
+									<div class="flex gp-10">
+										<img class="about-campaign profile-img" src="../static/img/profile-img.png" alt="">
+										<div class="about-campaign-profile-content flex-column align-start py-2 ">
+											<p class="profile-name highlight-span-clr fw-600">Janrich Volschenk</p>
+											<div class="flex gp-5">
+												<span class="about-campaign title-span">Organiser</span>
+												<span class="smallest-text">1 BaB campaign</span>
+											</div>
+										</div>
+									</div>
+									<div class="mt-3">
+										<p class="">Marlee’s life has been one of unwavering service, selflessness, and love. Today, she needs your help to continue her journey of hope and healing as she battles a life-threatening diagnosis of leukemia.</p>
+										<p class="mt-3">For over two decades, Marlee Volschenk has dedicated her life to helping others. As a missionary since 2001, she and her husband Dries spent 22 years in Madagascar, creating safe spaces and nurturing positive opportunities for children in vulnerable communities. In April 2023, Marlee and Dries returned to their home country, South Africa to continue their important work.</p>
+										<p class="mt-3">Marlee is the proud mother of three incredible children, aged 24, 21, and 18. Her family has been her strength and motivation throughout this difficult journey. Together with her husband, Dries, they have weathered the storm of missionary life and built a legacy of hope in Madagascar. Marlee’s children now face the unimaginable reality of their mother’s illness, and they are determined to do everything possible to support her in this fight.</p>
+										<div class="mt-3">
+											<h5>Marlee’s Fight Against Leukemia</h5>
+											<p class="mt-3">At the end of November 2024, Marlee received the devastating diagnosis of B Acute Lymphoblastic Leukemia, a very aggressive blood cancer that requires immediate and intensive treatment. She has already started V.A.A.P chemotherapy treatment, which costs an astounding R33,000 per week. This gruelling regimen will continue for five weeks to prepare her body for the next critical step: a stem cell transplant.</p>
+											<p class="mt-3">The cost of the stem cell transplant alone is estimated to be between R1 million and R1.5 million. We are praying that one of Marlee’s siblings will be a match for the transplant. If no match is found within her family, the search for an unrelated donor will add another R500,000 to the total cost. Finding a bone marrow match outside the family is notoriously difficult due to the genetic complexities involved in compatibility, and the process often incurs additional financial and logistical challenges.</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="about-campaign-donation util-box-container">
+										<div class="about-campaign-donation details-title-container">
+											<h3 class="about-campaign details-title-text text-center">Donations</h3>
+										</div>
+
+										<div class="flex-between mt-2">
+											<span>Showing:</span>
+											<div class="category-btn-container flex gp-15">
+												<button class="category-btn active">ALL</button>
+												<button class="category-btn">TOP</button>
+											</div>
+										</div>
+
+										<div class="user-donation-container mt-3">
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">R 200</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Hanna</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>1 Jan '25</span>
+													</div>
+
+													<div>
+														<p>Lief vir julle!</p>
+													</div>
+												</div>
+											</div>
+
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">R 2 000</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Anonymous</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>1 Jan '25</span>
+													</div>
+
+													<div>
+														<p>Blessings for healing Marlee</p>
+													</div>
+												</div>
+											</div>
+
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">US$500</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Anonymous</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>31 Dec '24</span>
+													</div>
+
+													<div>
+														<p>With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
+													</div>
+												</div>
+											</div>
+
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">US$500</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Anonymous</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>31 Dec '24</span>
+													</div>
+
+													<div>
+														<p></p>
+													</div>
+												</div>
+											</div>
+
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">US$500</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Anonymous</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>31 Dec '24</span>
+													</div>
+
+													<div>
+														<p>With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
+													</div>
+												</div>
+											</div>
+											
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">R 10 000</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Philip en Johanika</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>31 Dec '24</span>
+													</div>
+
+													<div>
+														<p>Baie sterkte!!</p>
+													</div>
+												</div>
+											</div>
+
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">R 10 000</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Philip en Johanika</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>31 Dec '24</span>
+													</div>
+
+													<div>
+														<p>Baie sterkte!!</p>
+													</div>
+												</div>
+											</div>
+
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">US$500</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Anonymous</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>31 Dec '24</span>
+													</div>
+
+													<div>
+														<p>With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
+													</div>
+												</div>
+											</div>
+
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">R 10 000</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Philip en Johanika</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>31 Dec '24</span>
+													</div>
+
+													<div>
+														<p>Baie sterkte!!</p>
+													</div>
+												</div>
+											</div>
+
+											<div class="user-donation-item flex-between">
+												<div class="price">
+													<span class="fw-700 highlight-span-clr">US$500</span>
+												</div>
+
+												<div class="details-container">
+													<div class="flex-between">
+														<span class="fw-700">Anonymous</span>
+														<img title="Platform fee covered" class="donation-icon" src="../static/img/heart-with-ribbon.png" alt="Heart with ribbon from svgrepo">
+														<span>31 Dec '24</span>
+													</div>
+
+													<div>
+														<p>With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="view-more-container text-center mt-3">
+											<span class="view-more-text">View More</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<section class="make-donation-section">
+							<div class="text-center make-donation-container">
+								<div class="small-circle"></div>
+								<h5 class="support-text mt-2">SUPPORT THIS CAMPAIGN</h5>
+								<h3 class="page-sub-head mt-2">Make Your Donation</h3>
+								<p class="bold-p mt-2">Kindness can transform the world around us. Amazing things happen when people come together! Make a donation to this cause, share it with people you know, and you may ignite the generosity in others.</p>
+								<div class="flex-column gp-15 align-center mt-3">
+									<button class="donate-btn flex gp-5">
+										<span class="text">Donate</span>
+										<span class="icon flex-center">
+											<img src="../static/img/svg/love-icon.svg" alt="love icon by svgrepo">
+										</span>
+									</button>
+	
+									<button class="share-btn flex gp-5">
+										<span class="text">Share</span>
+										<span class="icon">
+											<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g id="Communication / Share_iOS_Export">
+												<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+												</g>
+											</svg>
+										</span>
+									</button>
+								</div>
+							</div>
+						</section>
+					</div>
+				</main>
+
+				<footer class="pos-rel mt-5">
+					<div class="footer-bottom-wrapper">
+						<div class="w-100">
+							<ul class="footer-links-container grid">
+								<li><a href="#" class="footer-links">FAQ</a></li>
+								<li><a href="#" class="footer-links">Contact us</a></li>
+								<li>
+									<a href="#" class="footer-links">Online fundraising Ideas</a>
+								</li>
+								<li><a href="#" class="footer-links">Bitcoin Fundraising</a></li>
+								<li><a href="#" class="footer-links">Learn More</a></li>
+								<li><a href="#" class="footer-links">Countries</a></li>
+								<li><a href="#" class="footer-links">Read Blog</a></li>
+								<li><a href="#" class="footer-links">How to fundraise</a></li>
+								<li><a href="#" class="footer-links">Facebook Fundraising</a></li>
+								<li><a href="#" class="footer-links">Facebook Fundraising</a></li>
+								<li><a href="#" class="footer-links">About</a></li>
+								<li><a href="#" class="footer-links">Help center</a></li>
+							</ul>
+
+							<div class="flex-wrap gp-20 footer-bottom-link-container mt-5">
+								<a href="#" class="footer-bottom-link">Privacy Policy</a>
+								<a href="#" class="footer-bottom-link">Terms & Conditions</a>
+								<div class="social-media-container flex-wrap">
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/facebook.svg"
+											alt="Facebook icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/twitter.svg"
+											alt="Twitter icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/instagram.svg"
+											alt="Instagram icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/linkedIn.svg"
+											alt="LinkedIn icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/tiktok.svg"
+											alt="Tiktok icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/whatsapp.svg"
+											alt="Whatsapp icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/telegram.svg"
+											alt="Telegram icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/youtube.svg"
+											alt="Youtube icon"
+										/>
+									</a>
+								</div>
+								<div class="copyright-container pos-rel flex gp-15">
+									<p class="copyright-text">2024 Feed Needs</p>
+									<span class="dash"></span>
+									<p class="copyright-text">All rights reserved</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+
+			<script>
+				const hamburger = document.querySelector(".hamburger");
+				const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
+				const overlay = document.querySelector(".overlay");
+				const mobileNav = document.querySelector(".mobile-nav");
+				const submitBtn = document.querySelector(".cta-btn.submit-btn");
+				const acctForm = document.querySelector(".acct-form");
+				if (hamburger) {
+					hamburger.addEventListener("click", function () {
+						overlay.classList.add("visible");
+						mobileNav.classList.add("slideIn");
+						document.body.classList.add("hide-overflow");
+					});
+				}
+
+				if (cancelIcon)
+					[
+						cancelIcon.addEventListener("click", function () {
+							overlay.classList.remove("visible");
+							mobileNav.classList.remove("slideIn");
+							document.body.classList.remove("hide-overflow");
+						}),
+					];
+
+				if (submitBtn && acctForm) {
+					submitBtn.addEventListener("click", function () {
+						acctForm.submit();
+					});
+				}
+			</script>
+		</body>
+	</html>
