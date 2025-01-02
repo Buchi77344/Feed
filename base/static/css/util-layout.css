@@ -87,6 +87,22 @@
   align-items: start!important;
 }
 
+.align-center {
+  align-items: center!important;
+}
+
+.align-stretch {
+  align-items: stretch!important;
+}
+
+
+.justify-between {
+  justify-content: space-between!important;
+}
+
+.justify-center {
+  justify-content: center!important;
+}
 
 .grid {
   display: grid;

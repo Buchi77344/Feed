@@ -1,0 +1,348 @@
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<link rel="preconnect" href="https://fonts.googleapis.com" />
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+			<link
+				href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap"
+				rel="stylesheet"
+			/>
+			<link
+				href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+				rel="stylesheet"
+				integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+				crossorigin="anonymous"
+			/>
+			<link rel="stylesheet" href="../static/css/style.css" />
+			<script defer src="../static/js/script.js"></script>
+			<title>Start campaign</title>
+		</head>
+		<body>
+			<div class="overlay"></div>
+			<div class="mobile-nav">
+				<div class="flex-between">
+				<a href="{% url 'login' %}" class="login-cta">Login/Register</a>
+				<span class="cancel-icon flex-center">
+					<svg
+					width="54"
+					height="54"
+					viewBox="0 0 54 54"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					>
+					<path
+						d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
+						fill="#9835EF"
+					/>
+					</svg>
+				</span>
+				</div>
+		
+				<ul class="mobile-nav-links-container flex-column gp-15 mt-5">
+				<li><a href="/" class="mobile-nav-link">Home</a></li>
+				<li><a href="{% url "find_campaign" %}" class="mobile-nav-link">Find campaign</a></li>
+				<li><a href="{% url "start_campaign" %}" class="mobile-nav-link">Start campaign</a></li>
+				<li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
+				<li><a href="#" class="mobile-nav-link">About</a></li>
+				<li><a href="#" class="mobile-nav-link">FAQ</a></li>
+				<li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
+				<li><a href="#" class="mobile-nav-link">Support</a></li>
+				</ul>
+			</div>
+
+			<div class="feed-payout campaign page">
+				<nav class="navbar sticky-top bos align-items-center bos">
+					<div class="container">
+						<img
+							class="logo-img"
+							src="../static/img/Feed-logo.png"
+							alt="logo img"
+						/>
+						<div
+							class="nav-util-cta-container ms-md-3 d-flex align-items-center gap-4"
+						>
+							<img
+								class="search-icon"
+								src="../static/img/svg/search-icon.svg"
+								alt="search icon"
+							/>
+							<a href="#" class="start-camp-cta">START CAMPAIGN</a>
+							<div class="profile-cta-container">
+								<img
+									class="profile-icon"
+									src="../static/img/profile-icon.png"
+									alt="profile icon"
+								/>
+								<img
+									class="down-arrow"
+									src="../static/img/svg/down-arrow.svg"
+									alt="down arrow icon"
+								/>
+							</div>
+						</div>
+						<div class="hamburger">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+
+						<!-- <div class="nav-cta-container d-flex">
+			</div> -->
+					</div>
+					<span class="page-highlight-span">Quick Links</span>
+				</nav>
+
+				<main class="feed-payout-main pd-down">
+					<div class="feed-payout-wrapper">
+						<div class="flex-wrap">
+                            <div class="feed-payout-category-cta active">
+                                <span>Support</span>
+                            </div>
+
+                            <div class="feed-payout-category-cta">
+                                <span>How it works</span>
+                            </div>
+
+                            <div class="feed-payout-category-cta">
+                                <span>Privacy Policy</span>
+                            </div>
+
+                            <div class="feed-payout-category-cta">
+                                <span>Terms & Conditions</span>
+                            </div>
+						</div>
+
+						<div class="support-container mt-4">
+							<div class="fees-payout-container flex-between align-start">
+								<div class="content-cta-container flex-column gp-15">
+									<button class="btn active">Fees and Payouts</button>
+									<button class="btn">Contact Us</button>
+								</div>
+                                <div class="flex-column content-container-wrapper">
+                                    <div data-content = "fees-payout" class="content-container fees-payout">
+                                        <p class="mac-italic-text fs-16">All donations made through BackaBuddy are managed by The BackaBuddy Foundation (Reg No. 2015/313483/08)</p>
+                                        <div>
+                                            <h3 class="fs-38 mt-2 text-center fw-600">Fee Structure</h3>
+                                            <p>It is free to setup a campaign. Fees are only charged on funds raised.</p>
+                                            <p class="fw-600 mt-3">Total fee = 1) Platform fee + 2) Payment Processing fee (3rd Party)</p>
+                                            <ol>
+                                                <li class="mt-4">
+                                                    <p>Platform fee: BackaBuddy</p>
+                                                    <ul>
+                                                        <li>
+                                                            <p class="block">Registered organisations / Non-Profit Organisations:</p>
+                                                            <p class="ms-1"><strong>0% platform fee.</strong> Donors can choose to leave a tip for our services.</p>
+                                                        </li>
+                                                        <li>
+                                                            <p class="block">Individual Fundraisers:</p>
+                                                            <p class="ms-1">7% (+VAT). Donors are given the option to cover this fee. <strong> N.B. 75% of donors cover this fee.</strong></p>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+    
+                                                <li class="mt-4">
+                                                    <p>Payment Processing fee (3rd Party):</p>
+                                                    <ul>
+                                                        <li>
+                                                            <p class="block">African Payment Processing fees (as of the 22nd March 2022):</p>
+                                                            <div class="ms-1 flex-between">
+                                                                <p>Electronic Funds Transfer EFT</p>
+                                                                <strong>R12</strong>
+                                                            </div>
+                                                            <div class="ms-1 flex-between">
+                                                                <p>Instant EFT</p>
+                                                                <strong>3.5%</strong>
+                                                            </div>
+                                                            <div class="ms-1 flex-between">
+                                                                <p>Debit/Credit Card South Africa</p>
+                                                                <strong>3.9%</strong>
+                                                            </div>
+                                                            <div class="ms-1 flex-between">
+                                                                <p>SnapScan</p>
+                                                                <strong>3.9%</strong>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <p>International Payment Processing fees:</p>
+                                                            <div class="ms-1 flex-between">
+                                                                <p>International Credit Card (PayPal)</p>
+                                                                <strong>$0.3 + 5.5%</strong>
+                                                            </div>
+                                                            <div class="ms-1 flex-between">
+                                                                <p>PayPal Account</p>
+                                                                <strong>$0.3 + 5.5%</strong>
+                                                            </div>
+                                                            
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                        <p class="mac-italic-text fs-16">PayPal is a high-cost payment portal but is a trusted international payment channel. The 5.5% is made of two fees; the PayPal fee directly, and the local SA PayPal banking partner's fee.</p>
+                                        <div>
+                                            <h3 class="fs-38 mt-2 text-center fw-600">Payouts</h3>
+                                            <p class="mt-3">You have the flexibility to request a payout at any time, provided your campaign/organisation has been vetted and you have received donations. <strong>Please note that the processing time for payouts by BackaBuddy is up to 10 business days.</strong> Additionally, you can only submit a new payout request once the previous one has been successfully processed.</p>
+                                            <p class="my-4">Thank you for considering BackaBuddy as your fundraising platform. We’re here for you!</p>
+                                        </div>
+                                    </div>
+    
+                                    <div data-content = "contact-us" class="content-container contact-us">
+                                        <h3 class="fs-38 mt-2 text-center fw-600">We're here for you</h3>
+                                        <p>Need help? Our team of Customer Support Specialists is here to guide you throughout your crowdfunding journey.</p>
+                                        <div class="mt-4">
+                                            <h5 class="fs-18">How to reach us</h5>
+                                            <p class="mt-3">Whatsapp - <a class="link-hv-line highlight-span-clr" href="#">Click here</a></p>
+                                            <p class="mt-3">Contact number - <a class="link-hv-line highlight-span-clr" href="tel://+00 11 442 3125">+00 11 442 3125</a></p>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <h5 class="fs-18">Help via Email</h5>
+                                            <p>We provide clients with ticket-based support, simply log a ticket and we'll resolve your issue as soon as possible.</p>
+                                            <div class="form-container">
+                                                <form action=""></form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+				</main>
+
+				<footer class="pos-rel mt-5">
+                    <div class="campaign-container">
+                        <a href="#" class="start-campaign">START CAMPAIGN</a>
+                        <a href="#" class="find-campaign">FIND CAMPAIGN</a>
+                    </div>
+					<div class="footer-bottom-wrapper">
+						<div class="w-100">
+							<ul class="footer-links-container grid">
+								<li><a href="#" class="footer-links">FAQ</a></li>
+								<li><a href="#" class="footer-links">Contact us</a></li>
+								<li>
+									<a href="#" class="footer-links">Online fundraising Ideas</a>
+								</li>
+								<li><a href="#" class="footer-links">Bitcoin Fundraising</a></li>
+								<li><a href="#" class="footer-links">Learn More</a></li>
+								<li><a href="#" class="footer-links">Countries</a></li>
+								<li><a href="#" class="footer-links">Read Blog</a></li>
+								<li><a href="#" class="footer-links">How to fundraise</a></li>
+								<li><a href="#" class="footer-links">Facebook Fundraising</a></li>
+								<li><a href="#" class="footer-links">Facebook Fundraising</a></li>
+								<li><a href="#" class="footer-links">About</a></li>
+								<li><a href="#" class="footer-links">Help center</a></li>
+							</ul>
+
+							<div class="flex-wrap gp-20 footer-bottom-link-container mt-5">
+								<a href="#" class="footer-bottom-link">Privacy Policy</a>
+								<a href="#" class="footer-bottom-link">Terms & Conditions</a>
+								<div class="social-media-container flex-wrap">
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/facebook.svg"
+											alt="Facebook icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/twitter.svg"
+											alt="Twitter icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/instagram.svg"
+											alt="Instagram icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/linkedIn.svg"
+											alt="LinkedIn icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/tiktok.svg"
+											alt="Tiktok icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/whatsapp.svg"
+											alt="Whatsapp icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/telegram.svg"
+											alt="Telegram icon"
+										/>
+									</a>
+
+									<a href="#" class="flex-center">
+										<img
+											class="social-icon"
+											src="../static/img/svg/socials/youtube.svg"
+											alt="Youtube icon"
+										/>
+									</a>
+								</div>
+								<div class="copyright-container pos-rel flex gp-15">
+									<p class="copyright-text">2024 Feed Needs</p>
+									<span class="dash"></span>
+									<p class="copyright-text">All rights reserved</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+
+			<script>
+				const hamburger = document.querySelector(".hamburger");
+				const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
+				const overlay = document.querySelector(".overlay");
+				const mobileNav = document.querySelector(".mobile-nav");
+				const submitBtn = document.querySelector(".cta-btn.submit-btn");
+				const acctForm = document.querySelector(".acct-form");
+				if (hamburger) {
+					hamburger.addEventListener("click", function () {
+						overlay.classList.add("visible");
+						mobileNav.classList.add("slideIn");
+						document.body.classList.add("hide-overflow");
+					});
+				}
+
+				if (cancelIcon)
+					[
+						cancelIcon.addEventListener("click", function () {
+							overlay.classList.remove("visible");
+							mobileNav.classList.remove("slideIn");
+							document.body.classList.remove("hide-overflow");
+						}),
+					];
+
+				if (submitBtn && acctForm) {
+					submitBtn.addEventListener("click", function () {
+						acctForm.submit();
+					});
+				}
+			</script>
+		</body>
+	</html>
