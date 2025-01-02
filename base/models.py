@@ -83,7 +83,7 @@ class Campaign(models.Model):
     organization_payment = models.BooleanField(default=False)
     single_payment = models.BooleanField(default=False) 
     is_featured = models.BooleanField(default=False)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE,blank=True,null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,blank=True,null=True)
     goal = models.DecimalField(max_digits=10, decimal_places=2,default=0.00)
 
 
@@ -100,4 +100,8 @@ class Donation(models.Model):
     def __str__(self):
         return f"{self.user.username} donated {self.amount} to {self.campaign.campaign_name}"
 
-     
+class Newsletter(models.Model):
+     email = models.EmailField( max_length=400)
+
+     def __str__(self):
+         return  f"{self.email}"  

@@ -18,7 +18,7 @@ def index(request):
 
     campaigns = Campaign.objects.all()
     campaigns_with_percentage = []
-
+    # if Campaign.objects.filter(profile__user =request.user).exists: 
     for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
@@ -32,11 +32,22 @@ def index(request):
             'total_donations': total_donations,
             'percentage_achieved': percentage_achieved,
         })
-
+    
     # Calculate the percentage achieved
-    percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+    
+        percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+    if request.method == "POST":
+        email = request.POST.get('email')
+        if Newsletter.objects.filter(email=email).exists():
+            messages.error(request, 'email already exist')
+            return redirect('index')
+        else:
+            Newsletter.objects.get_or_create(email=email)
+            messages.error(request, 'email added sucessfully')
+            return redirect('/')
     context = {
         'featured_campaigns': featured_campaigns,
+        'campaigns':campaigns, 
         'trending_campaigns': trending_campaigns,
         'campaigns_with_percentage':campaigns_with_percentage,
     }
@@ -216,7 +227,7 @@ def reset_password(request, uidb64, token):
 from django.contrib import messages
 from .models import Campaign
 from datetime import datetime
-
+from django_countries import countries
 @login_required(login_url="login")
 def start_campaign(request):
     if request.method == 'POST':
@@ -226,7 +237,6 @@ def start_campaign(request):
             monetary = request.POST.get('monetary')
             category = request.POST.get('category')
             story = request.POST.get('story')
-            sector = request.POST.get('sector')
             event = request.POST.get('event')
             image = request.FILES.get('image')
             video_url = request.POST.get('video_url')
@@ -234,20 +244,21 @@ def start_campaign(request):
             address = request.POST.get('address')
             address1 = request.POST.get('address1')
             city = request.POST.get('city')
-            zipcode = request.POST.get('zipcode')
             state = request.POST.get('state')
             country = request.POST.get('country')
-            organization_payment = request.POST.get('organization_payment') == 'on'
-            single_payment = request.POST.get('single_payment') == 'on'
-            is_featured = request.POST.get('is_featured') == 'on'
-
+            start_date =request.POST.get('start_date')
+            end_date =request.POST.get('end_date')
+            # organization_payment = request.POST.get('organization_payment') == 'on'
+            # single_payment = request.POST.get('single_payment') == 'on'
+            # is_featured = request.POST.get('is_featured') == 'on'
+           
             # Create and save the campaign object
             campaign = Campaign.objects.create(
                 campaign_name=campaign_name,
                 monetary=monetary,
                 category=category,
                 story=story,
-                sector=sector,
+              
                 event=event,
                 images=image,
                 video_url=video_url,
@@ -255,41 +266,47 @@ def start_campaign(request):
                 address=address,
                 address1=address1,
                 city=city,
-                zipcode=zipcode,
+              
                 state=state,
                 country=country,
-                organization_payment=organization_payment,
-                single_payment=single_payment,
-                is_featured=is_featured,
-                start_date=datetime.now(),
-                end_date=datetime.now(),  # Update as needed
+               
+                start_date=start_date,
+                end_date=end_date, 
+                user =request.user
+                
             )
-            # profile = Profile.objects.get(user=request.user)
-            # profile.campaign = campaign
-            # profile.save()
+           
             messages.success(request, f'Campaign "{campaign_name}" created successfully!')
             return redirect('profile')  # Adjust redirect as needed
 
         except Exception as e:
             messages.error(request, f"Error creating campaign: {str(e)}")
             return render(request, 'start_campaign.html', status=400)
+    category = Campaign.CATEGORY_CHOICES
+    event =Campaign.EVENT_CHOICE
+    context = {
+        'countries':countries,
+        'category':category,
+        'event':event,
+    }
 
-    return render(request, 'start_campaign.html')
+    return render(request, 'start_campaign.html',context)
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="login")
 def profile(request):
-    campaign =  Campaign.objects.filter(profile__user=request.user)
+    campaign = Campaign.objects.filter(user=request.user)
     profile = get_object_or_404(Profile, user=request.user)
 
-    # Get all donations for campaigns created by this profile
-    donations = Donation.objects.filter(campaign__profile=profile).select_related("campaign", "user")
+    # Get all donations for campaigns created by this user
+    donations = Donation.objects.filter(campaign__user=request.user).select_related("campaign", "user")
+
     context = {
-        "campaign":campaign,
-        "donations":donations,
-        "profile":profile
+        "campaign": campaign,
+        "donations": donations,
+        "profile": profile,
     }
-    return render (request, 'profile.html',context)
+    return render(request, 'profile.html', context)
 
 
 from django.shortcuts import redirect, get_object_or_404
@@ -327,12 +344,12 @@ def donate_to_campaign(request, campaign_id):
     return redirect('campaign_detail', campaign_id=campaign_id)
 
 
-
+@login_required(login_url="login")
 def find_campaign(request):
     campaigns = Campaign.objects.all()
     campaigns_with_percentage = []
-
-    for campaign in campaigns:
+    if Campaign.objects.filter(profile__user =request.user).exists: 
+      for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
@@ -345,9 +362,61 @@ def find_campaign(request):
             'total_donations': total_donations,
             'percentage_achieved': percentage_achieved,
         })
-    return render (request, 'find_campaign.html')
+    context ={
+            'campaigns_with_percentage':campaigns_with_percentage,
+        }
+    return render (request, 'find_campaign.html',context)
 
 def about(request):
     return render (request, 'about.html')
 def faq(request):
     return render (request, 'faq.html')
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import Campaign  # Assuming your model is named Campaign
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def search_campaigns(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            keyword = data.get('keyword', '')
+            categories = data.get('categories', [])
+            sectors = data.get('sectors', [])
+
+            # Validate input 
+            if not keyword and not categories and not sectors:
+                return JsonResponse([], safe=False)
+
+            # Query campaigns
+            campaigns = Campaign.objects.all()
+
+            if keyword:
+                campaigns = campaigns.filter(campaign_name__icontains=keyword)
+            # if keyword:
+            #     campaigns = campaigns.filter(country__icontains=keyword)
+            if categories:
+                campaigns = campaigns.filter(category__in=categories)
+            if sectors:
+                campaigns = campaigns.filter(sector__in=sectors)
+
+            results = list(campaigns.values(
+                'campaign_name', 'country', 'story', 'category', 'sector', 'start_date', 'end_date'
+            ))
+
+            return JsonResponse(results, safe=False)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid method'}, status=400)
+
+
+def support(request):
+    return render (request, 'support.html')
+ 
