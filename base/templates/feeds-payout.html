@@ -17,7 +17,18 @@
 			/>
 			<link rel="stylesheet" href="../static/css/style.css" />
 			<script defer src="../static/js/script.js"></script>
-			<title>Start campaign</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+            <style>
+                /* #phone {
+                width: 300px;
+                } */
+
+                .iti{
+                    display: block!important;
+                }
+            </style>
+			<title>Feeds & Payouts</title>
 		</head>
 		<body>
 			<div class="overlay"></div>
@@ -94,7 +105,7 @@
 					<span class="page-highlight-span">Quick Links</span>
 				</nav>
 
-				<main class="feed-payout-main pd-down">
+				<main class="feed-payout-main pd-down mb-4">
 					<div class="feed-payout-wrapper">
 						<div class="flex-wrap">
                             <div class="feed-payout-category-cta active">
@@ -116,12 +127,12 @@
 
 						<div class="support-container mt-4">
 							<div class="fees-payout-container flex-between align-start">
-								<div class="content-cta-container flex-column gp-15">
-									<button class="btn active">Fees and Payouts</button>
-									<button class="btn">Contact Us</button>
+								<div class="support-cta-container content-cta-container flex-column gp-15">
+									<button id = "fees-payout" class="btn active">Fees and Payouts</button>
+									<button id = "contact-us" class="btn">Contact Us</button>
 								</div>
                                 <div class="flex-column content-container-wrapper">
-                                    <div data-content = "fees-payout" class="content-container fees-payout">
+                                    <div data-content = "fees-payout" class="support-tab show content-container fees-payout">
                                         <p class="mac-italic-text fs-16">All donations made through BackaBuddy are managed by The BackaBuddy Foundation (Reg No. 2015/313483/08)</p>
                                         <div>
                                             <h3 class="fs-38 mt-2 text-center fw-600">Fee Structure</h3>
@@ -188,7 +199,7 @@
                                         </div>
                                     </div>
     
-                                    <div data-content = "contact-us" class="content-container contact-us">
+                                    <div data-content = "contact-us" class="support-tab content-container contact-us">
                                         <h3 class="fs-38 mt-2 text-center fw-600">We're here for you</h3>
                                         <p>Need help? Our team of Customer Support Specialists is here to guide you throughout your crowdfunding journey.</p>
                                         <div class="mt-4">
@@ -201,7 +212,143 @@
                                             <h5 class="fs-18">Help via Email</h5>
                                             <p>We provide clients with ticket-based support, simply log a ticket and we'll resolve your issue as soon as possible.</p>
                                             <div class="form-container">
-                                                <form action=""></form>
+                                                <form class="contact-form" action="">
+                                                    <div class="flex-column align-start mt-3">
+                                                        <label class="input-label text-start block mb-2" for="">Name</label>
+                                                        <div class="row w-100">
+                                                            <div class="col-lg-6 flex-column ">
+                                                                <input class="form-el" name = "first_name" type="text">
+                                                                <span class="input-name">First Name</span>
+                                                            </div>
+    
+                                                            <div class="col-lg-6 flex-column">
+                                                                <input class="form-el" name="last_name" type="text">
+                                                                <span class="input-name">Last Name</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-column align-start mt-3">
+                                                        <label class="input-label text-start block mb-2" for="">Email</label>
+                                                        <div class="flex-column align-start w-100 gp-20">
+                                                            <div class="w-res-60">
+                                                                <input class="form-el" name = "email" type="email">
+                                                            </div>
+    
+                                                            <div class="w-res-60">
+                                                                <input class="form-el" placeholder="Confirm Email" name="confirm_email" type="email">
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-column align-start mt-3">
+                                                        <label class="input-label text-start block mb-2" for="">Phone number</label>
+                                                        <div class="flex-column align-start w-100 gp-20">
+                                                            <div class="w-res-60">
+                                                                <input class="form-el" id = "phone" name = "phone_number" type="tel">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-column align-start mt-3">
+                                                        <label class="input-label text-start block mb-2" for="">Do you have an existing project</label>
+                                                        <div class="flex-column align-start gp-20">
+                                                            <div class="flex gp-5">
+                                                                <input class="form-el radio" id = "existing-rad-1" name = "existing_radio" type="radio">
+                                                                <label for="existing-rad-1">Yes</label>
+                                                            </div>
+
+                                                            <div class="flex gp-5">
+                                                                <input class="form-el radio" id = "existing-rad-2" name = "existing_radio" type="radio">
+                                                                <label for="existing-rad-2">No</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="w-100">
+                                                            <div data-content="existing-rad-1" class="existing-cta-div flex-column align-start mt-4 w-100">
+                                                                <label for="">Campaign Link</label>
+                                                                <div class="flex-column w-res-60 mt-2">
+                                                                    <input class="form-el" name = "first_name" type="text">
+                                                                    <span class="input-name">Copy and paste your campaign link here</span>
+                                                                </div>
+                                                            </div>
+
+                                                             <div data-content="existing-rad-2" class="existing-cta-div flex-column align-start mt-4 w-100">
+                                                                <label for="">Link to supported campaign</label>
+                                                                <div class="flex-column w-res-60 mt-2">
+                                                                    <input class="form-el" name = "first_name" type="text">
+                                                                </div>
+                                                                <span class="input-name">Please copy and paste the link to the campaign from the browser bar (while you're viewing the campaign, that is!)</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-column mt-4 align-start w-100">
+                                                        <label class="input-label" for="subject">Subject</label>
+                                                        <div class="w-res-60 mt-2">
+                                                            <input class="form-el" type="text" name="subject" id="subject">   
+                                                            <span class="input-name">Describe your issue in 5 words</span>                                                     
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-column mt-4 align-start w-100">
+                                                        <label class="input-label" for="subject">Query Description</label>
+                                                        <div class="flex-column align-start w-res-80 mt-2">
+                                                            <textarea class="form-el" name="query_description" id=""></textarea>
+                                                            <span class="input-name">Describe your issue in as much detail as possible</span>                                                     
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-column mt-4 align-start w-100">
+                                                        <label for="subject">Add a screenshot or any images</label>
+                                                        <div class="flex-column align-start w-100 mt-2">
+                                                            <div class="upload-control-container w-100">
+                                                                <label class="upload-control-label w-res-80" for="screenshot-upload-input">
+                                                                    <span>Choose File(s)</span>
+                                                                    <span class="flex-center upload-icon">
+                                                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="Communication / Share_iOS_Export">
+                                                                            <path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </span>
+                                                                    <input class="upload-control-input" type="file" name="" id="screenshot-upload-input">
+                                                                </label>
+                                                            </div>
+                                                            <span class="input-name">Upload screenshots of any payment or system issues you might be facing.</span>                                                     
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-column mt-4 align-start w-100">
+                                                        <label for="subject">Upload any other files</label>
+                                                        <div class="flex-column align-start w-100 mt-2">
+                                                            <div class="upload-control-container w-100">
+                                                                <label class="upload-control-label w-res-80" for="screenshot-upload-input">
+                                                                    <span>Choose File(s)</span>
+                                                                    <span class="flex-center upload-icon">
+                                                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="Communication / Share_iOS_Export">
+                                                                            <path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </span>
+                                                                    <input class="upload-control-input" type="file" name="" id="screenshot-upload-input">
+                                                                </label>
+                                                            </div>
+                                                            <span class="input-name">If you have any other files besides screenshots that you want us to see like supporting documents, proof of payments etc. please add them here.</span>                                                     
+                                                        </div>
+                                                    </div>
+
+                                                    <button class="cta-btn submit-btn">Submit Query</button>
+                                                </form>
+                                            </div>
+                                            <div class="mt-4">
+                                                <h5>Our support hours</h5>
+                                                <p>8am - 5pm : Monday - Friday</p>
+                                                <p class="my-3 w-res-80">Kindly note that BackaBuddy does not offer any form of financial assistance or funding to individuals or charities.</p>
+                                                <p>For further queries, please do not hesitate to get in touch with us.</p>
+                                                <p class="bold-p mt-3">Head office: <span class="fw-800"> Cape Town, South Africa</span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -344,5 +491,25 @@
 					});
 				}
 			</script>
+            <script>
+                const phoneInput = document.querySelector("#phone");
+                const iti = window.intlTelInput(phoneInput, {
+                initialCountry: "auto", // Automatically detect user's country
+                geoIpLookup: function(callback) {
+                    fetch('https://ipinfo.io/json?token=YOUR_TOKEN') // Replace YOUR_TOKEN with your IPInfo API token
+                    .then(resp => resp.json())
+                    .then(data => callback(data.country))
+                    .catch(() => callback("us"));
+                },
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/utils.js" // for number formatting/validation
+                });
+
+                // Example: Get the selected country code
+                phoneInput.addEventListener("blur", () => {
+                const selectedCountryData = iti.getSelectedCountryData();
+                console.log("Selected country: ", selectedCountryData.name);
+                console.log("Dial code: ", selectedCountryData.dialCode);
+                });
+            </script>
 		</body>
 	</html>
