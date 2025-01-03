@@ -19,6 +19,19 @@
 		<script defer src="../static/js/script.js"></script>
 		<title>Profile</title>
 	</head>
+	<style>
+		.modal-content{
+			border: 10px solid #76b30f;
+			border-radius: 20px;
+		}
+		.btn.btn-primary{
+			background-color: #76b30f;
+			border: 1px solid;
+		}
+		.form-control:hover{
+			border: 4px solid #76b30f;
+		}
+	</style>
 	<body>
 		<div class="overlay"></div>
 		<div class="mobile-nav">
@@ -118,30 +131,68 @@
                         </div>
 						
 						<!-- Mobile -->
+						{% if request.user.is_authenticated %}
 						<div data-profile_category="my-profile" class="info-item profile-details-container mobile w-100 bd p-4 br-10">
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">First Name</span>
-								<p class="mac-text-mid fw-600">Name of profile</p>
+								<p class="mac-text-mid fw-600">{{request.user.first_name}}</p>
 							</div>
 
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">Surname</span>
-								<p class="mac-text-mid fw-600">Surname of profile</p>
+								<p class="mac-text-mid fw-600">{{request.user.last_name}}</p>
 							</div>
 
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">Mobile number</span>
-								<p class="mac-text-mid fw-600">9457932979753</p>
+								<p class="mac-text-mid fw-600">{{request.user.phone_number}}</p>
 							</div>
 
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">Address (optional)</span>
-								<p class="mac-text-mid fw-600">qibffbug, vrhwbw, USA</p>
+								<p class="mac-text-mid fw-600">{{profile.address}}</p>
 							</div>
 
 							<div class="edit-cta-container">
 								<span class="edit-text">Update your details</span>
-								<button class="edit-btn"><img src="../static/img/svg/pen.svg" alt=""></button>
+								<button   data-bs-toggle="modal" data-bs-target="#ProfileModal" class="edit-btn"><img src="../static/img/svg/pen.svg" alt=""></button>
+							</div>
+						</div>
+						{% endif %}
+
+						<div class="modal fade" id="ProfileModal" tabindex="-1" aria-labelledby="ProfileModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="ProfileModalLabel">Update Profile Details</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<form method="post" action="">
+										{% csrf_token %}
+										<div class="modal-body">
+											<div class="mb-3">
+												<label for="firstName" class="form-label">First Name</label>
+												<input type="text" class="form-control" id="firstName" name="first_name" value="{{ request.user.first_name }}">
+											</div>
+											<div class="mb-3">
+												<label for="lastName" class="form-label">Surname</label>
+												<input type="text" class="form-control" id="lastName" name="last_name" value="{{ request.user.last_name }}">
+											</div>
+											<div class="mb-3">
+												<label for="phoneNumber" class="form-label">Mobile Number</label>
+												<input type="text" class="form-control" id="phoneNumber" name="phone_number" value="{{ request.user.phone_number }}">
+											</div>
+											<div class="mb-3">
+												<label for="address" class="form-label">Address (optional)</label>
+												<input type="text" class="form-control" id="address" name="address" value="{{profile.address}}">
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Save changes</button>
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
 						<!-- Mobile -->
@@ -195,15 +246,51 @@
 
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">Address (optional)</span>
-								<p class="mac-text-mid fw-600">qibffbug, vrhwbw, USA</p>
+								<p class="mac-text-mid fw-600">{{profile.address}}</p>
 							</div>
 
 							<div class="edit-cta-container">
 								<span class="edit-text">Update your details</span>
-								<button class="edit-btn"><img src="../static/img/svg/pen.svg" alt=""></button>
+								<button  data-bs-toggle="modal" data-bs-target="#updateProfileModal" class="edit-btn"><img src="../static/img/svg/pen.svg" alt=""></button>
 							</div>
 						</div>
+						
 						{% endif %}
+						<div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="updateProfileModalLabel">Update Profile Details</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<form method="post">
+										{% csrf_token %}
+										<div class="modal-body">
+											<div class="mb-3">
+												<label for="firstName" class="form-label">First Name</label>
+												<input type="text" class="form-control" id="firstName" name="first_name" value="{{ request.user.first_name }}">
+											</div>
+											<div class="mb-3">
+												<label for="lastName" class="form-label">Surname</label>
+												<input type="text" class="form-control" id="lastName" name="last_name" value="{{ request.user.last_name }}">
+											</div>
+											<div class="mb-3">
+												<label for="phoneNumber" class="form-label">Mobile Number</label>
+												<input type="text" class="form-control" id="phoneNumber" name="phone_number" value="{{ request.user.phone_number }}">
+											</div>
+											<div class="mb-3">
+												<label for="address" class="form-label">Address (optional)</label>
+												<input type="text" class="form-control" id="address" name="address" value="{{profile.address}}">
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Save changes</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 						<div data-profile_category="my-donations" class="info-item profile-donations-container text-center w-100 bd p-4 br-10">
 							<div class="flex-column gp-10">
 								<span class="donate-text mac-text-mid">You have not made any donations</span>
@@ -349,15 +436,7 @@
 				});
 			}
 		</script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
 </html>
 
-<h1>{{profile.user.username}}</h1>
-
-{% for campaign in campaign %}
-<h2>{{campaign.campaign_name}}</h2>
-{% endfor %}
-
-{% for donation in donations %}
-<h1>{{donation.amount}}</h1>
-{% endfor %}

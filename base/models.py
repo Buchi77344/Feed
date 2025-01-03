@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
 # Create your models here.
 class Profile(models.Model):
     user= models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    address = models.CharField( max_length=100,null=True)
     
     # donation = models.ForeignKey("Donation",on_delete=models.CASCADE,blank=True,null=True)
 
