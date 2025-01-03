@@ -15,6 +15,11 @@ urlpatterns = [
     path('faq',faq,name="faq"),
     path('api/search/', search_campaigns, name='search_campaigns'),
     path('support',support,name="support"),
+    path('details/<str:token>/',details,name="details"),
+    path('preview/<str:token>/',preview,name="preview"),
+    path('fee_payout',fee_payout,name="fee_payout"),
+    path('create_campaign/',create_campaign,name="create_campaign"),
+    path('edit_campaign/<str:token>/',edit_campaign,name="edit_campaign"),
 ]
 
 

@@ -237,8 +237,8 @@ def start_campaign(request):
             monetary = request.POST.get('monetary')
             category = request.POST.get('category')
             story = request.POST.get('story')
-            event = request.POST.get('event')
-            image = request.FILES.get('image')
+            event = request.POST.get('event') 
+            images = request.FILES.get('images')
             video_url = request.POST.get('video_url')
             social_link = request.POST.get('social_link')
             address = request.POST.get('address')
@@ -248,6 +248,7 @@ def start_campaign(request):
             country = request.POST.get('country')
             start_date =request.POST.get('start_date')
             end_date =request.POST.get('end_date')
+           
             # organization_payment = request.POST.get('organization_payment') == 'on'
             # single_payment = request.POST.get('single_payment') == 'on'
             # is_featured = request.POST.get('is_featured') == 'on'
@@ -260,7 +261,7 @@ def start_campaign(request):
                 story=story,
               
                 event=event,
-                images=image,
+                images=images,
                 video_url=video_url,
                 social_link=social_link,
                 address=address,
@@ -274,7 +275,7 @@ def start_campaign(request):
                 end_date=end_date, 
                 user =request.user
                 
-            )
+            ) 
            
             messages.success(request, f'Campaign "{campaign_name}" created successfully!')
             return redirect('profile')  # Adjust redirect as needed
@@ -291,6 +292,90 @@ def start_campaign(request):
     }
 
     return render(request, 'start_campaign.html',context)
+
+from django.http import JsonResponse
+from django.shortcuts import render
+from .models import Campaign
+
+@login_required(login_url="login")
+def create_campaign(request):
+    if request.method == 'POST':
+        # Get data from the request
+        campaign_name = request.POST.get('campaign_name')
+        monetary = request.POST.get('monetary')
+        category = request.POST.get('category')
+        story = request.POST.get('story')
+        event = request.POST.get('event')
+        images = request.FILES.get('images')  # Handle image upload
+        video_url = request.POST.get('video_url')
+        social_link = request.POST.get('social_link')
+        address = request.POST.get('address')
+        address1 = request.POST.get('address1')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        country = request.POST.get('country')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+        # Create and save the Campaign object
+        campaign = Campaign.objects.create(
+            campaign_name=campaign_name,
+            monetary=monetary,
+            category=category,
+            story=story,
+            event=event,
+            images=images,
+            video_url=video_url,
+            social_link=social_link,
+            address=address,
+            address1=address1,
+            city=city,
+            state=state,
+            country=country,
+            start_date=start_date,
+            end_date=end_date
+        )
+        print('id', campaign.token)
+        # Return JSON response with the ID of the newly created campaign
+        return JsonResponse({'id': campaign.token})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
+    
+from django.shortcuts import render, get_object_or_404
+from .models import Campaign
+
+@login_required(login_url="login")
+def edit_campaign(request,token):
+    # Retrieve the campaign object by its ID
+    campaign = get_object_or_404(Campaign, token=token)
+    
+    if request.method == 'POST':
+        # Handle form submission for updating the campaign
+        campaign.campaign_name = request.POST.get('campaign_name')
+        campaign.monetary = request.POST.get('monetary')
+        campaign.category = request.POST.get('category')
+        campaign.story = request.POST.get('story')
+        campaign.event = request.POST.get('event')
+        campaign.images = request.FILES.get('images', campaign.images)  # Keep existing if no new image
+        campaign.video_url = request.POST.get('video_url')
+        campaign.social_link = request.POST.get('social_link')
+        campaign.address = request.POST.get('address')
+        campaign.address1 = request.POST.get('address1')
+        campaign.city = request.POST.get('city')
+        campaign.state = request.POST.get('state')
+        campaign.country = request.POST.get('country')
+        campaign.start_date = request.POST.get('start_date')
+        campaign.end_date = request.POST.get('end_date')
+        campaign.save()
+        return JsonResponse({'token': campaign.token})
+    
+    # Render the form pre-filled with the campaign's data
+    category = Campaign.CATEGORY_CHOICES
+    event =Campaign.EVENT_CHOICE
+    return render(request, 'edit_campaign.html', {'campaign': campaign, 'countries':countries, 'category':category,
+        'event':event,})
+
+
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="login")
@@ -438,4 +523,23 @@ def search_campaigns(request):
 
 def support(request):
     return render (request, 'support.html')
- 
+
+
+
+def details(request,token):
+    campaign_details = get_object_or_404(Campaign,token=token )
+    context ={
+        'campaign_details':campaign_details,
+        
+    }
+    return render (request, 'details.html',context)
+def preview(request,token):
+    campaign_details = get_object_or_404(Campaign,token=token )
+    context ={
+        'campaign_details':campaign_details,
+        
+    }
+    return render (request, 'preview.html',context)
+
+def fee_payout(request):
+    return render (request , 'feeds-payout.html')

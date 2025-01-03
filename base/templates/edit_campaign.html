@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-{% load static %}
+
 
 			<main class="light-bg-clr pd-down">
                 <div class="start-campaign-content-wrapper">
-					<form id="myForm" method="post"  enctype="multipart/form-data">
+					<form id="editForm" method="post"  enctype="multipart/form-data">
 						{% csrf_token %}
 						<div class="start-campaign-item">
 							<p class="mac-text-mid highlight-span-clr fw-600">Campaign details</p>
 							<div class="acct-form mt-3">
-								<input type="text" name="campaign_name" id="" class="acct-input" placeholder="Campaign name *">
-								<input type="text" name="monetary" id="" class="acct-input" placeholder="Monetary target *">
+								<input type="text" name="campaign_name" id="" value="{{campaign.campaign_name}}" class="acct-input" placeholder="Campaign name *">
+								<input type="text" value="{{campaign.monetary}}" name="monetary" id="" class="acct-input" placeholder="Monetary target *">
 								<select class="acct-select" id="" name="category">
                                      {% for kay, value in category %}
 									
-									<option value="{{value}}"> {{value}} </option>
+									<option value="{{campaign.category}}"> {{value}} </option>
 									{% endfor %}
 								</select>
 								<div class="require-div">
@@ -47,16 +47,16 @@
 								understand what you're trying to achieve.
 							</p>
 							<div class="acct-form mt-5">
-								<input type="text" name="story" id="" class="acct-input large" placeholder="Tell your story *">
+								<input type="text" value="{{campaign.story}}" name="story" id="" class="acct-input large" placeholder="Tell your story *">
 								<select class="acct-select" id="" name ="event">
 									{% for kay, value in event %}
 								   
-								   <option value="{{value}}"> {{value}} </option>
+								   <option value="{{campaign.event}}" > {{value}} </option>
 								   {% endfor %}
 							   </select>
 								<textarea class="acct-text-area" placeholder="Thank you message to donors *" name="" id=""></textarea>
-								<input type="date" name="start_date" id="" class="acct-input" placeholder="Start date   |  End date">
-								<input type="date" name="end_date" id="" class="acct-input" placeholder="Start date   |  End date">
+								<input type="date" value="{{campaign.start_date}}" name="start_date" id="" class="acct-input" placeholder="Start date   |  End date">
+								<input type="date" value="{{campaign.end_date}}" name="end_date" id="" class="acct-input" placeholder="Start date   |  End date">
 								<div class="require-div">
 									<p class="flex gp-10 mac-text-mid fw-600">
 										<span class="highlight-span-clr">*</span>
@@ -75,7 +75,7 @@
 							<div class="acct-form mt-5">
 								<div class="acct-input large upload-div pos-rel">
 									<label for = "image_upload" class="mac-text-mid">Upload image *</label>
-									<input type="file" name="images" id="image_upload" class="upload-input">
+									<input type="file" value="{{campaign.images.url}}" name="images" id="image_upload" class="upload-input">
 								</div>
 								<input type="text" name="video_url" id="" class="acct-input" placeholder="Paste video link *">
 								<input type="text" name="social_link" id="" class="acct-input" placeholder="Paste social media link *">
@@ -95,14 +95,14 @@
 									Show donors where your campaign will have the greatest impact.
 								</p>
 								<div class="acct-form mt-3">
-									<input type="text" name="address" id="" class="acct-input" placeholder="Add address 1 *">
-									<input type="text" name="address1" id="" class="acct-input" placeholder="Add address 2 *">
-									<input type="text" name="city" id="" class="acct-input" placeholder="City/town *">
-									<input type="text" name="state" id="" class="acct-input" placeholder="State *">
+									<input type="text" value="{{campaign.address}}"  name="address" id="" class="acct-input" placeholder="Add address 1 *">
+									<input type="text" value="{{campaign.address1}}"  name="address1" id="" class="acct-input" placeholder="Add address 2 *">
+									<input type="text" value="{{campaign.city}}"  name="city" id="" class="acct-input" placeholder="City/town *">
+									<input type="text" value="{{campaign.state}}"  name="state" id="" class="acct-input" placeholder="State *">
 									<select class="acct-select" id="" name = "country">
 										{% for code, name in countries %}
 									   
-									   <option value="{{code}}"> {{name}} </option>
+									   <option value="{{code}}" > {{name}} </option>
 									   {% endfor %}
 									</select>
 								</div>
@@ -123,8 +123,8 @@
 						</div>
 	
 						<div class="start-campaign-btn-container">
-						
-							<a href="#" class="save secondary-cta-btn flex-center">SAVE & PREVIEW</a>
+							
+							
 							<a href="#" class=" verify secondary-cta-btn flex-center mt-3">VERIFY</a>
 						</div>
 	
@@ -134,62 +134,36 @@
 
 					</form>
                 </div>
-				<div class="spinner-border text-primary" role="status" id="loadingSpinner" style="display: none;">
-					<span class="visually-hidden">Loading...</span>
-				</div>
-				
 			</main>
+            {% endblock content %}
 			<script>
 				// Get the 'SAVE & PREVIEW' link and form element
-				const savePreviewBtn = document.querySelector('.save.secondary-cta-btn');
-				const form = document.getElementById('myForm');
-				const loadingSpinner = document.getElementById('loadingSpinner');
-				
-				function showLoading() {
-					loadingSpinner.style.display = 'inline-block'; // Show the spinner
-					savePreviewBtn.disabled = true; // Disable the button
-				}
-				
-				function hideLoading() {
-					loadingSpinner.style.display = 'none'; // Hide the spinner
-					savePreviewBtn.disabled = false; // Enable the button
-				}
-				
-				// Event listener for the "SAVE & PREVIEW" button click
-				savePreviewBtn.addEventListener('click', async function(event) {
-					event.preventDefault(); // Prevent default behavior
-					showLoading(); // Show the spinner
-				
-					// Add a slight delay to allow the spinner to render before proceeding
-					setTimeout(async () => {
-						// Create a FormData object from the form
-						const formData = new FormData(form);
-				
-						try {
-							// Send POST request to the backend with form data
-							const response = await fetch('/create_campaign/', {
-								method: 'POST',
-								body: formData, // Send form data (including file) to backend
-							});
-				
-							// Check if the response is successful
-							if (response.ok) {
-								const { id } = await response.json(); // Parse the JSON response
-								window.location.href = `/preview/${id}/`; // Redirect
-							} else {
-								const errorMessage = await response.text();
-								alert('Error saving data: ' + errorMessage);
-							}
-						} catch (error) {
-							console.error('Error during fetch request:', error);
-							alert('An error occurred while submitting the form.');
-						} finally {
-							hideLoading(); // Always hide the spinner, even on error
-						}
-					}, 100); // Delay for 100ms to ensure spinner visibility
-				});
-				
+                const editForm = document.getElementById('editForm');
+
+                editForm.addEventListener('submit', async function(event) {
+                    event.preventDefault(); // Prevent default form submission
+                
+                    const formData = new FormData(editForm);
+                
+                    try {
+                        const response = await fetch(`/campaign/edit/${campaignId}/`, {
+                            method: 'POST',
+                            body: formData,
+                        });
+                
+                        if (response.ok) {
+                            const result = await response.json();
+                            // Redirect back to the details page after editing
+                            window.location.href = `profile`;
+                        } else {
+                            const errorMessage = await response.text();
+                            alert('Error saving changes: ' + errorMessage);
+                        }
+                    } catch (error) {
+                        console.error('Error during fetch request:', error);
+                        alert('An error occurred while updating the campaign.');
+                    }
+                });
+                
+
 			</script>
-			
-			
-{% endblock content %}

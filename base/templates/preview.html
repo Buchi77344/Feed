@@ -96,6 +96,8 @@
 							<div class="row details-hero-section">
 								<div class="col-lg-6 content-div">
 									<div class="details-title-container">
+                                        <a href="{% url 'edit_campaign' campaign_details.token  %}" class="btn btn-primary">Back to Edit</a>
+
 										<h1 class="details-title-text">{{campaign_details.campaign_name}}</h2>
 									</div>
 									<span class="details smaller-text fw-400 mt-2">Started {{campaign_details.start_date|timesince}} ago</span>

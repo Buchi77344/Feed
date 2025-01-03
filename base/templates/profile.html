@@ -118,8 +118,8 @@
                         </span>
                     </div>
 
-                    <h3 class="page-head text-center">Name of profile</h3>
-                    <p class="mac-text-mid text-center">Member since November 2024</p>
+                    <h3 class="page-head text-center">{{request.user.first_name}}</h3>
+                    <p class="mac-text-mid text-center">Member since {{ request.user.date_joined|date}}</p>
                 </div>
                 <div class="profile-main-content mt-3">
                     <div class="profile-util-container flex-column gap-4 align-items-start">
@@ -150,7 +150,11 @@
 
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">Address (optional)</span>
+								{% if not profile %}
+								<p class="mac-text-mid fw-600">No Address</p>
+								{% else %}
 								<p class="mac-text-mid fw-600">{{profile.address}}</p>
+								{% endif %}
 							</div>
 
 							<div class="edit-cta-container">
@@ -185,6 +189,7 @@
 											<div class="mb-3">
 												<label for="address" class="form-label">Address (optional)</label>
 												<input type="text" class="form-control" id="address" name="address" value="{{profile.address}}">
+												
 											</div>
 										</div>
 										<div class="modal-footer">
@@ -246,7 +251,11 @@
 
 							<div class="profile-details-item">
 								<span class="mac-text-sm fw-500">Address (optional)</span>
+								{% if not profile.address %}
+								<p class="mac-text-mid fw-600">No Address</p>
+								{% else %}
 								<p class="mac-text-mid fw-600">{{profile.address}}</p>
+								{% endif %}
 							</div>
 
 							<div class="edit-cta-container">

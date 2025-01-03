@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django_countries.fields import CountryField  
+from django.utils.crypto import  get_random_string
 
 
 class CustomUser(AbstractUser):
@@ -25,7 +26,13 @@ def save_user_model(sender ,instance,created,**kwargs):
 
 post_save.connect(save_user_model, sender=CustomUser ) 
 
-
+def generate_unique_token():
+    while True:
+        # Generate a random string token
+        token = get_random_string(length=32)
+        # Check if the token already exists in the database
+        if not Campaign.objects.filter(token=token).exists():
+            return token
 class Campaign(models.Model):
     CATEGORY_CHOICES = [
         ('organisation/charity/npo/pbo', 'Organisation/Charity/NPO/PBO'),
@@ -86,6 +93,15 @@ class Campaign(models.Model):
     is_featured = models.BooleanField(default=False)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,blank=True,null=True)
     goal = models.DecimalField(max_digits=10, decimal_places=2,default=0.00)
+    token = models.CharField( max_length=32, unique=True, blank=True, default=generate_unique_token)
+    def save(self, *args, **kwargs):
+        # Ensure the token is generated only if it's not already assigned
+        if not self.token:
+            self.token = generate_unique_token()
+        super().save(*args, **kwargs)
+
+    
+
 
 
 
