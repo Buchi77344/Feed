@@ -1691,6 +1691,10 @@ main.pd-down {
 	background-color: hsl(0, 0%, 95%);
 }
 
+.feed-payout-main.pd-down{
+	padding-bottom: 50px;
+}
+
 .fees-payout-container{
 	font-family: var(--montserrat-font);
 }
@@ -1753,6 +1757,79 @@ main.pd-down {
 
 .link-hv-line:hover{
 	text-decoration: underline;
+}
+
+.form-el {
+	background-color : transparent;
+	border: 1px solid hsl(0, 0%, 40%);
+	width: 100%;
+	padding : 5px 12px;
+}
+
+.input-name{
+	color : hsl(0, 0%, 50%);
+	align-self: flex-start;
+	margin-top: 5px;
+	/* text-align: left; */
+}
+
+.existing-cta-div{
+	display: none;
+}
+
+.existing-cta-div.show{
+	display: flex!important;
+}
+
+.upload-control-label{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width : 100%;
+	padding: 10px 15px;
+	background-color: var(--light-theme-clr);
+	outline : 1px dashed hsl(0, 0%, 60%);
+	border-radius: 5px;
+	position: relative;
+}
+
+.upload-control-label:hover{
+	outline : 2px dashed hsl(0, 0%, 60%);	
+}
+
+.upload-icon{
+	width : 50px;
+	height : 50px;
+	background-color: hsl(0, 0%, 80%);
+	border-radius: 50%;
+}
+
+.upload-icon svg{
+	width : 25px;
+	height : 25px;
+}
+
+.upload-control-input{
+	/* width : 0;
+	height : 0;
+	visibility: hidden;
+	padding: 0; */
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	/* display: none; */
+}
+
+.upload-control-input::-webkit-file-upload-button{
+	display: none;
+}
+
+.support-tab{
+	display: none;
+}
+
+.show{
+	display: block!important;
 }
 
 @media (max-width: 1300px) {
