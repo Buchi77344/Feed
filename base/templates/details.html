@@ -108,12 +108,13 @@
 											</div>
 											<p class="text-center donation-price-text">of R {{campaign_details.monetary}} goal</p>
 											<div class="btn-container flex-center gp-10 my-3">
-												<button class="donate-btn flex gp-5">
+												<a href="{% url 'donate' campaign_details.token  %}"><button class="donate-btn flex gp-5">
 													<span class="text">Donate</span>
 													<span class="icon flex-center">
 														<img src="{% static '../static/img/svg/love-icon.svg' %}" alt="love icon by svgrepo">
 													</span>
 												</button>
+											</a>
 		
 												<button class="share-btn flex gp-5">
 													<span class="text">Share</span>
