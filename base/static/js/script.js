@@ -5,6 +5,7 @@ if (document.querySelector(".select-head")) {
 		dropHead.addEventListener("click", function () {
 			let parent = dropHead.parentElement;
 			let selectDropDown = parent.querySelector(".select-dropdown");
+			console.log(parent)
 			if (selectDropDown.classList.contains("popup")) {
 				removePopup(selectDropDown);
 			} else {
@@ -92,43 +93,61 @@ if (document.querySelector(".profile.page")) {
 
 /** Profile Page script */
 
-const existingRadioEl = document.querySelectorAll(
-	"input[name = 'existing_radio']"
-);
-const existingCta = document.querySelectorAll(".existing-cta-div");
-let selectedRadio = null;
-
-const supportCtaBtn = document.querySelectorAll(".support-cta-container .btn");
-const supportCtaTabs = document.querySelectorAll(".support-tab");
-
-existingRadioEl.forEach((radio) => {
-	radio.addEventListener("click", function () {
-		if (selectedRadio == this) {
-			this.checked = false;
-			selectedRadio = null;
-		} else {
-			selectedRadio = this;
-		}
-
-		existingCta.forEach((cta) => {
-			if (radio.id == cta.dataset.content) {
-				cta.classList.add("show");
+if(document.querySelector(".existing-cta-div")){
+	const existingRadioEl = document.querySelectorAll(
+		"input[name = 'existing_radio']"
+	);
+	const existingCta = document.querySelectorAll(".existing-cta-div");
+	let selectedRadio = null;
+	
+	const supportCtaBtn = document.querySelectorAll(".support-cta-container .btn");
+	const supportCtaTabs = document.querySelectorAll(".support-tab");
+	
+	const feedPayoutCategoryCta = document.querySelectorAll(".feed-payout-category-cta");
+	const feedPayoutCategory = document.querySelectorAll(".feed-payout-category");
+	
+	existingRadioEl.forEach((radio) => {
+		radio.addEventListener("click", function () {
+			if (selectedRadio == this) {
+				this.checked = false;
+				selectedRadio = null;
 			} else {
-				cta.classList.remove("show");
+				selectedRadio = this;
 			}
+	
+			existingCta.forEach((cta) => {
+				if (radio.id == cta.dataset.content) {
+					cta.classList.add("show");
+				} else {
+					cta.classList.remove("show");
+				}
+			});
 		});
 	});
-});
-
-supportCtaBtn.forEach((btn) => {
-	btn.addEventListener("click", function () {
-		btn.classList.remove("active");
-		supportCtaTabs.forEach((tab) => {
-			if (btn.id == tab.dataset.content) {
-				tab.classList.add("show");
-			} else {
-				tab.classList.remove("show");
-			}
+	
+	supportCtaBtn.forEach((btn) => {
+		btn.addEventListener("click", function () {
+			let btnDataset = btn.dataset.content
+			tabChangeFunc(supportCtaBtn, supportCtaTabs, this, btnDataset)
 		});
 	});
-});
+	
+	feedPayoutCategoryCta.forEach((cta) => {
+		cta.addEventListener("click", function () {
+			let ctaDataset = cta.dataset.content
+			tabChangeFunc(feedPayoutCategoryCta, feedPayoutCategory, this, ctaDataset)
+		});
+	});
+	
+	
+	function tabChangeFunc(allbtns, allTabs, el, btnDataset){
+		allbtns.forEach(btn => btn.classList.remove("active"))
+		el.classList.add("active")
+		allTabs.forEach((tab) => {
+			tab.classList.remove("show")
+			document.querySelector(`#${btnDataset}`).classList.add("show")
+		});
+	}
+}
+
+

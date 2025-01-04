@@ -94,6 +94,8 @@ class Campaign(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,blank=True,null=True)
     goal = models.DecimalField(max_digits=10, decimal_places=2,default=0.00)
     token = models.CharField( max_length=32, unique=True, blank=True, default=generate_unique_token)
+    is_launch =models.BooleanField(default=False)
+    is_status = models.BooleanField(default=False)
     def save(self, *args, **kwargs):
         # Ensure the token is generated only if it's not already assigned
         if not self.token:

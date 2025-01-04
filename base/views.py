@@ -228,6 +228,7 @@ from django.contrib import messages
 from .models import Campaign
 from datetime import datetime
 from django_countries import countries
+
 @login_required(login_url="login")
 def start_campaign(request):
     if request.method == 'POST':
@@ -273,7 +274,8 @@ def start_campaign(request):
                
                 start_date=start_date,
                 end_date=end_date, 
-                user =request.user
+                user =request.user,
+                is_status =True
                 
             ) 
            
@@ -333,7 +335,8 @@ def create_campaign(request):
             state=state,
             country=country,
             start_date=start_date,
-            end_date=end_date
+            end_date=end_date,
+            user =request.user
         )
         print('id', campaign.token)
         # Return JSON response with the ID of the newly created campaign
@@ -418,7 +421,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 
-@login_required
+@login_required(login_url="login")
 def donate_to_campaign(request, campaign_id):
     if request.method == 'POST':
         campaign = get_object_or_404(campaign, id=campaign_id)
@@ -525,7 +528,7 @@ def support(request):
     return render (request, 'support.html')
 
 
-
+@login_required(login_url="login")
 def details(request,token):
     campaign_details = get_object_or_404(Campaign,token=token )
     context ={
@@ -533,6 +536,8 @@ def details(request,token):
         
     }
     return render (request, 'details.html',context)
+
+@login_required(login_url="login")
 def preview(request,token):
     campaign_details = get_object_or_404(Campaign,token=token )
     context ={

@@ -84,6 +84,10 @@
 	font-size: 1rem!important;
 }
 
+.fs-14{
+	font-size: 0.875rem!important;
+}
+
 @media(max-width : 800px){
 	.page-head{
 		font-size: 3rem;
