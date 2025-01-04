@@ -302,23 +302,19 @@
 						</div>
 						<div data-profile_category="my-donations" class="info-item profile-donations-container text-center w-100 bd p-4 br-10">
 							<div class="flex-column gp-10">
-								{% for campaign in campaigns %}
-    {% if campaign.is_status %}
-        <span class="donate-text mac-text-mid"> 
-            {{ campaign.campaign_name }} 
-            status: Active 
-            launch: {% if campaign.is_launch %} Launched {% else %} Not Launched {% endif %}
-        </span>
-    {% else %}
-        <span class="donate-text mac-text-mid"> 
-            {{ campaign.campaign_name }} 
-            status: Inactive 
-            launch: {% if campaign.is_launch %} Launched {% else %} Not Launched {% endif %}
-        </span>
-    {% endif %}
-{% empty %}
-    <span class="donate-text mac-text-mid">No campaigns available.</span>
-{% endfor %}
+								
+								{% for campaign in campaign %}
+								<span class="donate-text mac-text-mid">
+									{{ campaign.campaign_name }} 
+									status: {% if campaign.is_status %}Active{% else %}Inactive{% endif %}
+									launch: {% if campaign.is_launch %}Launched{% else %}Not Launched{% endif %}
+								</span>
+							{% empty %}
+								<span class="donate-text mac-text-mid">No campaigns available.</span>
+							{% endfor %}
+							
+							
+							
 
 								<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>								
 							</div>

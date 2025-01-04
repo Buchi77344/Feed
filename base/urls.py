@@ -20,6 +20,7 @@ urlpatterns = [
     path('fee_payout',fee_payout,name="fee_payout"),
     path('create_campaign/',create_campaign,name="create_campaign"),
     path('edit_campaign/<str:token>/',edit_campaign,name="edit_campaign"),
+    path('donate/<str:token>/', donate, name="donate"),
 ]
 
 

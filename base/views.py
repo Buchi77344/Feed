@@ -386,6 +386,7 @@ def profile(request):
     campaign = Campaign.objects.filter(user=request.user)
     profile = get_object_or_404(Profile, user=request.user)
 
+
     # Get all donations for campaigns created by this user
     donations = Donation.objects.filter(campaign__user=request.user).select_related("campaign", "user")
 
@@ -422,9 +423,9 @@ from django.contrib import messages
 
 
 @login_required(login_url="login")
-def donate_to_campaign(request, campaign_id):
+def donate(request, token):
     if request.method == 'POST':
-        campaign = get_object_or_404(campaign, id=campaign_id)
+        campaign = get_object_or_404(campaign, token=token)
         amount = request.POST.get('amount')
         message = request.POST.get('message', '')
 
@@ -442,13 +443,13 @@ def donate_to_campaign(request, campaign_id):
             )
 
             messages.success(request, f"Thank you for donating {amount} to {campaign.campaign_name}!")
-            return redirect('campaign_detail', campaign_id=campaign.id)
+            return redirect('donate', token=token)
 
         except Exception as e:
             messages.error(request, f"Error processing donation: {e}")
-            return redirect('campaign_detail', campaign_id=campaign.id)
+            return redirect('donate', token=token)
 
-    return redirect('campaign_detail', campaign_id=campaign_id)
+    return render(request, 'donate.html')
 
 
 @login_required(login_url="login")
