@@ -454,7 +454,7 @@ def donate(request, token):
 
 @login_required(login_url="login")
 def find_campaign(request):
-    campaigns = Campaign.objects.all()
+    campaigns = Campaign.objects.filter(is_launch=True)
     campaigns_with_percentage = []
     if Campaign.objects.filter(user =request.user).exists: 
       for campaign in campaigns:
