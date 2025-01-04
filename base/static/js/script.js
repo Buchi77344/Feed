@@ -236,8 +236,10 @@ if (document.querySelector(".recurring-btn")) {
 			donationPrice.forEach(cta => cta.classList.remove("active"))
 			this.classList.add("active");
 			let num = this.querySelector(".text").textContent;
-			console.log((num.slice(0, num.length - 3)).trim());
-			donationAmountInput.value = (num.slice(0, num.length - 3)).trim();
+			let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "")
+			console.log(trimNum);
+			
+			donationAmountInput.value = trimNum;
 		});
 	});
 }
