@@ -2136,6 +2136,35 @@ ul.list {
 	display: block;
 }
 
+.profile-cta-container{
+	cursor: pointer;
+}
+
+.profile-dropdown{
+	position : absolute;
+	top : 100%;
+	display: none;
+	left : 50%;
+	border-radius: 5px;
+	min-width: 150px;
+	transform: translate(-50%);
+	border : 1px solid rgba(0, 0, 0, 0.3);
+	background-color: var(--light-theme-clr);
+}
+
+.profile-cta-container:hover .profile-dropdown{
+	display: inline-block;
+}
+
+.profile-dropdown li{
+	padding : 7px 10px;
+
+}
+
+.profile-dropdown li:hover{
+	background-color: hsl(0, 0%, 88%);
+}
+
 .br-b{
 	border-bottom: 1px solid black;
 }

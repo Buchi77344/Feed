@@ -65,8 +65,9 @@
               alt="search icon"
             />
             <a href="{% url 'start_campaign' %}" class="start-camp-cta">START CAMPAIGN</a>
-            <div class="profile-cta-container">
-              <img
+            <div class="profile-cta-container pos-rel">
+              <div class="flex gp-5 profile-cta-head">
+                  <img
                 class="profile-icon"
                 src="{% static '../static/img/profile-icon.png' %}"
                 alt="profile icon"
@@ -76,6 +77,13 @@
                 src="{% static '../static/img/svg/down-arrow.svg' %}"
                 alt="down arrow icon"
               />
+              </div>
+              <ul class="profile-dropdown">
+                <li>drop 1</li>
+                <li>drop 2</li>
+                <li>drop 2</li>
+                <li>drop 2</li>
+              </ul>
             </div>
           </div>
           <div class="hamburger">
