@@ -1,905 +1,684 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-            crossorigin="anonymous"
-        />
-        <link rel="stylesheet" href="../static/css/style.css" />
-        <script defer src="../static/js/script.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
-        <style>
-            /* #phone {
-            width: 300px;
-            } */
-
-            .iti{
-                display: block!important;
-            }
-        </style>
-        <title>Feeds & Payouts</title>
-    </head>
-    <body>
-        <div class="overlay"></div>
-        <div class="mobile-nav">
-            <div class="flex-between">
-            <a href="{% url 'login' %}" class="login-cta">Login/Register</a>
-            <span class="cancel-icon flex-center">
-                <svg
-                width="54"
-                height="54"
-                viewBox="0 0 54 54"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                >
-                <path
-                    d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
-                    fill="#9835EF"
-                />
-                </svg>
-            </span>
-            </div>
-    
-            <ul class="mobile-nav-links-container flex-column gp-15 mt-5">
-            <li><a href="/" class="mobile-nav-link">Home</a></li>
-            <li><a href="{% url "find_campaign" %}" class="mobile-nav-link">Find campaign</a></li>
-            <li><a href="{% url "start_campaign" %}" class="mobile-nav-link">Start campaign</a></li>
-            <li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
-            <li><a href="#" class="mobile-nav-link">About</a></li>
-            <li><a href="#" class="mobile-nav-link">FAQ</a></li>
-            <li><a href="#" class="mobile-nav-link">Fees & Payment</a></li>
-            <li><a href="#" class="mobile-nav-link">Support</a></li>
-            </ul>
-        </div>
-
-        <div class="feed-payout campaign page">
-            <nav class="navbar sticky-top bos align-items-center bos">
-                <div class="container">
-                    <img
-                        class="logo-img"
-                        src="../static/img/Feed-logo.png"
-                        alt="logo img"
-                    />
-                    <div
-                        class="nav-util-cta-container ms-md-3 d-flex align-items-center gap-4"
-                    >
-                        <img
-                            class="search-icon"
-                            src="../static/img/svg/search-icon.svg"
-                            alt="search icon"
-                        />
-                        <a href="#" class="start-camp-cta">START CAMPAIGN</a>
-                        <div class="profile-cta-container">
-                            <img
-                                class="profile-icon"
-                                src="../static/img/profile-icon.png"
-                                alt="profile icon"
-                            />
-                            <img
-                                class="down-arrow"
-                                src="../static/img/svg/down-arrow.svg"
-                                alt="down arrow icon"
-                            />
-                        </div>
-                    </div>
-                    <div class="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-
-                    <!-- <div class="nav-cta-container d-flex">
-        </div> -->
+{% extends "base2.html" %}
+{% block content %}
+{% load static %}
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap"
+		rel="stylesheet"
+	/>
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+		crossorigin="anonymous"
+	/>
+	<title>FEEDS & PAYOUT</title>
+</head>
+    <main class="feed-payout-main pd-down mb-4">
+        <span class="page-highlight-span">FEEDS & PAYOUT</span>
+        <div class="feed-payout-wrapper ">
+            <div class="flex-wrap">
+                <div data-content = "feeds-payout-category-support" class="feed-payout-category-cta active">
+                    <span>Support</span>
                 </div>
-                <span class="page-highlight-span">Quick Links</span>
-            </nav>
 
-            <main class="feed-payout-main pd-down mb-4">
-                <div class="feed-payout-wrapper ">
-                    <div class="flex-wrap">
-                        <div data-content = "feeds-payout-category-support" class="feed-payout-category-cta active">
-                            <span>Support</span>
-                        </div>
+                <div data-content = "feeds-payout-category-works" class="feed-payout-category-cta">
+                    <span>How it works</span>
+                </div>
 
-                        <div data-content = "feeds-payout-category-works" class="feed-payout-category-cta">
-                            <span>How it works</span>
-                        </div>
+                <div data-content = "feeds-payout-category-privacy" class="feed-payout-category-cta">
+                    <span>Privacy Policy</span>
+                </div>
 
-                        <div data-content = "feeds-payout-category-privacy" class="feed-payout-category-cta">
-                            <span>Privacy Policy</span>
-                        </div>
+                <div data-content = "feeds-payout-category-terms" class="feed-payout-category-cta">
+                    <span>Terms & Conditions</span>
+                </div>
+            </div>
 
-                        <div data-content = "feeds-payout-category-terms" class="feed-payout-category-cta">
-                            <span>Terms & Conditions</span>
-                        </div>
-                    </div>
-
-                    <div id = "feeds-payout-category-support" class="feed-payout-category support-container mt-4 show">
-                        <div class="support-content-container row align-start">
-                            <div class="col-md-3">
-                                <div class="support-cta-container content-cta-container flex-column gp-15">
-                                    <button data-content = "support-tab-fees-payout" class="btn active">Fees and Payouts</button>
-                                    <button data-content = "support-tab-contact-us" class="btn mb-4">Contact Us</button>
-                                </div>
-                            </div>
-
-                            <div class="col-md-9">
-                                <div class="flex-column content-container-wrapper">
-                                    <div id = "support-tab-fees-payout" class="support-tab show content-container fees-payout">
-                                        <p class="mac-italic-text fs-16">All donations made through BackaBuddy are managed by The BackaBuddy Foundation (Reg No. 2015/313483/08)</p>
-                                        <div>
-                                            <h3 class="fs-38 my-3 text-center fw-600">Fee Structure</h3>
-                                            <p>It is free to setup a campaign. Fees are only charged on funds raised.</p>
-                                            <p class="fw-600 mt-3">Total fee = 1) Platform fee + 2) Payment Processing fee (3rd Party)</p>
-                                            <ol>
-                                                <li class="mt-4">
-                                                    <p>Platform fee: BackaBuddy</p>
-                                                    <ul>
-                                                        <li>
-                                                            <p class="block">Registered organisations / Non-Profit Organisations:</p>
-                                                            <p class="ms-1"><strong>0% platform fee.</strong> Donors can choose to leave a tip for our services.</p>
-                                                        </li>
-                                                        <li>
-                                                            <p class="block">Individual Fundraisers:</p>
-                                                            <p class="ms-1">7% (+VAT). Donors are given the option to cover this fee. <strong> N.B. 75% of donors cover this fee.</strong></p>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-    
-                                                <li class="mt-4">
-                                                    <p>Payment Processing fee (3rd Party):</p>
-                                                    <ul>
-                                                        <li>
-                                                            <p class="block">African Payment Processing fees (as of the 22nd March 2022):</p>
-                                                            <div class="ms-1 flex-between">
-                                                                <p>Electronic Funds Transfer EFT</p>
-                                                                <strong>R12</strong>
-                                                            </div>
-                                                            <div class="ms-1 flex-between">
-                                                                <p>Instant EFT</p>
-                                                                <strong>3.5%</strong>
-                                                            </div>
-                                                            <div class="ms-1 flex-between">
-                                                                <p>Debit/Credit Card South Africa</p>
-                                                                <strong>3.9%</strong>
-                                                            </div>
-                                                            <div class="ms-1 flex-between">
-                                                                <p>SnapScan</p>
-                                                                <strong>3.9%</strong>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <p>International Payment Processing fees:</p>
-                                                            <div class="ms-1 flex-between">
-                                                                <p>International Credit Card (PayPal)</p>
-                                                                <strong>$0.3 + 5.5%</strong>
-                                                            </div>
-                                                            <div class="ms-1 flex-between">
-                                                                <p>PayPal Account</p>
-                                                                <strong>$0.3 + 5.5%</strong>
-                                                            </div>
-                                                            
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ol>
-                                        </div>
-                                        <p class="mac-italic-text fs-16">PayPal is a high-cost payment portal but is a trusted international payment channel. The 5.5% is made of two fees; the PayPal fee directly, and the local SA PayPal banking partner's fee.</p>
-                                        <div>
-                                            <h3 class="fs-38 mt-2 text-center fw-600">Payouts</h3>
-                                            <p class="mt-3">You have the flexibility to request a payout at any time, provided your campaign/organisation has been vetted and you have received donations. <strong>Please note that the processing time for payouts by BackaBuddy is up to 10 business days.</strong> Additionally, you can only submit a new payout request once the previous one has been successfully processed.</p>
-                                            <p class="my-4">Thank you for considering BackaBuddy as your fundraising platform. We’re here for you!</p>
-                                        </div>
-                                    </div>
-    
-                                    <div id = "support-tab-contact-us" class="support-tab content-container contact-us">
-                                        <h3 class="fs-38 mt-2 text-center fw-600">We're here for you</h3>
-                                        <p>Need help? Our team of Customer Support Specialists is here to guide you throughout your crowdfunding journey.</p>
-                                        <div class="mt-4">
-                                            <h5 class="fs-18">How to reach us</h5>
-                                            <p class="mt-3">Whatsapp - <a class="link-hv-line highlight-span-clr" href="#">Click here</a></p>
-                                            <p class="mt-3">Contact number - <a class="link-hv-line highlight-span-clr" href="tel://+00 11 442 3125">+00 11 442 3125</a></p>
-                                        </div>
-
-                                        <div class="mt-4">
-                                            <h5 class="fs-18">Help via Email</h5>
-                                            <p>We provide clients with ticket-based support, simply log a ticket and we'll resolve your issue as soon as possible.</p>
-                                            <div class="form-container">
-                                                <form class="contact-form" action="">
-                                                    <div class="flex-column align-start mt-3">
-                                                        <label class="input-label text-start block mb-2" for="">Name</label>
-                                                        <div class="row w-100">
-                                                            <div class="col-lg-6 flex-column ">
-                                                                <input class="form-el" name = "first_name" type="text">
-                                                                <span class="input-name">First Name</span>
-                                                            </div>
-    
-                                                            <div class="col-lg-6 flex-column">
-                                                                <input class="form-el" name="last_name" type="text">
-                                                                <span class="input-name">Last Name</span>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="flex-column align-start mt-3">
-                                                        <label class="input-label text-start block mb-2" for="">Email</label>
-                                                        <div class="flex-column align-start w-100 gp-20">
-                                                            <div class="w-res-60">
-                                                                <input class="form-el" name = "email" type="email">
-                                                            </div>
-    
-                                                            <div class="w-res-60">
-                                                                <input class="form-el" placeholder="Confirm Email" name="confirm_email" type="email">
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="flex-column align-start mt-3">
-                                                        <label class="input-label text-start block mb-2" for="">Phone number</label>
-                                                        <div class="flex-column align-start w-100 gp-20">
-                                                            <div class="w-res-60">
-                                                                <input class="form-el" id = "phone" name = "phone_number" type="tel">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="flex-column align-start mt-3">
-                                                        <label class="input-label text-start block mb-2" for="">Do you have an existing project</label>
-                                                        <div class="flex-column align-start gp-20">
-                                                            <div class="flex gp-5">
-                                                                <input class="form-el radio" id = "existing-rad-1" name = "existing_radio" type="radio">
-                                                                <label for="existing-rad-1">Yes</label>
-                                                            </div>
-
-                                                            <div class="flex gp-5">
-                                                                <input class="form-el radio" id = "existing-rad-2" name = "existing_radio" type="radio">
-                                                                <label for="existing-rad-2">No</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="w-100">
-                                                            <div data-content="existing-rad-1" class="existing-cta-div flex-column align-start mt-4 w-100">
-                                                                <label for="">Campaign Link</label>
-                                                                <div class="flex-column w-res-60 mt-2">
-                                                                    <input class="form-el" name = "first_name" type="text">
-                                                                    <span class="input-name">Copy and paste your campaign link here</span>
-                                                                </div>
-                                                            </div>
-
-                                                                <div data-content="existing-rad-2" class="existing-cta-div flex-column align-start mt-4 w-100">
-                                                                <label for="">Link to supported campaign</label>
-                                                                <div class="flex-column w-res-60 mt-2">
-                                                                    <input class="form-el" name = "first_name" type="text">
-                                                                </div>
-                                                                <span class="input-name">Please copy and paste the link to the campaign from the browser bar (while you're viewing the campaign, that is!)</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="flex-column mt-4 align-start w-100">
-                                                        <label class="input-label" for="subject">Subject</label>
-                                                        <div class="w-res-60 mt-2">
-                                                            <input class="form-el" type="text" name="subject" id="subject">   
-                                                            <span class="input-name">Describe your issue in 5 words</span>                                                     
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="flex-column mt-4 align-start w-100">
-                                                        <label class="input-label" for="subject">Query Description</label>
-                                                        <div class="flex-column align-start w-res-80 mt-2">
-                                                            <textarea class="form-el" name="query_description" id=""></textarea>
-                                                            <span class="input-name">Describe your issue in as much detail as possible</span>                                                     
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="flex-column mt-4 align-start w-100">
-                                                        <label for="subject">Add a screenshot or any images</label>
-                                                        <div class="flex-column align-start w-100 mt-2">
-                                                            <div class="upload-control-container w-100">
-                                                                <label class="upload-control-label w-res-80" for="screenshot-upload-input">
-                                                                    <span>Choose File(s)</span>
-                                                                    <span class="flex-center upload-icon">
-                                                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="Communication / Share_iOS_Export">
-                                                                            <path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <input class="upload-control-input" type="file" name="" id="screenshot-upload-input">
-                                                                </label>
-                                                            </div>
-                                                            <span class="input-name">Upload screenshots of any payment or system issues you might be facing.</span>                                                     
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="flex-column mt-4 align-start w-100">
-                                                        <label for="subject">Upload any other files</label>
-                                                        <div class="flex-column align-start w-100 mt-2">
-                                                            <div class="upload-control-container w-100">
-                                                                <label class="upload-control-label w-res-80" for="screenshot-upload-input">
-                                                                    <span>Choose File(s)</span>
-                                                                    <span class="flex-center upload-icon">
-                                                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="Communication / Share_iOS_Export">
-                                                                            <path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <input class="upload-control-input" type="file" name="" id="screenshot-upload-input">
-                                                                </label>
-                                                            </div>
-                                                            <span class="input-name">If you have any other files besides screenshots that you want us to see like supporting documents, proof of payments etc. please add them here.</span>                                                     
-                                                        </div>
-                                                    </div>
-
-                                                    <button class="cta-btn submit-btn">Submit Query</button>
-                                                </form>
-                                            </div>
-                                            <div class="mt-4">
-                                                <h5>Our support hours</h5>
-                                                <p>8am - 5pm : Monday - Friday</p>
-                                                <p class="my-3 w-res-80">Kindly note that BackaBuddy does not offer any form of financial assistance or funding to individuals or charities.</p>
-                                                <p>For further queries, please do not hesitate to get in touch with us.</p>
-                                                <p class="bold-p mt-3">Head office: <span class="fw-800"> Cape Town, South Africa</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div id = "feeds-payout-category-support" class="feed-payout-category support-container mt-4 show">
+                <div class="support-content-container row align-start">
+                    <div class="col-md-3">
+                        <div class="support-cta-container content-cta-container flex-column gp-15">
+                            <button data-content = "support-tab-fees-payout" class="btn active">Fees and Payouts</button>
+                            <button data-content = "support-tab-contact-us" class="btn mb-4">Contact Us</button>
                         </div>
                     </div>
 
-                    <div id = "feeds-payout-category-works" class="feed-payout-category works-container mt-4">
-                        <h3 class="fs-38 my-3 text-center fw-600">How it works</h3>
-                        <p class="mt-2">BackaBuddy is a South African crowdfunding platform that is designed to help you create online campaigns to raise funds for causes you are passionate abou</p>
-                        <h4 class="fs-20 mt-3">What sort of campaigns can be created on BackaBuddy?</h4>
-                        <p class="mt-2">You can create campaigns for anything that has a positive impact on individuals, communities, and the environment.</p>
-                        <p class="mt-2">These campaigns can raise funds for organisations or for individuals who need donations for a variety of reasons, including medical procedures, sporting opportunities, or for studies. You can even create campaigns in loving memory of a special person to raise funds for his or her favourite cause.</p>
-                        <p class="mt-2">We love campaigns that make use of our ‘champion’ model – raising funds on behalf of an organisation or an individual in need. While you are welcome to fundraise for yourself, campaigns that help others, friends or strangers, are powerful reminders of all the good there is in the world.</p>
-                        <div class="mt-3">
-                            <h4 class="fs-20">How does it work?</h4>
-                            <p class="mt-2">You can quickly and easily create a fundraiser on the BackaBuddy site, then share your campaign link with your friends, family, and colleagues – your crowd - to invite monetary donations. Creating a campaign is free and there are no charges if you don’t raise funds.</p>
-                            <p class="mt-2">There are no time limits imposed on campaigns and no penalties if you don’t reach your target. You can also carry on receiving donations after you’ve met your target.</p>
-                            <p class="mt-2">Simply put, your campaign can continue for as long as you like. You do not have to reach your target or a certain amount to receive your donations. You have the flexibility to request a payout at any time, provided your campaign/organisation has been vetted and you have received donations. Please note that the processing time for payouts by BackaBuddy is up to 10 business days. Additionally, you can only submit a new payout request once the previous one has been successfully processed. </p>
-                        </div>
-                        <div class="mt-3">
-                            <h4 class="fs-20">Organisation Registrations</h4>
-                            <p class="mt-2">If you are an organisation, crowdfunding is a transparent and effective way to fundraise for specific needs within your organisation. First you simply register by completing this form. We’ll create your organisation profile page, and then you (and your supporters) can create as many fundraising campaigns as you’d like!</p>
-                        </div>
-                        <div class="mt-3">
-                            <h4 class="fs-20">What makes BackaBuddy different from other crowdfunding platforms?</h4>
-                            <p class="mt-2">BackaBuddy takes integrity really seriously, which is why we like to ‘vet’ individual campaigns and organisations' registrations before any payouts can be processed. This way, our site users and donors can be assured that we take steps to protect them to the best of our ability.</p>
-                            <p class="mt-2">Funds raised can only be paid out once the campaign/organisation has been verified and banking details have been received. You can read more here about what this involves. Once you have met the criteria in place and we consider your fundraiser to be authentic with donations received, you can request a payout on funds raised. Please note that the processing time for payouts by BackaBuddy is up to 10 business days. Additionally, you can only submit a new payout request once the previous one has been successfully processed.</p>
-                            <p class="mt-2">BackaBuddy offers campaign creators the option of BackaBuddy administering the campaign. “Bluetick Campaigns” or “BackaBuddy Assisted” means paying part or all of the funds eligible for payout to a <span class="fs-14">vendor/organisation/company/professional</span> directly upon presentation of invoices or similar transaction proof, instead of paying funds directly to the bank account of the individual campaign creator or beneficiary. Although it is not essential, having funds paid directly to a vendor or institution is almost always preferred by donors.</p>
-                        </div>
-
-                    </div>
-
-                    <div id = "feeds-payout-category-privacy" class="feed-payout-category policy-container mt-4">
-                        <h3 class="fs-38 my-3 text-center fw-600">Privacy policy</h3>
-                        <p class="mt-3">BackaBuddy takes your privacy very seriously. We will not pass your personal details on to anyone, except the organisation you have chosen to support, without your express consent. The only exception to this rule is when you register your BackaBuddy fundraising page. Your name, email address, and postal address may be given to the organisation so they can identify you as the source of donations received.</p>
-                        <p class="mt-3">Please note that by visiting or registering with BackaBuddy, you are agreeing to the practices detailed below, so please read carefully to find out how we will treat your information.</p>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Your right to access your personal information</h4>
-                            <p class="mt-3">You have the right to access, amend, correct, access, or transfer your personal information at any time. Additionally, you have the right to request us to limit the use of, block transfer of, or delete your personal information from our records. To make any request regarding your personal information, please contact us here.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Why we collect your personal information</h4>
-                            <p class="mt-3">We collect your personal information because it helps us deliver a superior experience and level of customer service. Your personal information also helps us and our third-party advertising partners deliver more relevant ads to you when you visit the website.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">What information we collect & how we may use it</h4>
-                            <p class="mt-3">We will ask for your personal information if you wish to create a profile with us for the purpose of receiving company updates, blog posts, related company news. We may at that time require that you provide personally identifiable information, including without limitation your name and email address.</p>
-                            <p class="mt-3">We may also collect certain non-personally identifiable information regarding customer activities on our website. This helps us to determine how best to provide useful information to users and to understand which parts of our website and Internet services are of most interest to them.</p>
-                            <p class="mt-3">When you submit reviews or comments to the website, you will provide us with the contents of your submission.</p>
-                            <p class="mt-3">We will also collect the information described below under “Cookies, Tracking and Other Technologies” when you use the website.</p>
-                            <p class="mt-3">We may use your personal information to provide services that you have requested, respond to your requests, and send you communications, as well as for auditing, research, and analysis to improve the products offered on our website.</p>
-                            <p class="mt-3">When you participate in a BackaBuddy fundraising campaign, BackaBuddy may collect any of the following information as applicable for that fundraising campaign. You will always have the choice to opt-in or opt-out of providing this information.</p>
-                            <ul class= "list">
-                                <li>Contact details such as name, address, telephone number, and email address</li>
-                                <li>Identity number, or passport number for identification purposes</li>
-                                <li>Identification of workplace and position (title)</li>
-                                <li>Information collected from a recruiting firm that recruited you for our fundraising campaign</li>
-                                <li>Information regarding any relevant experience or subject matter expertise necessary for the fundraising campaign</li>
-                                <li>Medical condition and any prescribed medications, when applicable for the fundraising campaign</li>
-                                <li>Relevant professional licensing number (e.g., medical license number)</li>
-                                <li>Demographic information such as age, household income, race, gender, ethnicity</li>
-                                <li>Opinions, specifically limited to opinions on the products or services in the fundraising campaign</li>
-                            </ul>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Publicly displayed information is public</h4>
-                            <p class="mt-3">If you use the review or comment feature on the website, you should be aware that your user name and any other information you share may be visible to other users. Personally identifiable information you submit in this manner can be read, collected, or used by other individuals to send you unsolicited messages. For example, if you submit a review that includes information that was previously non-public, BackaBuddy will collect that information from your interaction and the information may become publicly available. BackaBuddy is not responsible for the personally identifiable information you choose to submit in this manner.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">When we disclose your information</h4>
-                            <p class="mt-3">To help us provide superior service, your personal information may be shared with actual and prospective assignees and licensees of the website, its content, or any portion thereof, including your submissions and personal information. In addition, the personal and other information you provide to BackaBuddy is considered an asset of the company and may be included among transferred assets of the website if BackaBuddy or any parent company is acquired by a third party.</p>
-                            <p class="mt-3">There are also times when BackaBuddy makes certain personal information about you available to companies or individuals to provide products and services to you on our behalf. These companies may help us process information, manage and enhance customer data, provide customer service, assess your interest in our products and services, or conduct customer research or satisfaction surveys. We call them our “Service Providers.” We may share personally identifiable information with Service Providers solely as appropriate for them to perform their functions, but we prohibit them from using such information for any other purpose unless we inform you otherwise at the time of collection.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Retention of your personal information</h4>
-                            <p class="mt-3">BackaBuddy will only use your personal information to the extent necessary to carry out the fundraising campaign as specified in the informed consent form provided to you prior to your participation in our fundraising campaign. Aggregate reports of your personal information may be developed and retained for longer periods. This means that the information you provide is anonymized and combined with that of other fundraising campaign participants for analysis where this information cannot be used to identify you.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Cookies, tracking and other technologies</h4>
-                            <p class="mt-3">Like many websites, the BackaBuddy website uses cookies, flash cookies, web beacons, and other technologies to help us understand which parts of our websites are the most popular, where our visitors are going, and how much time they spend there. We may use these technologies to determine fundraising campaign traffic patterns on our website. This information helps us make the website more rewarding and helps us improve the effectiveness of our customer communications. We also use cookies to customize your experience and provide greater convenience each time you interact with us. For example, your profile information and information about your computer helps us operate the website efficiently.</p>
-                            <p class="mt-3">As is true of most websites, we gather certain information automatically and store it in log files. This information includes Internet Protocol (IP) addresses, browser type, Internet Service Provider (ISP), referring/exit pages, operating system, date/time stamp, and clickstream data. We use this information, which does not identify individual users, to analyze trends, to administer the site, to track users’ movements around the site and to gather demographic information about our user base as a whole. BackaBuddy will not use this type of collected information to market directly to that person. We may share aggregated anonymous information with third parties to assist in analyzing, operating, maintaining, and improving the website and placing advertising on it.</p>
-                            <p class="mt-3">We also may use third-party website analytics tools (such as Google Analytics) that collect information about visitor traffic on our website. The information we may collect by these tools is similar to that collected by the technologies described above and includes:</p>
-                            <ul class = "list">
-                                <li>Information about the devices our visitors use to access the Internet (such as the IP address and the device, browser and operating system type)</li>
-                                <li>URLs that refer visitors to the website</li>
-                                <li>Dates and times of visits to the website</li>
-                                <li>Information on actions taken on the website (such as page views and site navigation patterns)</li>
-                                <li>A general geographic location (such as country and city) from which a visitor accesses our website</li>
-                                <li>Search terms that visitors use to reach the website</li>
-                            </ul>
-                            <p class="mt-3">In some of the email messages from us or those whose products are available on our website, we use a “click-through URL” linked to content on the BackaBuddy website. When customers click one of these URLs, they pass through our web server before arriving at the destination web page. We may track this click-through data to help us determine interest in particular topics and measure the effectiveness of customer communications. If you prefer not to be tracked, simply avoid clicking text or graphic links in the email.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Clickstream data</h4>
-                            <p class="mt-3">As you use the Internet, a trail of electronic information is left at each website you visit. This information, which is sometimes referred to as “Clickstream Data,” can be collected and stored by a website’s server. As noted above, we collect Clickstream Data. Clickstream Data can tell us the type of computer and browsing software you use and the address of the website from which you linked to our website. We may use Clickstream Data as a form of non-personal information to anonymously determine how much time visitors spend on each page of the website, how visitors navigate throughout the website and how we may tailor our web pages to better meet the needs of visitors. This information will only be used to improve the website. Any collection or use of Clickstream Data will be anonymous and aggregated.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Retention of your personal information</h4>
-                            <p class="mt-3">BackaBuddy will only use your personal information to the extent necessary to carry out the fundraising campaign as specified in the informed consent form provided to you prior to your participation in our fundraising campaign. Aggregate reports of your personal information may be developed and retained for longer periods. This means that the information you provide is anonymized and combined with that of other fundraising campaign participants for analysis where this information cannot be used to identify you.</p>
-                            
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">How we respond to do not track (DNT) signals</h4>
-                            <p class="mt-3">Our website has links to the sites of advertisers and other third parties. BackaBuddy is not responsible for its privacy practices. We encourage you to learn about the privacy policies of those companies, which may collect personally identifiable information about you.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Registered BackaBuddy user information</h4>
-                            <p class="mt-3">When you create a secure personal profile on BackaBuddy for the purpose of creating a BackaBuddy fundraising page, we collect your title, name, email address, postal address, phone number (where you agree to provide it) and your password. We will automatically pass on your name, email and home addresses to the organisation that will benefit from the donations you are collecting. In all other instances, this information will be withheld from third parties unless you give us your express consent to do otherwise.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Children and minors</h4>
-                            <p class="mt-3">Our website and app are intended for use by adults only, and we do not knowingly collect or use any personal information from minors under the age of 17. If we collect personal information from someone we learn to be under 17 years of age, such personal information shall immediately be deleted. If you are a parent or guardian of a child under 17 years of age and you believe your child has provided us with personal information, please contact us <a href="#">here</a></p>
-                            <p class="mt-3">If you are a California resident under the age of 18, and a registered user of our website, California Business and Professions Code Section 22581 permits you to request and obtain the removal of content or information you have publicly posted. To make such a request, please contact us here and include “Removal Request” in the subject line. Please be aware that such a request does not ensure complete or comprehensive removal of the content or information you have posted and that there may be circumstances in which the law does not require or allow removal even if requested.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Donor information</h4>
-                            <p class="mt-3">If you donate on BackaBuddy, we collect your first and last name, your credit or debit card details (including card type, card number and expiry date) and your billing address. We will only use your payment details for the purpose of processing your donation via our payment partner, Nedbank.</p>
-                            <p class="mt-3">When donating to a campaign for an organisation, the organisation will receive certain information such as donor names and email addresses. It is the organisation’s responsibility to keep this information private and use it solely for the purposes of participating in the BackaBuddy campaigns.</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">BackaBuddy E-Newsletters</h4>
-                            <p class="mt-3">We will not send you email newsletters at any time unless you have expressly opted to receive them. All newsletters from BackaBuddy include the option to unsubscribe. If you have a personal BackaBuddy profile, you can change your contact preferences at any time by visiting the section entitled "your details".</p>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Organisations’ use of your personal information – [onward transfer and sharing of your personal information]</h4>
-                            <p class="mt-3">In the context of its business and with your consent, BackaBuddy may transfer your personal information to its organisation. In some cases, our organisation will request data that includes your personal information. Transfer of this data that includes your personal information, allows our organisation to improve the design of the product or service that is being developed. In many cases, we will simply transfer aggregate reports which do not contain your personal information or any information that can be used to identify you. Aggregate reports are those wherein the information you provide is anonymized and combined with that of other fundraising campaign participants for the purposes of analysis as a whole, where this information cannot be used to identify you.</p>
-                            <p class="mt-3">We do not share your personal information with other third parties, nor do we permit the use of your personal information for any reason other than that for which it was originally provided, which will always be described in the informed consent form provided to you prior to your participation in the fundraising campaign.</p>
-                            <p class="mt-3">In such cases of transfer of your personal information, BackaBuddy remains liable for the protection of personal information under the Principles of the Privacy Shield if the third party handles the information in a manner inconsistent with Privacy Shield Principles. In the event information will be transferred, BackaBuddy provides clear and unambiguous advanced notice and a description of the purpose of transfer to the data subject, who will have the opportunity to decline.</p>
-                        </div>
-
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Security precautions to protect your information</h4>
-                            <p class="mt-3">The transfer of online transaction data to and from the website is protected by the implementation of the SSL Certificate provided by AWS Certificate Manager. It is your responsibility to keep your password secure at all times to avoid unauthorised use of your BackaBuddy profile.</p>
-                            <p class="mt-3">To ensure the ongoing protection of your personal information, BackaBuddy has implemented information security practices consistent with industry standards. This includes technical, physical, administrative, and organizational measures we have implemented to protect the confidentiality, integrity, and availability of your personal information and safeguard your personal information against loss, theft, and misuse, as well as unauthorized access, disclosure, alteration, and destruction.</p>
-                        </div>
-
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">How we protect your personal information</h4>
-                            <p class="mt-3">BackaBuddy takes precautions – including administrative, technical, and physical measures – to safeguard your personal information against loss, theft, and misuse, as well as unauthorized access, disclosure, alteration, and destruction. We use reasonable and customary measures to safeguard the security of your personal information. Nonetheless, transmissions made on or through the Internet and information stored by us are vulnerable to attack and cannot be guaranteed to be secure. You hereby acknowledge that we are not responsible for any intercepted information sent via the Internet or data loss caused by “hacks,” malicious attacks or other breaches caused by third parties, and you hereby release us from any and all claims arising out of or related to the use of information obtained by means of an unauthorized interception or breach.</p>
-                        </div>
-
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Legal process</h4>
-                            <p class="mt-3">At times we may be required by law, litigation, arbitration or similar legal process to disclose your personal information. We may also disclose information about you if you consent to it or if we determine that disclosure is necessary for national security, law enforcement, personal safety, or other issues of public importance.</p>
-                        </div>
-
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Acceptance of our privacy policy</h4>
-                            <p class="mt-3">Use of the BackaBuddy website and associated services implies acceptance of this Privacy Policy. If you are not satisfied with any aspect of it, please do not continue to use the website and services. This policy may change from time to time and you are deemed to have accepted the current version each time you use <a href="www.backabuddy.co.za" class = "highlight-span-clr">www.backabuddy.co.za </a>or any site powered by us. If you have any questions about our Privacy Policy, please contact us here.</p>
-                        </div>
-
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Changess</h4>
-                            <p class="mt-3">We reserve the right to change this Privacy Policy at any time. The date on which this Privacy Policy was last adopted or changed will be set forth at the top of this Privacy Policy.Therefore, please review this Privacy Policy from time to time so that you are aware when any changes are made to this Privacy Policy. If you have any questions about the changes that were implemented, please contact us here and include “Information Regarding Updated Policy” in the subject line. In any event, your continued use of the website after such change constitutes your acceptance of any such change(s), and if you do not accept any changes, you may choose not to use our website.</p>
-                        </div>
-
-                        <div class="mt-4">
-                            <h4 class="fs-20 mt-3">Personal information gathered under previous versions of this privacy policy</h4>
-                            <p class="mt-3">Personal information collected via the website will generally be governed by the version of the Privacy Policy in effect at the time the information was gathered. We will not retroactively make material changes to the way we use personally identifiable information collected under previous versions of this Privacy Policy without obtaining your consent.</p>
-                        </div>
-                    </div>
-
-                    <div id = "feeds-payout-category-terms" class="feed-payout-category terms-container mt-4">
-                        <h3 class="fs-38 my-3 text-center fw-600">Terms and Conditions</h3>
-                        <ol class = "mt-4">
-                            <li>
-                                <h5 class= "fs-20 mt-3">Thanks for using BackaBuddy</h5>
-                                <p class="mt-3">Welcome to BackaBuddy and thank you for using this website (the Site). We are BackaBuddy NPC (registration number 2015/313483/08), and together with our partners, subsidiaries, affiliates, agents, representatives, consultants, employees, officers, and directors — collectively, BackaBuddy, we, or us. By using the Site and our services (together with the Site, the Services), you agree to these contractual rules (the Terms). Please also go and see our Privacy and Cookies Policies (which you’re also agreeing to by using the Services).</p>
-                                <p class="mt-3">Sometimes we might change these Terms. We’ll do our best to notify you personally of any changes (if we have your details), but in any event, we will also inform our community of these changes by posting a notice on the Site.</p>
-                                <p class="mt-3">BackaBuddy is only for your personal, non-commercial use. BackaBuddy is for online fundraisers (referred to here as campaigns) that collect monetary donations only. Requests for donations in kind or the offer of rewards for donations are not permitted on the site.</p>
-                            </li>
-                            <li>
-                                <h5 class= "fs-20 mt-3">Registration of a campaign for an organisation, a campaign for an individual need, or registration of an organisation</h5>
-                                <p class="mt-3">If you’d like to create a campaign to raise funds for an organisation or create a campaign to raise funds for a person/personal cause you can do so here. If you’d like to register your organisation, please do so here. You will need to create, or already have, a profile to register either. You can also browse BackaBuddy without registering a profile. If you do plan to register, however, the information you give us must be complete, and up-to-date. We reserve the right to cancel your campaign or organisation registration if you don’t comply with any of these Terms.</p>
-                                <p class="mt-3">Please remember that if you do choose to register for any of the above, you are responsible for all the activity on your profile, and for keeping your password confidential. If you become aware that your profile has been used without your permission, <a href="#">you must report it to us immediately.</a></p>
-                                <p class="mt-3">To register as an organisation, you must be at least 18 years old. A campaign for an organisation or for an individual can be created by a minor, but funds will only be transferred to a bank account held by an individual who is over the age of 18.</p>
-                                <p class="mt-3">BackaBuddy does not guarantee that a Campaign or an Organisation will obtain a certain amount of donations or any donations at all. <p class="bold-p">We do not personally endorse any Campaign, Campaign Organiser or Organisation or initiate campaigns ourselves. We expressly disclaim any liability or responsibility for the success of any Campaign, or the outcome of any fundraising purpose.</p></p>
-                                <p class="mt-3">If you choose to contribute to a campaign or cause, you as the donor must make the final determination as to the value and appropriateness of contributing to any Campaign, Campaign Organiser or organisation.
-                                </p>
-                            </li>
-                            <li>
-                                <h5 class= "fs-20 mt-3">Please don’t do the following</h5>
-                                <p class="mt-4">By using this site, you agree that you will not engage in posting:</p>
-                                <ul class="list">
-                                    <li>Content that is harmful to others or may cause reputational harm (this includes posting discriminatory comments, comments which are inappropriate or profane, including but not limited to the distribution of child pornography, comments which constitute hate speech or content that is designed to abuse, stalk, harass or physically threaten other people)</li>
-                                    <li>Content that violates any intellectual property laws, including content that is protected by copyright or a patent</li>
-                                    <li>Content that is misleading, false, or intentionally inaccurate.</li>
-                                    <li>Information that is fraudulent in nature</li>
-                                    <li>Banking details of the beneficiary or campaign creator on a campaign page, organisation profile page, or anywhere on the BackaBuddy site.</li>
-                                    <li>Content that is illegal, and violates any domestic or international law or content which breaches a legal duty that you owe to other people</li>
-                                    <li>Content which is designed as spam or any other unsolicited mass mailing activity that is distributed without the consent of the recipients.</li>
-                                    <li>Content which in any way threatens the security of the BackaBuddy network or one of its users’ computers, including the distribution of malware, viruses, Trojan horses, or any other harmful piece of software.</li>
-                                    <li>Campaign content that contains the offer of any contest, competition giveaway, sweepstakes, offering monetary or other rewards for donations.
-                                    </li>
-                                    <li>Annuities, investments, equity or lottery contracts, off-shore banking or similar transactions, money service businesses (including currency exchanges, check cashing or the like), pyramid schemes, “get rich quick schemes” (i.e., Investment opportunities or other services that promise high rewards), network marketing and referral marketing programs, debt collection or crypto-currencies</li>
-                                    <li>Credit repair or debt settlement services.</li>
-                                    <li>Details of a pending or current legal case.</li>
-                                </ul>
-
-                                <p class="mt-4">Please refrain from participating in the following activities:</p>
-                                <ul class="list">
-                                    <li>Disseminating other people’s private information – when you use the Services — whether as a contributor or an organisation — you will receive certain information regarding other users of the site, such as their names and their email addresses. Please keep this information private, and use it solely for the purposes of participating in the BackaBuddy campaigns. Do not share or distribute any user information without their permission.</li>
-                                    <li>Interfering with the working of BackaBuddy – you may not engage in any activity that interferes with the proper working of the Site or the Services</li>
-                                    <li>Bypassing any security – you may not bypass any of the security measures that BackaBuddy has put into place to restrict access to certain sections of the site or circumvent any of the security measures that have been put into place by BackaBuddy</li>
-                                    <li>Attempting to obtain personal information of BackaBuddy or its users – you may not attempt to gain unauthorised access to any data, password, or any other restricted information which belongs to BackaBuddy, its affiliates, or any user of its site</li>
-                                    <li>Putting strain on BackaBuddy’s infrastructure – you may not engage in any activity that places a disproportionately large load on the infrastructure of BackaBuddy or its affiliates.</li>
-                                    
-                                </ul>
-                            </li>
-                            <li>
-                                <h5 class= "fs-20 mt-3">Contract between Organisation and Contributor</h5>
-                                <p class="mt-3">BackaBuddy provides a funding platform for organisations and charitable campaigns. When someone publishes a charitable campaign on BackaBuddy, they invite other people to form a legal contract with them. Anyone who contributes to an organisation (a donor) is accepting the organisation’s offer and forming that contract.</p>
-                                <p class="mt-4">BackaBuddy is not a part of this contract — the contract is a direct legal agreement between organisations and their contributors. Here are the terms that govern that agreement:</p>
-                                <ul class="list">
-                                    <li>When a campaign is successfully funded, the organisation must use the funds for the purpose advertised. Once an organisation has done this, it has satisfied its obligation to its contributors.</li>
-                                    <li>Throughout the process, organisations owe their contributors a high standard of effort, honesty, transparency and a commitment to achieving the advertised goals of that organisation.</li>
-                                    <li>Contributors must understand that there could be delays in an organisation achieving what it has set out to do.</li>
-                                    <li>A donation is an irrevocable and unconditional act and, once a donation has been made using the Services, the contributor is not entitled to a refund unless the relevant organisation agrees to the refund and special arrangements are made directly with the organisation. Once an organisation has refunded the contributor it has no further obligation to that contributor, and no further agreement exists between the two parties.</li>
-                                    <li>BackaBuddy is not responsible for the fulfillment of the promises made by organisations.</li>
-                                    <li>If organisations are unable to satisfy the terms of their agreement, they may be subject to legal action by contributors.</li>
-                                    <li>When donating to a campaign for an organisation, the organisation will receive certain information such as donor names and email addresses. It is the organisation’s responsibility to keep this information private and use it solely for the purposes of participating in the BackaBuddy campaigns. Do not share or distribute any user information without their permission.</li>
-                                    <li>When creating a campaign for an organisation, the organisation will receive certain information such as champion names and email addresses. It is the organisation’s responsibility to keep this information private and use it solely for the purposes of participating in the BackaBuddy campaigns. Do not share or distribute any user information without their permission.</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <h5 class= "fs-20 mt-3">Contract between beneficiaries of individual campaigns and Contributor Individual campaigns are fundraisers for a person or group that is/are not affiliated with a registered organisation.</h5>
-                                <p class="mt-3">While every effort will be taken to ‘vet’ campaigns for individuals, BackaBuddy ultimately cannot warrant that your donations will be used for any particular purpose and shall not be responsible for any dissatisfaction you may have regarding the recipient individual's use of any donation you may make through the website or for any misuse or non-use of such donations by the recipient individual cause.</p>
-                                <p class="mt-3">After donations are made, all further dealings are solely between the donor and such recipient.</p>
-                                <p class="mt-3">BackaBuddy shall have no liability to donors whatsoever for any use or misuse of donations made to a BackaBuddy Crowdfunding page. The BackaBuddy Crowdfunding page may state that they will use donations only for specific purposes, but BackaBuddy cannot guarantee that they will use it for such a purpose.</p>
-                                <p class="mt-3">It is your sole responsibility, as a user of the site, to ensure that the cause stated to be supported on a relevant BackaBuddy page is one that you wish to support.</p>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">FICA Legislation Requirements</h5>
-                                <p class="mt-3">All transactions using PayPal (greater than or equal to) ≥R20 000 will need to be verified in accordance with FICA regulations and the South African Law.</p>
-                                <div class="mt-4">
-                                    <p class="mt-3">Our finance team will be in touch to request the following:</p>
-                                    <ul class = "list">
-                                        <li>Copy of Identity document or passport.</li>
-                                        <li>Proof of residential address in your country of permanent residence.</li>
-                                        <li>Confirmation that it was indeed you, who made this donation.</li>
-                                        <li>Confirmation that we may proceed in remitting your donation to the supported campaign</li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">Vetting Individual Campaigns</h5>
-                                <p class="mt-3">Each campaign will be reviewed based on the content provided by this submission form.</p>
-                                <p class="mt-3">Campaign Organisers must register using their true identities, including their name and any image or video purporting to depict the Campaign Organisers or the beneficiary of such campaign.</p>
-                                <p class="mt-3">BackaBuddy takes the integrity of individual campaigns seriously and will endeavour to ensure there is sufficient evidence for the legitimacy of campaign content. To this end, there are criteria in place that need to be met before a campaign is verified on the platform, and funds are paid out.</p>
-                                <div class="mt-4">
-                                    <p class= "mt-3">We reserve the right to decline campaigns based on the following criteria:</p>
-                                    <ul class = "list">
-                                        <li>Insufficient supporting information and/or campaign copy. This includes but is not limited to a lack of appropriate contactable references or supporting documentation that can be used to verify the campaign ‘cause’ at any stage of the process.</li>
-                                        <li>Monetary targets that are not proportionate to the cause as stated in the campaign copy</li>
-                                        <li>Campaigns that are raising funds for investment, speculation, or gambling.</li>
-                                        <li>Campaigns that offer rewards or entry into a competition/raffle</li>
-                                        <li>Campaigns that display inappropriate images or images subject to copyright</li>
-                                        <li>Campaigns that aim to fund or form political parties, are political party affiliated or promote a political agenda.</li>
-                                    </ul>
-                                    <p class="mt-3">BackaBuddy offers campaign creators the option of BackaBuddy administering the campaign. “Bluetick Campaigns” or “BackaBuddy Assisted” means paying part or all of the funds eligible for payout to a <span class="fs-14">vendor/organisation/company/professional</span> directly upon presentation of invoices or similar transaction proof, instead of paying funds directly to the bank account of the individual campaign creator or beneficiary. Although it is not essential, having funds paid directly to a vendor or institution is almost always preferred by donors. BackaBuddy reserves the right to convert any individual campaign to a Bluetick Campaign.</p>
-                                    <p class="mt-3">If during the course of your Bluetick Campaign, you would prefer that the funds be paid out directly to yourself or the beneficiary, BackaBuddy is required to send an email to your donors to confirm if they are happy to have the funds redirected or if they would prefer a refund. (Please refer to our section on refunds).</p>
-                                    <p class="mt-3">For both self-managed and Bluetick campaigns, it is the responsibility of the campaign creator to ensure the accuracy of the account details provided.</p>
-                                    <p class="mt-3">Campaign creators are responsible for ensuring the accuracy of the banking details provided. BackaBuddy will not process payouts into a new or updated account if the originally provided details were incorrect, until the funds have been successfully recalled and returned by the bank. While BackaBuddy will make reasonable efforts to assist in the recall process, the campaign creator acknowledges that the responsibility for providing correct banking information lies solely with them, and any delays or losses resulting from incorrect details are not the responsibility of BackaBuddy.</p>
-                                </div>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">What we do and don’t do</h5>
-                                <ul class = "list">
-                                    <li>Responsibility for using donation money as advertised rests entirely with the organisation or campaign creator.</li>
-                                    <li>We charge our fees before putting funds into a organisation’s account. We (and our payment partners) will subtract fees and banking charges before transmitting the proceeds of a campaign.</li>
-                                    <li>
-                                        <p class="bold-p">We don’t verify the identity of the organisations on the Site or whether organisations are using monies received for a legitimate purpose - </p>this is your responsibility as a contributor!
-                                    </li>
-                                    <li>
-                                        We don’t independently verify whether the organisations hosted on the Site have section 18A status in terms of the Income Tax Act, 1962. This is something that contributors are responsible for checking with a organisation before donating. As such, BackaBuddy does not guarantee that donations to organisations will be tax-deductible.
-                                    </li>
-                                    <li>If you are an organisation or campaign creator, don’t assume that you’ll be able to immediately collect your funding and don’t take any actions in reliance on collecting any donations until the money is put into your account.</li>
-                                    <li>We don’t become involved in disputes between users, or between users and any third party relating to the use of the Services. BackaBuddy will, however, investigate organisation profiles or campaigns should we receive 2 or more complaints in writing about the organisation or campaign.</li>
-                                    <li>BackaBuddy doesn’t endorse any content that users submit to the Site.</li>
-                                    <li>The Site may contain links to other websites (which we do not necessarily endorse). When you access these websites, you do so at your own risk.</li>
-                                    
-                                </ul>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">Our Fees/Administrative Costs</h5>
-                                <p class="mt-3">All donations made through BackaBuddy are managed by The BackaBuddy Foundation</p>
-                                <p class="mt-3">(Reg No. 2015/313483/08)</p>
-                                <p class="mt-3">The BackaBuddy Foundation collects a 7% +VAT = 8.05% admin fee and a transaction fee which covers the costs of our 3rd party bank and payment channel fees.</p>
-                                <p class="mt-3">
-                                    <p class="bold-p">75% cover the administration fee.</p> 
-                                    How? BackaBuddy gives donors the option to cover this fee.
-                                </p>
-                                <p class="mt-3">Your support helps us continue to offer our much-needed platform and services to people in true need and organisations such as yourselves.</p>
-                                <p class="mt-3">Registered organisations / Non-Profit Organisations are subject to a 0% platform/admin fee and a transaction fee which covers the costs of our 3rd party bank and payment channel fees. Donors can choose to leave a tip for our services.</p>
-                                <div class="mt-4">
-                                    <p>African Payment Processing fees: as of the 22nd March 2022</p>
-                                    <ul class="list">
-                                        <li>Electronic Funds Transfer EFT R12</li>
-                                        <li>Instant EFT 3.5%</li>
-                                        <li>Debit/Credit Card South Africa 3.9%</li>
-                                        <li>SnapScan 3.9%</li>
-                                    </ul>
-                                    <p>International Payment Processing fees:</p>
-                                    <ul class="list">
-                                        <li>The PayPal fee directly</li>
-                                        <li>The local SA PayPal banking partners fee</li>
-                                    </ul>
-                                </div>
-
-                                <div class="mt-4">
-                                    <h5 class="fs-20 mt-3">Payout of funds raised:</h5>
-                                    <p class="mt-3">You have the flexibility to request a payout at any time, provided your campaign/organisation has been vetted and you have received donations. Please note that the processing time for payouts by BackaBuddy is up to 10 business days. Additionally, you can only submit a new payout request once the previous one has been successfully processed.</p>
-                                    <p class="mt-3">VAT Reg No: 4430288623</p>
-                                </div>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">Intellectual Property</h5>
-                                <p class="mt-3">As an organisation, you own your ideas and the content that you post on your fundraising page. This means that you are solely responsible for the content that appears on your page. BackaBuddy will not be liable for any mistakes or omissions that appear on your page. You are also responsible for ensuring that the content that you post does not violate any of the rights of third parties, or any copyright. You will be responsible for paying any royalties that become owing due to the content posted on your page.</p>
-                                <p class="mt-3">BackaBuddy does not become the owner of the content that you post on your page. However, BackaBuddy does require some control over your content in order to perform the Services. Once you post information on your page, you grant BackaBuddy a worldwide, irrevocable, non-exclusive, continuous and royalty-free right to use, reproduce, display and distribute the content that you post. BackaBuddy is also entitled to modify, delete, translate or reformat the content that is posted on your page.</p>
-                                <p class="mt-3">The Services are legally protected by copyright, intellectual property rights and other rights and laws. You are obliged to respect BackaBuddy’s protections at all times. Content that appears on the BackaBuddy site, whether its own content or content generated by its users, may be used and reproduced by you for personal use only. You may not use any content that appears on the BackaBuddy site for commercial gain, without prior permission from the relevant copyright holder.</p>
-                                <p class="mt-3">“BackaBuddy”, “Back-a-Buddy”, “Backabuddy.com”, “Backabuddy” and the BackaBuddy logo are protected under trademark registration and any unauthorised use of these marks is prohibited. Copyright subsists in all of the material on this website and, other than in respect of the content that you post on your page, all copyright vests in Easygiving (Proprietary) Limited, trading as BackaBuddy.</p>
-                                <p class="mt-3">BackaBuddy’s intellectual property policy is informed by the Trade Marks Act 194 of 1993 and the Copyright Act 98 of 1978. We reserve the right to delete all content that infringes the provisions of these two Acts.</p>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">Our Rights</h5>
-                                <div class="mt-4">
-                                    <p class="mt-3">BackaBuddy reserves the right:</p>
-                                    <ul class = 'list'>
-                                        <li>To make changes to the Site and Services without notice or liability.</li>
-                                        <li>To decide who’s eligible to use BackaBuddy. We can cancel profiles, decline to offer our Services and can change our eligibility criteria at any time. If anything relating to our Site is prohibited by law where you live, then we revoke your right to use BackaBuddy in that jurisdiction.</li>
-                                        <li>In the event that any system or programme maintenance of any sort is required, to suspend services until such time as these have been completed; To cancel any pledge to any campaign, at any time and for any reason</li>
-                                        <li>To reject, cancel, interrupt, remove, or suspend any campaign at any time and for any reason.</li>
-                                        <li>To redistribute funds that have not been claimed, or are untraceable, after a 12 month period, to be used to further the charitable aims of BackaBuddy.</li>
-                                        <li>To retain all interest received from funds held until payout.</li>
-                                        <li>To transfer unallocatable donations where an incorrect reference has been used or a refund has not been requested within one (1) month of the donation date. These funds will be moved to a BackaBuddy fund, which is dedicated to enhancing the user and campaign creator experience, supporting initiatives such as matched funding, improving payment gateways, and other platform improvements aimed at better serving people in need in the future. All efforts are made to ensure that donations are correctly allocated, and a record of these efforts can be viewed by requesting a copy here.</li>
-                                    </ul>
-                                </div>
-                                <div class="mt-4">
-                                    <p class="mt-3">BackaBuddy reserves the right to refund donors for any reason. Such reason may include any, but not exclusively, of the following:</p>
-                                    <ul>
-                                        <li>When BackaBuddy has been instructed by the organisation or the campaign creator.</li>
-                                        <li>When the campaign cannot be verified satisfactorily.</li>
-                                    </ul>
-                                </div>
-                                <p class="mt-3">Refunds are processed on Tuesdays and Thursdays (or the closest working day), with a 7-working-day grace period to attend to the request.</p>
-                                <p class="mt-3">All bank/payment/transaction fees associated with a donation will be held by BackaBuddy when the refund is processed.</p>
-                                <p class="mt-3">If there are any queries on a particular campaign with regards to the fees being held by BackaBuddy, that query must be sent in writing to queries@backabuddy.co.za. In this case BackaBuddy will evaluate case by case basis if the refund should include bank/payment/transaction fees.</p>
-                                <div class="mt-4">
-                                    <p class="mt-3">The following are exceptions to our standard refund terms:</p>
+                    <div class="col-md-9">
+                        <div class="flex-column content-container-wrapper">
+                            <div id = "support-tab-fees-payout" class="support-tab show content-container fees-payout">
+                                <p class="mac-italic-text fs-16">All donations made through BackaBuddy are managed by The BackaBuddy Foundation (Reg No. 2015/313483/08)</p>
+                                <div>
+                                    <h3 class="fs-38 my-3 text-center fw-600">Fee Structure</h3>
+                                    <p>It is free to setup a campaign. Fees are only charged on funds raised.</p>
+                                    <p class="fw-600 mt-3">Total fee = 1) Platform fee + 2) Payment Processing fee (3rd Party)</p>
                                     <ol>
-                                        <li>In the case of a recurring donation processed by BackaBuddy when it should not have been, then BackaBuddy will refund the donation amount inclusive of bank/payment/transaction fees.</li>
-                                        <li>When refunds are processed via PayPal the full donation amount will be refunded.</li>
+                                        <li class="mt-4">
+                                            <p>Platform fee: BackaBuddy</p>
+                                            <ul>
+                                                <li>
+                                                    <p class="block">Registered organisations / Non-Profit Organisations:</p>
+                                                    <p class="ms-1"><strong>0% platform fee.</strong> Donors can choose to leave a tip for our services.</p>
+                                                </li>
+                                                <li>
+                                                    <p class="block">Individual Fundraisers:</p>
+                                                    <p class="ms-1">7% (+VAT). Donors are given the option to cover this fee. <strong> N.B. 75% of donors cover this fee.</strong></p>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="mt-4">
+                                            <p>Payment Processing fee (3rd Party):</p>
+                                            <ul>
+                                                <li>
+                                                    <p class="block">African Payment Processing fees (as of the 22nd March 2022):</p>
+                                                    <div class="ms-1 flex-between">
+                                                        <p>Electronic Funds Transfer EFT</p>
+                                                        <strong>R12</strong>
+                                                    </div>
+                                                    <div class="ms-1 flex-between">
+                                                        <p>Instant EFT</p>
+                                                        <strong>3.5%</strong>
+                                                    </div>
+                                                    <div class="ms-1 flex-between">
+                                                        <p>Debit/Credit Card South Africa</p>
+                                                        <strong>3.9%</strong>
+                                                    </div>
+                                                    <div class="ms-1 flex-between">
+                                                        <p>SnapScan</p>
+                                                        <strong>3.9%</strong>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <p>International Payment Processing fees:</p>
+                                                    <div class="ms-1 flex-between">
+                                                        <p>International Credit Card (PayPal)</p>
+                                                        <strong>$0.3 + 5.5%</strong>
+                                                    </div>
+                                                    <div class="ms-1 flex-between">
+                                                        <p>PayPal Account</p>
+                                                        <strong>$0.3 + 5.5%</strong>
+                                                    </div>
+                                                    
+                                                </li>
+                                            </ul>
+                                        </li>
                                     </ol>
                                 </div>
-                                <p class="mt-3">BackaBuddy will make contact with the donors via email to notify them of the pending refund and to request banking details, or alternatively propose to the donor other options for how the donated funds should be allocated.</p>
-                                <p class="mt-3">BackaBuddy is not liable for any damages as a result of any of these actions, and it is our policy not to comment on the reasons for any such action</p>
-                                <p class="mt-3">Furthermore, if you are an organisation and we have already deposited funds into your account and a donation is subsequently reversed by one of our payment partners (for example, in the case of a charge-back) then we are entitled to claim the reversed amount back from you for a reasonable period after the reversal/charge-back.</p>
-                            </li>
-                            <li>
-                                <h5 class = "fs-20 mt-3">Disclaimer, Indemnity and Limitation of Liability</h5>
-                                <p class="mt-3">You use the Services solely at your own risk. They are provided to you without warranty of any kind, whether express or implied.</p>
-                                <p class="mt-3">If you do something that results in us getting sued, or if you break any of the promises you make in these Terms, you hereby indemnify us and agree to defend and hold us harmless from all liabilities, claims, and expenses (including reasonable attorneys’ fees and other legal costs) that arise from or relate to your use or misuse of the Services.</p>
-                                <p class="mt-3">
-                                    In no event will BackaBuddy (or our directors, employees, partners, suppliers, or content providers) be liable for damages of any kind, including but not limited to damages (i) resulting from your access to, use of, or inability to access or use the Services; (ii) for any lost profits, data loss, or cost of procurement of substitute goods or services; or (iii) for any conduct or content of any third party on or in connection with the Site (including hackers or employees/agents of BackaBuddy acting beyond the scope of their authority). In no event shall our liability for direct damages be in excess of (in the aggregate) one thousand Rand.</p>
-                                <p class="mt-3">By using the Services, you release BackaBuddy from claims, damages, and demands of every kind — known or unknown, suspected or unsuspected, disclosed or undisclosed — arising out of or in any way related to such disputes and the Services.</p>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">Dispute Resolution and Governing Law</h5>
-                                <p class="mt-3">In the event that you have any complaints or believe that we have caused you any loss or harm, please contact us (using the contact details provided here) first before resorting to legal action.</p>
-                                <p class="mt-4">In the unfortunate situation where legal action does arise, these Terms (and all other rules, policies, or guidelines incorporated by reference) will be governed by and construed in accordance with the laws of South Africa, and you consent and submit to the non-exclusive jurisdiction of the High Court of South Africa, Western Cape Division, Cape Town in any dispute arising from or in connection with these Terms.</p>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">Legal and Regulation Restrictions</h5>
-                                <p class="mt-3">Due to legal and regulatory constraints, PayPal is unable to process payments for crowdfunding in Hong Kong, crowdfunding for political fundraising in Russia, and campaigns related to Sanctions Jurisdictions (Cuba, Iran, North Korea, Syria, and the Crimea, Donetsk and Luhansk regions of Ukraine).</p>
-                                <p class="mt-3">BackaBuddy is not allowed to use PayPal as a payment method for customers/campaign owners/beneficiaries who are domiciled in or reside in the abovementioned Sanctioned Jurisdictions and Hong Kong, and BackaBuddy is not allowed to use PayPal as a payment method for campaigns benefiting the Sanctioned Jurisdictions, or crowdfunding in Hong Kong and political-related causes in Russia.</p>
-                            </li>
-                            <li>
-                                <h5 class="fs-20 mt-3">The Boilerplates</h5>
-                                <p class="mt-3">These Terms constitute the entire agreement between you and BackaBuddy with regard to the Services. Neither you nor BackaBuddy will have any claim or right of action arising from any undertaking, representation or warranty not included in these Terms.</p>
-                                <p class="mt-3">No agreement to vary, add to or cancel these Terms as they specifically apply to you will be of any force or effect unless recorded in writing (which doesn’t include email) and signed by or on behalf of both you and BackaBuddy.</p>
-                                <p class="mt-3">
-                                    If any provision of these Terms is rendered void, illegal or unenforceable under any law of any jurisdiction (provided the provision isn’t vital to the proper understanding of these Terms), the validity, legality and enforceability of the remaining provisions should not in any way be affected and the legality, validity and unenforceability of such provision under the law of any other jurisdiction are not in any way affected or impaired.</p>
-                                <p class="mt-3">
-                                    These Terms are personal to you and you can’t cede any rights that you may have against us, or delegate any obligations you owe to us unless you have our prior written consent. There may, however, be circumstances where we need to cede our rights against you or delegate our obligations owed to you to third parties (for example, if we undergo a corporate restructure). These Terms constitute your prior consent to such cession and delegation. If we do cede our rights or delegate our obligations, we do undertake to notify you of this by email, or by posting a notice on the Site.
-                                </p>
-                                <p class="mt-4 bold-p">Well done and thanks for reading these Terms. Welcome to FEED NEEDS!</p>
-                            </li>
-                        </ol>
-
-                    </div>
-                </div>
-            </main>
-
-            <footer class="pos-rel mt-5">
-                <div class="campaign-container">
-                    <a href="#" class="start-campaign">START CAMPAIGN</a>
-                    <a href="#" class="find-campaign">FIND CAMPAIGN</a>
-                </div>
-                <div class="footer-bottom-wrapper">
-                    <div class="w-100">
-                        <ul class="footer-links-container grid">
-                            <li><a href="#" class="footer-links">FAQ</a></li>
-                            <li><a href="#" class="footer-links">Contact us</a></li>
-                            <li>
-                                <a href="#" class="footer-links">Online fundraising Ideas</a>
-                            </li>
-                            <li><a href="#" class="footer-links">Bitcoin Fundraising</a></li>
-                            <li><a href="#" class="footer-links">Learn More</a></li>
-                            <li><a href="#" class="footer-links">Countries</a></li>
-                            <li><a href="#" class="footer-links">Read Blog</a></li>
-                            <li><a href="#" class="footer-links">How to fundraise</a></li>
-                            <li><a href="#" class="footer-links">Facebook Fundraising</a></li>
-                            <li><a href="#" class="footer-links">Facebook Fundraising</a></li>
-                            <li><a href="#" class="footer-links">About</a></li>
-                            <li><a href="#" class="footer-links">Help center</a></li>
-                        </ul>
-
-                        <div class="flex-wrap gp-20 footer-bottom-link-container mt-5">
-                            <a href="#" class="footer-bottom-link">Privacy Policy</a>
-                            <a href="#" class="footer-bottom-link">Terms & Conditions</a>
-                            <div class="social-media-container flex-wrap">
-                                <a href="#" class="flex-center">
-                                    <img
-                                        class="social-icon"
-                                        src="../static/img/svg/socials/facebook.svg"
-                                        alt="Facebook icon"
-                                    />
-                                </a>
-
-                                <a href="#" class="flex-center">
-                                    <img
-                                        class="social-icon"
-                                        src="../static/img/svg/socials/twitter.svg"
-                                        alt="Twitter icon"
-                                    />
-                                </a>
-
-                                <a href="#" class="flex-center">
-                                    <img
-                                        class="social-icon"
-                                        src="../static/img/svg/socials/instagram.svg"
-                                        alt="Instagram icon"
-                                    />
-                                </a>
-
-                                <a href="#" class="flex-center">
-                                    <img
-                                        class="social-icon"
-                                        src="../static/img/svg/socials/linkedIn.svg"
-                                        alt="LinkedIn icon"
-                                    />
-                                </a>
-
-                                <a href="#" class="flex-center">
-                                    <img
-                                        class="social-icon"
-                                        src="../static/img/svg/socials/tiktok.svg"
-                                        alt="Tiktok icon"
-                                    />
-                                </a>
-
-                                <a href="#" class="flex-center">
-                                    <img
-                                        class="social-icon"
-                                        src="../static/img/svg/socials/whatsapp.svg"
-                                        alt="Whatsapp icon"
-                                    />
-                                </a>
-
-                                <a href="#" class="flex-center">
-                                    <img
-                                        class="social-icon"
-                                        src="../static/img/svg/socials/telegram.svg"
-                                        alt="Telegram icon"
-                                    />
-                                </a>
-
-                                <a href="#" class="flex-center">
-                                    <img
-                                        class="social-icon"
-                                        src="../static/img/svg/socials/youtube.svg"
-                                        alt="Youtube icon"
-                                    />
-                                </a>
+                                <p class="mac-italic-text fs-16">PayPal is a high-cost payment portal but is a trusted international payment channel. The 5.5% is made of two fees; the PayPal fee directly, and the local SA PayPal banking partner's fee.</p>
+                                <div>
+                                    <h3 class="fs-38 mt-2 text-center fw-600">Payouts</h3>
+                                    <p class="mt-3">You have the flexibility to request a payout at any time, provided your campaign/organisation has been vetted and you have received donations. <strong>Please note that the processing time for payouts by BackaBuddy is up to 10 business days.</strong> Additionally, you can only submit a new payout request once the previous one has been successfully processed.</p>
+                                    <p class="my-4">Thank you for considering BackaBuddy as your fundraising platform. We’re here for you!</p>
+                                </div>
                             </div>
-                            <div class="copyright-container pos-rel flex gp-15">
-                                <p class="copyright-text">2024 Feed Needs</p>
-                                <span class="dash"></span>
-                                <p class="copyright-text">All rights reserved</p>
+
+                            <div id = "support-tab-contact-us" class="support-tab content-container contact-us">
+                                <h3 class="fs-38 mt-2 text-center fw-600">We're here for you</h3>
+                                <p>Need help? Our team of Customer Support Specialists is here to guide you throughout your crowdfunding journey.</p>
+                                <div class="mt-4">
+                                    <h5 class="fs-18">How to reach us</h5>
+                                    <p class="mt-3">Whatsapp - <a class="link-hv-line highlight-span-clr" href="#">Click here</a></p>
+                                    <p class="mt-3">Contact number - <a class="link-hv-line highlight-span-clr" href="tel://+00 11 442 3125">+00 11 442 3125</a></p>
+                                </div>
+
+                                <div class="mt-4">
+                                    <h5 class="fs-18">Help via Email</h5>
+                                    <p>We provide clients with ticket-based support, simply log a ticket and we'll resolve your issue as soon as possible.</p>
+                                    <div class="form-container">
+                                        <form class="contact-form" action="">
+                                            <div class="flex-column align-start mt-3">
+                                                <label class="input-label text-start block mb-2" for="">Name</label>
+                                                <div class="row w-100">
+                                                    <div class="col-lg-6 flex-column ">
+                                                        <input class="form-el" name = "first_name" type="text">
+                                                        <span class="input-name">First Name</span>
+                                                    </div>
+
+                                                    <div class="col-lg-6 flex-column">
+                                                        <input class="form-el" name="last_name" type="text">
+                                                        <span class="input-name">Last Name</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-column align-start mt-3">
+                                                <label class="input-label text-start block mb-2" for="">Email</label>
+                                                <div class="flex-column align-start w-100 gp-20">
+                                                    <div class="w-res-60">
+                                                        <input class="form-el" name = "email" type="email">
+                                                    </div>
+
+                                                    <div class="w-res-60">
+                                                        <input class="form-el" placeholder="Confirm Email" name="confirm_email" type="email">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-column align-start mt-3">
+                                                <label class="input-label text-start block mb-2" for="">Phone number</label>
+                                                <div class="flex-column align-start w-100 gp-20">
+                                                    <div class="w-res-60">
+                                                        <input class="form-el" id = "phone" name = "phone_number" type="tel">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-column align-start mt-3">
+                                                <label class="input-label text-start block mb-2" for="">Do you have an existing project</label>
+                                                <div class="flex-column align-start gp-20">
+                                                    <div class="flex gp-5">
+                                                        <input class="form-el radio" id = "existing-rad-1" name = "existing_radio" type="radio">
+                                                        <label for="existing-rad-1">Yes</label>
+                                                    </div>
+
+                                                    <div class="flex gp-5">
+                                                        <input class="form-el radio" id = "existing-rad-2" name = "existing_radio" type="radio">
+                                                        <label for="existing-rad-2">No</label>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100">
+                                                    <div data-content="existing-rad-1" class="existing-cta-div flex-column align-start mt-4 w-100">
+                                                        <label for="">Campaign Link</label>
+                                                        <div class="flex-column w-res-60 mt-2">
+                                                            <input class="form-el" name = "first_name" type="text">
+                                                            <span class="input-name">Copy and paste your campaign link here</span>
+                                                        </div>
+                                                    </div>
+
+                                                        <div data-content="existing-rad-2" class="existing-cta-div flex-column align-start mt-4 w-100">
+                                                        <label for="">Link to supported campaign</label>
+                                                        <div class="flex-column w-res-60 mt-2">
+                                                            <input class="form-el" name = "first_name" type="text">
+                                                        </div>
+                                                        <span class="input-name">Please copy and paste the link to the campaign from the browser bar (while you're viewing the campaign, that is!)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-column mt-4 align-start w-100">
+                                                <label class="input-label" for="subject">Subject</label>
+                                                <div class="w-res-60 mt-2">
+                                                    <input class="form-el" type="text" name="subject" id="subject">   
+                                                    <span class="input-name">Describe your issue in 5 words</span>                                                     
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-column mt-4 align-start w-100">
+                                                <label class="input-label" for="subject">Query Description</label>
+                                                <div class="flex-column align-start w-res-80 mt-2">
+                                                    <textarea class="form-el" name="query_description" id=""></textarea>
+                                                    <span class="input-name">Describe your issue in as much detail as possible</span>                                                     
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-column mt-4 align-start w-100">
+                                                <label for="subject">Add a screenshot or any images</label>
+                                                <div class="flex-column align-start w-100 mt-2">
+                                                    <div class="upload-control-container w-100">
+                                                        <label class="upload-control-label w-res-80" for="screenshot-upload-input">
+                                                            <span>Choose File(s)</span>
+                                                            <span class="flex-center upload-icon">
+                                                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <g id="Communication / Share_iOS_Export">
+                                                                    <path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
+                                                            <input class="upload-control-input" type="file" name="" id="screenshot-upload-input">
+                                                        </label>
+                                                    </div>
+                                                    <span class="input-name">Upload screenshots of any payment or system issues you might be facing.</span>                                                     
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-column mt-4 align-start w-100">
+                                                <label for="subject">Upload any other files</label>
+                                                <div class="flex-column align-start w-100 mt-2">
+                                                    <div class="upload-control-container w-100">
+                                                        <label class="upload-control-label w-res-80" for="screenshot-upload-input">
+                                                            <span>Choose File(s)</span>
+                                                            <span class="flex-center upload-icon">
+                                                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <g id="Communication / Share_iOS_Export">
+                                                                    <path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
+                                                            <input class="upload-control-input" type="file" name="" id="screenshot-upload-input">
+                                                        </label>
+                                                    </div>
+                                                    <span class="input-name">If you have any other files besides screenshots that you want us to see like supporting documents, proof of payments etc. please add them here.</span>                                                     
+                                                </div>
+                                            </div>
+
+                                            <button class="cta-btn submit-btn">Submit Query</button>
+                                        </form>
+                                    </div>
+                                    <div class="mt-4">
+                                        <h5>Our support hours</h5>
+                                        <p>8am - 5pm : Monday - Friday</p>
+                                        <p class="my-3 w-res-80">Kindly note that BackaBuddy does not offer any form of financial assistance or funding to individuals or charities.</p>
+                                        <p>For further queries, please do not hesitate to get in touch with us.</p>
+                                        <p class="bold-p mt-3">Head office: <span class="fw-800"> Cape Town, South Africa</span></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </footer>
+            </div>
+
+            <div id = "feeds-payout-category-works" class="feed-payout-category works-container mt-4">
+                <h3 class="fs-38 my-3 text-center fw-600">How it works</h3>
+                <p class="mt-2">BackaBuddy is a South African crowdfunding platform that is designed to help you create online campaigns to raise funds for causes you are passionate abou</p>
+                <h4 class="fs-20 mt-3">What sort of campaigns can be created on BackaBuddy?</h4>
+                <p class="mt-2">You can create campaigns for anything that has a positive impact on individuals, communities, and the environment.</p>
+                <p class="mt-2">These campaigns can raise funds for organisations or for individuals who need donations for a variety of reasons, including medical procedures, sporting opportunities, or for studies. You can even create campaigns in loving memory of a special person to raise funds for his or her favourite cause.</p>
+                <p class="mt-2">We love campaigns that make use of our ‘champion’ model – raising funds on behalf of an organisation or an individual in need. While you are welcome to fundraise for yourself, campaigns that help others, friends or strangers, are powerful reminders of all the good there is in the world.</p>
+                <div class="mt-3">
+                    <h4 class="fs-20">How does it work?</h4>
+                    <p class="mt-2">You can quickly and easily create a fundraiser on the BackaBuddy site, then share your campaign link with your friends, family, and colleagues – your crowd - to invite monetary donations. Creating a campaign is free and there are no charges if you don’t raise funds.</p>
+                    <p class="mt-2">There are no time limits imposed on campaigns and no penalties if you don’t reach your target. You can also carry on receiving donations after you’ve met your target.</p>
+                    <p class="mt-2">Simply put, your campaign can continue for as long as you like. You do not have to reach your target or a certain amount to receive your donations. You have the flexibility to request a payout at any time, provided your campaign/organisation has been vetted and you have received donations. Please note that the processing time for payouts by BackaBuddy is up to 10 business days. Additionally, you can only submit a new payout request once the previous one has been successfully processed. </p>
+                </div>
+                <div class="mt-3">
+                    <h4 class="fs-20">Organisation Registrations</h4>
+                    <p class="mt-2">If you are an organisation, crowdfunding is a transparent and effective way to fundraise for specific needs within your organisation. First you simply register by completing this form. We’ll create your organisation profile page, and then you (and your supporters) can create as many fundraising campaigns as you’d like!</p>
+                </div>
+                <div class="mt-3">
+                    <h4 class="fs-20">What makes BackaBuddy different from other crowdfunding platforms?</h4>
+                    <p class="mt-2">BackaBuddy takes integrity really seriously, which is why we like to ‘vet’ individual campaigns and organisations' registrations before any payouts can be processed. This way, our site users and donors can be assured that we take steps to protect them to the best of our ability.</p>
+                    <p class="mt-2">Funds raised can only be paid out once the campaign/organisation has been verified and banking details have been received. You can read more here about what this involves. Once you have met the criteria in place and we consider your fundraiser to be authentic with donations received, you can request a payout on funds raised. Please note that the processing time for payouts by BackaBuddy is up to 10 business days. Additionally, you can only submit a new payout request once the previous one has been successfully processed.</p>
+                    <p class="mt-2">BackaBuddy offers campaign creators the option of BackaBuddy administering the campaign. “Bluetick Campaigns” or “BackaBuddy Assisted” means paying part or all of the funds eligible for payout to a <span class="fs-14">vendor/organisation/company/professional</span> directly upon presentation of invoices or similar transaction proof, instead of paying funds directly to the bank account of the individual campaign creator or beneficiary. Although it is not essential, having funds paid directly to a vendor or institution is almost always preferred by donors.</p>
+                </div>
+
+            </div>
+
+            <div id = "feeds-payout-category-privacy" class="feed-payout-category policy-container mt-4">
+                <h3 class="fs-38 my-3 text-center fw-600">Privacy policy</h3>
+                <p class="mt-3">BackaBuddy takes your privacy very seriously. We will not pass your personal details on to anyone, except the organisation you have chosen to support, without your express consent. The only exception to this rule is when you register your BackaBuddy fundraising page. Your name, email address, and postal address may be given to the organisation so they can identify you as the source of donations received.</p>
+                <p class="mt-3">Please note that by visiting or registering with BackaBuddy, you are agreeing to the practices detailed below, so please read carefully to find out how we will treat your information.</p>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Your right to access your personal information</h4>
+                    <p class="mt-3">You have the right to access, amend, correct, access, or transfer your personal information at any time. Additionally, you have the right to request us to limit the use of, block transfer of, or delete your personal information from our records. To make any request regarding your personal information, please contact us here.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Why we collect your personal information</h4>
+                    <p class="mt-3">We collect your personal information because it helps us deliver a superior experience and level of customer service. Your personal information also helps us and our third-party advertising partners deliver more relevant ads to you when you visit the website.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">What information we collect & how we may use it</h4>
+                    <p class="mt-3">We will ask for your personal information if you wish to create a profile with us for the purpose of receiving company updates, blog posts, related company news. We may at that time require that you provide personally identifiable information, including without limitation your name and email address.</p>
+                    <p class="mt-3">We may also collect certain non-personally identifiable information regarding customer activities on our website. This helps us to determine how best to provide useful information to users and to understand which parts of our website and Internet services are of most interest to them.</p>
+                    <p class="mt-3">When you submit reviews or comments to the website, you will provide us with the contents of your submission.</p>
+                    <p class="mt-3">We will also collect the information described below under “Cookies, Tracking and Other Technologies” when you use the website.</p>
+                    <p class="mt-3">We may use your personal information to provide services that you have requested, respond to your requests, and send you communications, as well as for auditing, research, and analysis to improve the products offered on our website.</p>
+                    <p class="mt-3">When you participate in a BackaBuddy fundraising campaign, BackaBuddy may collect any of the following information as applicable for that fundraising campaign. You will always have the choice to opt-in or opt-out of providing this information.</p>
+                    <ul class= "list">
+                        <li>Contact details such as name, address, telephone number, and email address</li>
+                        <li>Identity number, or passport number for identification purposes</li>
+                        <li>Identification of workplace and position (title)</li>
+                        <li>Information collected from a recruiting firm that recruited you for our fundraising campaign</li>
+                        <li>Information regarding any relevant experience or subject matter expertise necessary for the fundraising campaign</li>
+                        <li>Medical condition and any prescribed medications, when applicable for the fundraising campaign</li>
+                        <li>Relevant professional licensing number (e.g., medical license number)</li>
+                        <li>Demographic information such as age, household income, race, gender, ethnicity</li>
+                        <li>Opinions, specifically limited to opinions on the products or services in the fundraising campaign</li>
+                    </ul>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Publicly displayed information is public</h4>
+                    <p class="mt-3">If you use the review or comment feature on the website, you should be aware that your user name and any other information you share may be visible to other users. Personally identifiable information you submit in this manner can be read, collected, or used by other individuals to send you unsolicited messages. For example, if you submit a review that includes information that was previously non-public, BackaBuddy will collect that information from your interaction and the information may become publicly available. BackaBuddy is not responsible for the personally identifiable information you choose to submit in this manner.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">When we disclose your information</h4>
+                    <p class="mt-3">To help us provide superior service, your personal information may be shared with actual and prospective assignees and licensees of the website, its content, or any portion thereof, including your submissions and personal information. In addition, the personal and other information you provide to BackaBuddy is considered an asset of the company and may be included among transferred assets of the website if BackaBuddy or any parent company is acquired by a third party.</p>
+                    <p class="mt-3">There are also times when BackaBuddy makes certain personal information about you available to companies or individuals to provide products and services to you on our behalf. These companies may help us process information, manage and enhance customer data, provide customer service, assess your interest in our products and services, or conduct customer research or satisfaction surveys. We call them our “Service Providers.” We may share personally identifiable information with Service Providers solely as appropriate for them to perform their functions, but we prohibit them from using such information for any other purpose unless we inform you otherwise at the time of collection.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Retention of your personal information</h4>
+                    <p class="mt-3">BackaBuddy will only use your personal information to the extent necessary to carry out the fundraising campaign as specified in the informed consent form provided to you prior to your participation in our fundraising campaign. Aggregate reports of your personal information may be developed and retained for longer periods. This means that the information you provide is anonymized and combined with that of other fundraising campaign participants for analysis where this information cannot be used to identify you.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Cookies, tracking and other technologies</h4>
+                    <p class="mt-3">Like many websites, the BackaBuddy website uses cookies, flash cookies, web beacons, and other technologies to help us understand which parts of our websites are the most popular, where our visitors are going, and how much time they spend there. We may use these technologies to determine fundraising campaign traffic patterns on our website. This information helps us make the website more rewarding and helps us improve the effectiveness of our customer communications. We also use cookies to customize your experience and provide greater convenience each time you interact with us. For example, your profile information and information about your computer helps us operate the website efficiently.</p>
+                    <p class="mt-3">As is true of most websites, we gather certain information automatically and store it in log files. This information includes Internet Protocol (IP) addresses, browser type, Internet Service Provider (ISP), referring/exit pages, operating system, date/time stamp, and clickstream data. We use this information, which does not identify individual users, to analyze trends, to administer the site, to track users’ movements around the site and to gather demographic information about our user base as a whole. BackaBuddy will not use this type of collected information to market directly to that person. We may share aggregated anonymous information with third parties to assist in analyzing, operating, maintaining, and improving the website and placing advertising on it.</p>
+                    <p class="mt-3">We also may use third-party website analytics tools (such as Google Analytics) that collect information about visitor traffic on our website. The information we may collect by these tools is similar to that collected by the technologies described above and includes:</p>
+                    <ul class = "list">
+                        <li>Information about the devices our visitors use to access the Internet (such as the IP address and the device, browser and operating system type)</li>
+                        <li>URLs that refer visitors to the website</li>
+                        <li>Dates and times of visits to the website</li>
+                        <li>Information on actions taken on the website (such as page views and site navigation patterns)</li>
+                        <li>A general geographic location (such as country and city) from which a visitor accesses our website</li>
+                        <li>Search terms that visitors use to reach the website</li>
+                    </ul>
+                    <p class="mt-3">In some of the email messages from us or those whose products are available on our website, we use a “click-through URL” linked to content on the BackaBuddy website. When customers click one of these URLs, they pass through our web server before arriving at the destination web page. We may track this click-through data to help us determine interest in particular topics and measure the effectiveness of customer communications. If you prefer not to be tracked, simply avoid clicking text or graphic links in the email.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Clickstream data</h4>
+                    <p class="mt-3">As you use the Internet, a trail of electronic information is left at each website you visit. This information, which is sometimes referred to as “Clickstream Data,” can be collected and stored by a website’s server. As noted above, we collect Clickstream Data. Clickstream Data can tell us the type of computer and browsing software you use and the address of the website from which you linked to our website. We may use Clickstream Data as a form of non-personal information to anonymously determine how much time visitors spend on each page of the website, how visitors navigate throughout the website and how we may tailor our web pages to better meet the needs of visitors. This information will only be used to improve the website. Any collection or use of Clickstream Data will be anonymous and aggregated.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Retention of your personal information</h4>
+                    <p class="mt-3">BackaBuddy will only use your personal information to the extent necessary to carry out the fundraising campaign as specified in the informed consent form provided to you prior to your participation in our fundraising campaign. Aggregate reports of your personal information may be developed and retained for longer periods. This means that the information you provide is anonymized and combined with that of other fundraising campaign participants for analysis where this information cannot be used to identify you.</p>
+                    
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">How we respond to do not track (DNT) signals</h4>
+                    <p class="mt-3">Our website has links to the sites of advertisers and other third parties. BackaBuddy is not responsible for its privacy practices. We encourage you to learn about the privacy policies of those companies, which may collect personally identifiable information about you.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Registered BackaBuddy user information</h4>
+                    <p class="mt-3">When you create a secure personal profile on BackaBuddy for the purpose of creating a BackaBuddy fundraising page, we collect your title, name, email address, postal address, phone number (where you agree to provide it) and your password. We will automatically pass on your name, email and home addresses to the organisation that will benefit from the donations you are collecting. In all other instances, this information will be withheld from third parties unless you give us your express consent to do otherwise.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Children and minors</h4>
+                    <p class="mt-3">Our website and app are intended for use by adults only, and we do not knowingly collect or use any personal information from minors under the age of 17. If we collect personal information from someone we learn to be under 17 years of age, such personal information shall immediately be deleted. If you are a parent or guardian of a child under 17 years of age and you believe your child has provided us with personal information, please contact us <a href="#">here</a></p>
+                    <p class="mt-3">If you are a California resident under the age of 18, and a registered user of our website, California Business and Professions Code Section 22581 permits you to request and obtain the removal of content or information you have publicly posted. To make such a request, please contact us here and include “Removal Request” in the subject line. Please be aware that such a request does not ensure complete or comprehensive removal of the content or information you have posted and that there may be circumstances in which the law does not require or allow removal even if requested.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Donor information</h4>
+                    <p class="mt-3">If you donate on BackaBuddy, we collect your first and last name, your credit or debit card details (including card type, card number and expiry date) and your billing address. We will only use your payment details for the purpose of processing your donation via our payment partner, Nedbank.</p>
+                    <p class="mt-3">When donating to a campaign for an organisation, the organisation will receive certain information such as donor names and email addresses. It is the organisation’s responsibility to keep this information private and use it solely for the purposes of participating in the BackaBuddy campaigns.</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">BackaBuddy E-Newsletters</h4>
+                    <p class="mt-3">We will not send you email newsletters at any time unless you have expressly opted to receive them. All newsletters from BackaBuddy include the option to unsubscribe. If you have a personal BackaBuddy profile, you can change your contact preferences at any time by visiting the section entitled "your details".</p>
+                </div>
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Organisations’ use of your personal information – [onward transfer and sharing of your personal information]</h4>
+                    <p class="mt-3">In the context of its business and with your consent, BackaBuddy may transfer your personal information to its organisation. In some cases, our organisation will request data that includes your personal information. Transfer of this data that includes your personal information, allows our organisation to improve the design of the product or service that is being developed. In many cases, we will simply transfer aggregate reports which do not contain your personal information or any information that can be used to identify you. Aggregate reports are those wherein the information you provide is anonymized and combined with that of other fundraising campaign participants for the purposes of analysis as a whole, where this information cannot be used to identify you.</p>
+                    <p class="mt-3">We do not share your personal information with other third parties, nor do we permit the use of your personal information for any reason other than that for which it was originally provided, which will always be described in the informed consent form provided to you prior to your participation in the fundraising campaign.</p>
+                    <p class="mt-3">In such cases of transfer of your personal information, BackaBuddy remains liable for the protection of personal information under the Principles of the Privacy Shield if the third party handles the information in a manner inconsistent with Privacy Shield Principles. In the event information will be transferred, BackaBuddy provides clear and unambiguous advanced notice and a description of the purpose of transfer to the data subject, who will have the opportunity to decline.</p>
+                </div>
+
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Security precautions to protect your information</h4>
+                    <p class="mt-3">The transfer of online transaction data to and from the website is protected by the implementation of the SSL Certificate provided by AWS Certificate Manager. It is your responsibility to keep your password secure at all times to avoid unauthorised use of your BackaBuddy profile.</p>
+                    <p class="mt-3">To ensure the ongoing protection of your personal information, BackaBuddy has implemented information security practices consistent with industry standards. This includes technical, physical, administrative, and organizational measures we have implemented to protect the confidentiality, integrity, and availability of your personal information and safeguard your personal information against loss, theft, and misuse, as well as unauthorized access, disclosure, alteration, and destruction.</p>
+                </div>
+
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">How we protect your personal information</h4>
+                    <p class="mt-3">BackaBuddy takes precautions – including administrative, technical, and physical measures – to safeguard your personal information against loss, theft, and misuse, as well as unauthorized access, disclosure, alteration, and destruction. We use reasonable and customary measures to safeguard the security of your personal information. Nonetheless, transmissions made on or through the Internet and information stored by us are vulnerable to attack and cannot be guaranteed to be secure. You hereby acknowledge that we are not responsible for any intercepted information sent via the Internet or data loss caused by “hacks,” malicious attacks or other breaches caused by third parties, and you hereby release us from any and all claims arising out of or related to the use of information obtained by means of an unauthorized interception or breach.</p>
+                </div>
+
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Legal process</h4>
+                    <p class="mt-3">At times we may be required by law, litigation, arbitration or similar legal process to disclose your personal information. We may also disclose information about you if you consent to it or if we determine that disclosure is necessary for national security, law enforcement, personal safety, or other issues of public importance.</p>
+                </div>
+
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Acceptance of our privacy policy</h4>
+                    <p class="mt-3">Use of the BackaBuddy website and associated services implies acceptance of this Privacy Policy. If you are not satisfied with any aspect of it, please do not continue to use the website and services. This policy may change from time to time and you are deemed to have accepted the current version each time you use <a href="www.backabuddy.co.za" class = "highlight-span-clr">www.backabuddy.co.za </a>or any site powered by us. If you have any questions about our Privacy Policy, please contact us here.</p>
+                </div>
+
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Changess</h4>
+                    <p class="mt-3">We reserve the right to change this Privacy Policy at any time. The date on which this Privacy Policy was last adopted or changed will be set forth at the top of this Privacy Policy.Therefore, please review this Privacy Policy from time to time so that you are aware when any changes are made to this Privacy Policy. If you have any questions about the changes that were implemented, please contact us here and include “Information Regarding Updated Policy” in the subject line. In any event, your continued use of the website after such change constitutes your acceptance of any such change(s), and if you do not accept any changes, you may choose not to use our website.</p>
+                </div>
+
+                <div class="mt-4">
+                    <h4 class="fs-20 mt-3">Personal information gathered under previous versions of this privacy policy</h4>
+                    <p class="mt-3">Personal information collected via the website will generally be governed by the version of the Privacy Policy in effect at the time the information was gathered. We will not retroactively make material changes to the way we use personally identifiable information collected under previous versions of this Privacy Policy without obtaining your consent.</p>
+                </div>
+            </div>
+
+            <div id = "feeds-payout-category-terms" class="feed-payout-category terms-container mt-4">
+                <h3 class="fs-38 my-3 text-center fw-600">Terms and Conditions</h3>
+                <ol class = "mt-4">
+                    <li>
+                        <h5 class= "fs-20 mt-3">Thanks for using BackaBuddy</h5>
+                        <p class="mt-3">Welcome to BackaBuddy and thank you for using this website (the Site). We are BackaBuddy NPC (registration number 2015/313483/08), and together with our partners, subsidiaries, affiliates, agents, representatives, consultants, employees, officers, and directors — collectively, BackaBuddy, we, or us. By using the Site and our services (together with the Site, the Services), you agree to these contractual rules (the Terms). Please also go and see our Privacy and Cookies Policies (which you’re also agreeing to by using the Services).</p>
+                        <p class="mt-3">Sometimes we might change these Terms. We’ll do our best to notify you personally of any changes (if we have your details), but in any event, we will also inform our community of these changes by posting a notice on the Site.</p>
+                        <p class="mt-3">BackaBuddy is only for your personal, non-commercial use. BackaBuddy is for online fundraisers (referred to here as campaigns) that collect monetary donations only. Requests for donations in kind or the offer of rewards for donations are not permitted on the site.</p>
+                    </li>
+                    <li>
+                        <h5 class= "fs-20 mt-3">Registration of a campaign for an organisation, a campaign for an individual need, or registration of an organisation</h5>
+                        <p class="mt-3">If you’d like to create a campaign to raise funds for an organisation or create a campaign to raise funds for a person/personal cause you can do so here. If you’d like to register your organisation, please do so here. You will need to create, or already have, a profile to register either. You can also browse BackaBuddy without registering a profile. If you do plan to register, however, the information you give us must be complete, and up-to-date. We reserve the right to cancel your campaign or organisation registration if you don’t comply with any of these Terms.</p>
+                        <p class="mt-3">Please remember that if you do choose to register for any of the above, you are responsible for all the activity on your profile, and for keeping your password confidential. If you become aware that your profile has been used without your permission, <a href="#">you must report it to us immediately.</a></p>
+                        <p class="mt-3">To register as an organisation, you must be at least 18 years old. A campaign for an organisation or for an individual can be created by a minor, but funds will only be transferred to a bank account held by an individual who is over the age of 18.</p>
+                        <p class="mt-3">BackaBuddy does not guarantee that a Campaign or an Organisation will obtain a certain amount of donations or any donations at all. <p class="bold-p">We do not personally endorse any Campaign, Campaign Organiser or Organisation or initiate campaigns ourselves. We expressly disclaim any liability or responsibility for the success of any Campaign, or the outcome of any fundraising purpose.</p></p>
+                        <p class="mt-3">If you choose to contribute to a campaign or cause, you as the donor must make the final determination as to the value and appropriateness of contributing to any Campaign, Campaign Organiser or organisation.
+                        </p>
+                    </li>
+                    <li>
+                        <h5 class= "fs-20 mt-3">Please don’t do the following</h5>
+                        <p class="mt-4">By using this site, you agree that you will not engage in posting:</p>
+                        <ul class="list">
+                            <li>Content that is harmful to others or may cause reputational harm (this includes posting discriminatory comments, comments which are inappropriate or profane, including but not limited to the distribution of child pornography, comments which constitute hate speech or content that is designed to abuse, stalk, harass or physically threaten other people)</li>
+                            <li>Content that violates any intellectual property laws, including content that is protected by copyright or a patent</li>
+                            <li>Content that is misleading, false, or intentionally inaccurate.</li>
+                            <li>Information that is fraudulent in nature</li>
+                            <li>Banking details of the beneficiary or campaign creator on a campaign page, organisation profile page, or anywhere on the BackaBuddy site.</li>
+                            <li>Content that is illegal, and violates any domestic or international law or content which breaches a legal duty that you owe to other people</li>
+                            <li>Content which is designed as spam or any other unsolicited mass mailing activity that is distributed without the consent of the recipients.</li>
+                            <li>Content which in any way threatens the security of the BackaBuddy network or one of its users’ computers, including the distribution of malware, viruses, Trojan horses, or any other harmful piece of software.</li>
+                            <li>Campaign content that contains the offer of any contest, competition giveaway, sweepstakes, offering monetary or other rewards for donations.
+                            </li>
+                            <li>Annuities, investments, equity or lottery contracts, off-shore banking or similar transactions, money service businesses (including currency exchanges, check cashing or the like), pyramid schemes, “get rich quick schemes” (i.e., Investment opportunities or other services that promise high rewards), network marketing and referral marketing programs, debt collection or crypto-currencies</li>
+                            <li>Credit repair or debt settlement services.</li>
+                            <li>Details of a pending or current legal case.</li>
+                        </ul>
+
+                        <p class="mt-4">Please refrain from participating in the following activities:</p>
+                        <ul class="list">
+                            <li>Disseminating other people’s private information – when you use the Services — whether as a contributor or an organisation — you will receive certain information regarding other users of the site, such as their names and their email addresses. Please keep this information private, and use it solely for the purposes of participating in the BackaBuddy campaigns. Do not share or distribute any user information without their permission.</li>
+                            <li>Interfering with the working of BackaBuddy – you may not engage in any activity that interferes with the proper working of the Site or the Services</li>
+                            <li>Bypassing any security – you may not bypass any of the security measures that BackaBuddy has put into place to restrict access to certain sections of the site or circumvent any of the security measures that have been put into place by BackaBuddy</li>
+                            <li>Attempting to obtain personal information of BackaBuddy or its users – you may not attempt to gain unauthorised access to any data, password, or any other restricted information which belongs to BackaBuddy, its affiliates, or any user of its site</li>
+                            <li>Putting strain on BackaBuddy’s infrastructure – you may not engage in any activity that places a disproportionately large load on the infrastructure of BackaBuddy or its affiliates.</li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <h5 class= "fs-20 mt-3">Contract between Organisation and Contributor</h5>
+                        <p class="mt-3">BackaBuddy provides a funding platform for organisations and charitable campaigns. When someone publishes a charitable campaign on BackaBuddy, they invite other people to form a legal contract with them. Anyone who contributes to an organisation (a donor) is accepting the organisation’s offer and forming that contract.</p>
+                        <p class="mt-4">BackaBuddy is not a part of this contract — the contract is a direct legal agreement between organisations and their contributors. Here are the terms that govern that agreement:</p>
+                        <ul class="list">
+                            <li>When a campaign is successfully funded, the organisation must use the funds for the purpose advertised. Once an organisation has done this, it has satisfied its obligation to its contributors.</li>
+                            <li>Throughout the process, organisations owe their contributors a high standard of effort, honesty, transparency and a commitment to achieving the advertised goals of that organisation.</li>
+                            <li>Contributors must understand that there could be delays in an organisation achieving what it has set out to do.</li>
+                            <li>A donation is an irrevocable and unconditional act and, once a donation has been made using the Services, the contributor is not entitled to a refund unless the relevant organisation agrees to the refund and special arrangements are made directly with the organisation. Once an organisation has refunded the contributor it has no further obligation to that contributor, and no further agreement exists between the two parties.</li>
+                            <li>BackaBuddy is not responsible for the fulfillment of the promises made by organisations.</li>
+                            <li>If organisations are unable to satisfy the terms of their agreement, they may be subject to legal action by contributors.</li>
+                            <li>When donating to a campaign for an organisation, the organisation will receive certain information such as donor names and email addresses. It is the organisation’s responsibility to keep this information private and use it solely for the purposes of participating in the BackaBuddy campaigns. Do not share or distribute any user information without their permission.</li>
+                            <li>When creating a campaign for an organisation, the organisation will receive certain information such as champion names and email addresses. It is the organisation’s responsibility to keep this information private and use it solely for the purposes of participating in the BackaBuddy campaigns. Do not share or distribute any user information without their permission.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h5 class= "fs-20 mt-3">Contract between beneficiaries of individual campaigns and Contributor Individual campaigns are fundraisers for a person or group that is/are not affiliated with a registered organisation.</h5>
+                        <p class="mt-3">While every effort will be taken to ‘vet’ campaigns for individuals, BackaBuddy ultimately cannot warrant that your donations will be used for any particular purpose and shall not be responsible for any dissatisfaction you may have regarding the recipient individual's use of any donation you may make through the website or for any misuse or non-use of such donations by the recipient individual cause.</p>
+                        <p class="mt-3">After donations are made, all further dealings are solely between the donor and such recipient.</p>
+                        <p class="mt-3">BackaBuddy shall have no liability to donors whatsoever for any use or misuse of donations made to a BackaBuddy Crowdfunding page. The BackaBuddy Crowdfunding page may state that they will use donations only for specific purposes, but BackaBuddy cannot guarantee that they will use it for such a purpose.</p>
+                        <p class="mt-3">It is your sole responsibility, as a user of the site, to ensure that the cause stated to be supported on a relevant BackaBuddy page is one that you wish to support.</p>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">FICA Legislation Requirements</h5>
+                        <p class="mt-3">All transactions using PayPal (greater than or equal to) ≥R20 000 will need to be verified in accordance with FICA regulations and the South African Law.</p>
+                        <div class="mt-4">
+                            <p class="mt-3">Our finance team will be in touch to request the following:</p>
+                            <ul class = "list">
+                                <li>Copy of Identity document or passport.</li>
+                                <li>Proof of residential address in your country of permanent residence.</li>
+                                <li>Confirmation that it was indeed you, who made this donation.</li>
+                                <li>Confirmation that we may proceed in remitting your donation to the supported campaign</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">Vetting Individual Campaigns</h5>
+                        <p class="mt-3">Each campaign will be reviewed based on the content provided by this submission form.</p>
+                        <p class="mt-3">Campaign Organisers must register using their true identities, including their name and any image or video purporting to depict the Campaign Organisers or the beneficiary of such campaign.</p>
+                        <p class="mt-3">BackaBuddy takes the integrity of individual campaigns seriously and will endeavour to ensure there is sufficient evidence for the legitimacy of campaign content. To this end, there are criteria in place that need to be met before a campaign is verified on the platform, and funds are paid out.</p>
+                        <div class="mt-4">
+                            <p class= "mt-3">We reserve the right to decline campaigns based on the following criteria:</p>
+                            <ul class = "list">
+                                <li>Insufficient supporting information and/or campaign copy. This includes but is not limited to a lack of appropriate contactable references or supporting documentation that can be used to verify the campaign ‘cause’ at any stage of the process.</li>
+                                <li>Monetary targets that are not proportionate to the cause as stated in the campaign copy</li>
+                                <li>Campaigns that are raising funds for investment, speculation, or gambling.</li>
+                                <li>Campaigns that offer rewards or entry into a competition/raffle</li>
+                                <li>Campaigns that display inappropriate images or images subject to copyright</li>
+                                <li>Campaigns that aim to fund or form political parties, are political party affiliated or promote a political agenda.</li>
+                            </ul>
+                            <p class="mt-3">BackaBuddy offers campaign creators the option of BackaBuddy administering the campaign. “Bluetick Campaigns” or “BackaBuddy Assisted” means paying part or all of the funds eligible for payout to a <span class="fs-14">vendor/organisation/company/professional</span> directly upon presentation of invoices or similar transaction proof, instead of paying funds directly to the bank account of the individual campaign creator or beneficiary. Although it is not essential, having funds paid directly to a vendor or institution is almost always preferred by donors. BackaBuddy reserves the right to convert any individual campaign to a Bluetick Campaign.</p>
+                            <p class="mt-3">If during the course of your Bluetick Campaign, you would prefer that the funds be paid out directly to yourself or the beneficiary, BackaBuddy is required to send an email to your donors to confirm if they are happy to have the funds redirected or if they would prefer a refund. (Please refer to our section on refunds).</p>
+                            <p class="mt-3">For both self-managed and Bluetick campaigns, it is the responsibility of the campaign creator to ensure the accuracy of the account details provided.</p>
+                            <p class="mt-3">Campaign creators are responsible for ensuring the accuracy of the banking details provided. BackaBuddy will not process payouts into a new or updated account if the originally provided details were incorrect, until the funds have been successfully recalled and returned by the bank. While BackaBuddy will make reasonable efforts to assist in the recall process, the campaign creator acknowledges that the responsibility for providing correct banking information lies solely with them, and any delays or losses resulting from incorrect details are not the responsibility of BackaBuddy.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">What we do and don’t do</h5>
+                        <ul class = "list">
+                            <li>Responsibility for using donation money as advertised rests entirely with the organisation or campaign creator.</li>
+                            <li>We charge our fees before putting funds into a organisation’s account. We (and our payment partners) will subtract fees and banking charges before transmitting the proceeds of a campaign.</li>
+                            <li>
+                                <p class="bold-p">We don’t verify the identity of the organisations on the Site or whether organisations are using monies received for a legitimate purpose - </p>this is your responsibility as a contributor!
+                            </li>
+                            <li>
+                                We don’t independently verify whether the organisations hosted on the Site have section 18A status in terms of the Income Tax Act, 1962. This is something that contributors are responsible for checking with a organisation before donating. As such, BackaBuddy does not guarantee that donations to organisations will be tax-deductible.
+                            </li>
+                            <li>If you are an organisation or campaign creator, don’t assume that you’ll be able to immediately collect your funding and don’t take any actions in reliance on collecting any donations until the money is put into your account.</li>
+                            <li>We don’t become involved in disputes between users, or between users and any third party relating to the use of the Services. BackaBuddy will, however, investigate organisation profiles or campaigns should we receive 2 or more complaints in writing about the organisation or campaign.</li>
+                            <li>BackaBuddy doesn’t endorse any content that users submit to the Site.</li>
+                            <li>The Site may contain links to other websites (which we do not necessarily endorse). When you access these websites, you do so at your own risk.</li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">Our Fees/Administrative Costs</h5>
+                        <p class="mt-3">All donations made through BackaBuddy are managed by The BackaBuddy Foundation</p>
+                        <p class="mt-3">(Reg No. 2015/313483/08)</p>
+                        <p class="mt-3">The BackaBuddy Foundation collects a 7% +VAT = 8.05% admin fee and a transaction fee which covers the costs of our 3rd party bank and payment channel fees.</p>
+                        <p class="mt-3">
+                            <p class="bold-p">75% cover the administration fee.</p> 
+                            How? BackaBuddy gives donors the option to cover this fee.
+                        </p>
+                        <p class="mt-3">Your support helps us continue to offer our much-needed platform and services to people in true need and organisations such as yourselves.</p>
+                        <p class="mt-3">Registered organisations / Non-Profit Organisations are subject to a 0% platform/admin fee and a transaction fee which covers the costs of our 3rd party bank and payment channel fees. Donors can choose to leave a tip for our services.</p>
+                        <div class="mt-4">
+                            <p>African Payment Processing fees: as of the 22nd March 2022</p>
+                            <ul class="list">
+                                <li>Electronic Funds Transfer EFT R12</li>
+                                <li>Instant EFT 3.5%</li>
+                                <li>Debit/Credit Card South Africa 3.9%</li>
+                                <li>SnapScan 3.9%</li>
+                            </ul>
+                            <p>International Payment Processing fees:</p>
+                            <ul class="list">
+                                <li>The PayPal fee directly</li>
+                                <li>The local SA PayPal banking partners fee</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5 class="fs-20 mt-3">Payout of funds raised:</h5>
+                            <p class="mt-3">You have the flexibility to request a payout at any time, provided your campaign/organisation has been vetted and you have received donations. Please note that the processing time for payouts by BackaBuddy is up to 10 business days. Additionally, you can only submit a new payout request once the previous one has been successfully processed.</p>
+                            <p class="mt-3">VAT Reg No: 4430288623</p>
+                        </div>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">Intellectual Property</h5>
+                        <p class="mt-3">As an organisation, you own your ideas and the content that you post on your fundraising page. This means that you are solely responsible for the content that appears on your page. BackaBuddy will not be liable for any mistakes or omissions that appear on your page. You are also responsible for ensuring that the content that you post does not violate any of the rights of third parties, or any copyright. You will be responsible for paying any royalties that become owing due to the content posted on your page.</p>
+                        <p class="mt-3">BackaBuddy does not become the owner of the content that you post on your page. However, BackaBuddy does require some control over your content in order to perform the Services. Once you post information on your page, you grant BackaBuddy a worldwide, irrevocable, non-exclusive, continuous and royalty-free right to use, reproduce, display and distribute the content that you post. BackaBuddy is also entitled to modify, delete, translate or reformat the content that is posted on your page.</p>
+                        <p class="mt-3">The Services are legally protected by copyright, intellectual property rights and other rights and laws. You are obliged to respect BackaBuddy’s protections at all times. Content that appears on the BackaBuddy site, whether its own content or content generated by its users, may be used and reproduced by you for personal use only. You may not use any content that appears on the BackaBuddy site for commercial gain, without prior permission from the relevant copyright holder.</p>
+                        <p class="mt-3">“BackaBuddy”, “Back-a-Buddy”, “Backabuddy.com”, “Backabuddy” and the BackaBuddy logo are protected under trademark registration and any unauthorised use of these marks is prohibited. Copyright subsists in all of the material on this website and, other than in respect of the content that you post on your page, all copyright vests in Easygiving (Proprietary) Limited, trading as BackaBuddy.</p>
+                        <p class="mt-3">BackaBuddy’s intellectual property policy is informed by the Trade Marks Act 194 of 1993 and the Copyright Act 98 of 1978. We reserve the right to delete all content that infringes the provisions of these two Acts.</p>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">Our Rights</h5>
+                        <div class="mt-4">
+                            <p class="mt-3">BackaBuddy reserves the right:</p>
+                            <ul class = 'list'>
+                                <li>To make changes to the Site and Services without notice or liability.</li>
+                                <li>To decide who’s eligible to use BackaBuddy. We can cancel profiles, decline to offer our Services and can change our eligibility criteria at any time. If anything relating to our Site is prohibited by law where you live, then we revoke your right to use BackaBuddy in that jurisdiction.</li>
+                                <li>In the event that any system or programme maintenance of any sort is required, to suspend services until such time as these have been completed; To cancel any pledge to any campaign, at any time and for any reason</li>
+                                <li>To reject, cancel, interrupt, remove, or suspend any campaign at any time and for any reason.</li>
+                                <li>To redistribute funds that have not been claimed, or are untraceable, after a 12 month period, to be used to further the charitable aims of BackaBuddy.</li>
+                                <li>To retain all interest received from funds held until payout.</li>
+                                <li>To transfer unallocatable donations where an incorrect reference has been used or a refund has not been requested within one (1) month of the donation date. These funds will be moved to a BackaBuddy fund, which is dedicated to enhancing the user and campaign creator experience, supporting initiatives such as matched funding, improving payment gateways, and other platform improvements aimed at better serving people in need in the future. All efforts are made to ensure that donations are correctly allocated, and a record of these efforts can be viewed by requesting a copy here.</li>
+                            </ul>
+                        </div>
+                        <div class="mt-4">
+                            <p class="mt-3">BackaBuddy reserves the right to refund donors for any reason. Such reason may include any, but not exclusively, of the following:</p>
+                            <ul>
+                                <li>When BackaBuddy has been instructed by the organisation or the campaign creator.</li>
+                                <li>When the campaign cannot be verified satisfactorily.</li>
+                            </ul>
+                        </div>
+                        <p class="mt-3">Refunds are processed on Tuesdays and Thursdays (or the closest working day), with a 7-working-day grace period to attend to the request.</p>
+                        <p class="mt-3">All bank/payment/transaction fees associated with a donation will be held by BackaBuddy when the refund is processed.</p>
+                        <p class="mt-3">If there are any queries on a particular campaign with regards to the fees being held by BackaBuddy, that query must be sent in writing to queries@backabuddy.co.za. In this case BackaBuddy will evaluate case by case basis if the refund should include bank/payment/transaction fees.</p>
+                        <div class="mt-4">
+                            <p class="mt-3">The following are exceptions to our standard refund terms:</p>
+                            <ol>
+                                <li>In the case of a recurring donation processed by BackaBuddy when it should not have been, then BackaBuddy will refund the donation amount inclusive of bank/payment/transaction fees.</li>
+                                <li>When refunds are processed via PayPal the full donation amount will be refunded.</li>
+                            </ol>
+                        </div>
+                        <p class="mt-3">BackaBuddy will make contact with the donors via email to notify them of the pending refund and to request banking details, or alternatively propose to the donor other options for how the donated funds should be allocated.</p>
+                        <p class="mt-3">BackaBuddy is not liable for any damages as a result of any of these actions, and it is our policy not to comment on the reasons for any such action</p>
+                        <p class="mt-3">Furthermore, if you are an organisation and we have already deposited funds into your account and a donation is subsequently reversed by one of our payment partners (for example, in the case of a charge-back) then we are entitled to claim the reversed amount back from you for a reasonable period after the reversal/charge-back.</p>
+                    </li>
+                    <li>
+                        <h5 class = "fs-20 mt-3">Disclaimer, Indemnity and Limitation of Liability</h5>
+                        <p class="mt-3">You use the Services solely at your own risk. They are provided to you without warranty of any kind, whether express or implied.</p>
+                        <p class="mt-3">If you do something that results in us getting sued, or if you break any of the promises you make in these Terms, you hereby indemnify us and agree to defend and hold us harmless from all liabilities, claims, and expenses (including reasonable attorneys’ fees and other legal costs) that arise from or relate to your use or misuse of the Services.</p>
+                        <p class="mt-3">
+                            In no event will BackaBuddy (or our directors, employees, partners, suppliers, or content providers) be liable for damages of any kind, including but not limited to damages (i) resulting from your access to, use of, or inability to access or use the Services; (ii) for any lost profits, data loss, or cost of procurement of substitute goods or services; or (iii) for any conduct or content of any third party on or in connection with the Site (including hackers or employees/agents of BackaBuddy acting beyond the scope of their authority). In no event shall our liability for direct damages be in excess of (in the aggregate) one thousand Rand.</p>
+                        <p class="mt-3">By using the Services, you release BackaBuddy from claims, damages, and demands of every kind — known or unknown, suspected or unsuspected, disclosed or undisclosed — arising out of or in any way related to such disputes and the Services.</p>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">Dispute Resolution and Governing Law</h5>
+                        <p class="mt-3">In the event that you have any complaints or believe that we have caused you any loss or harm, please contact us (using the contact details provided here) first before resorting to legal action.</p>
+                        <p class="mt-4">In the unfortunate situation where legal action does arise, these Terms (and all other rules, policies, or guidelines incorporated by reference) will be governed by and construed in accordance with the laws of South Africa, and you consent and submit to the non-exclusive jurisdiction of the High Court of South Africa, Western Cape Division, Cape Town in any dispute arising from or in connection with these Terms.</p>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">Legal and Regulation Restrictions</h5>
+                        <p class="mt-3">Due to legal and regulatory constraints, PayPal is unable to process payments for crowdfunding in Hong Kong, crowdfunding for political fundraising in Russia, and campaigns related to Sanctions Jurisdictions (Cuba, Iran, North Korea, Syria, and the Crimea, Donetsk and Luhansk regions of Ukraine).</p>
+                        <p class="mt-3">BackaBuddy is not allowed to use PayPal as a payment method for customers/campaign owners/beneficiaries who are domiciled in or reside in the abovementioned Sanctioned Jurisdictions and Hong Kong, and BackaBuddy is not allowed to use PayPal as a payment method for campaigns benefiting the Sanctioned Jurisdictions, or crowdfunding in Hong Kong and political-related causes in Russia.</p>
+                    </li>
+                    <li>
+                        <h5 class="fs-20 mt-3">The Boilerplates</h5>
+                        <p class="mt-3">These Terms constitute the entire agreement between you and BackaBuddy with regard to the Services. Neither you nor BackaBuddy will have any claim or right of action arising from any undertaking, representation or warranty not included in these Terms.</p>
+                        <p class="mt-3">No agreement to vary, add to or cancel these Terms as they specifically apply to you will be of any force or effect unless recorded in writing (which doesn’t include email) and signed by or on behalf of both you and BackaBuddy.</p>
+                        <p class="mt-3">
+                            If any provision of these Terms is rendered void, illegal or unenforceable under any law of any jurisdiction (provided the provision isn’t vital to the proper understanding of these Terms), the validity, legality and enforceability of the remaining provisions should not in any way be affected and the legality, validity and unenforceability of such provision under the law of any other jurisdiction are not in any way affected or impaired.</p>
+                        <p class="mt-3">
+                            These Terms are personal to you and you can’t cede any rights that you may have against us, or delegate any obligations you owe to us unless you have our prior written consent. There may, however, be circumstances where we need to cede our rights against you or delegate our obligations owed to you to third parties (for example, if we undergo a corporate restructure). These Terms constitute your prior consent to such cession and delegation. If we do cede our rights or delegate our obligations, we do undertake to notify you of this by email, or by posting a notice on the Site.
+                        </p>
+                        <p class="mt-4 bold-p">Well done and thanks for reading these Terms. Welcome to FEED NEEDS!</p>
+                    </li>
+                </ol>
+
+            </div>
         </div>
+    </main>
+    <script>
+        const phoneInput = document.querySelector("#phone");
+        const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "auto", // Automatically detect user's country
+        geoIpLookup: function(callback) {
+            fetch('https://ipinfo.io/json?token=YOUR_TOKEN') // Replace YOUR_TOKEN with your IPInfo API token
+            .then(resp => resp.json())
+            .then(data => callback(data.country))
+            .catch(() => callback("us"));
+        },
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/utils.js" // for number formatting/validation
+        });
 
-        <script>
-            const hamburger = document.querySelector(".hamburger");
-            const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
-            const overlay = document.querySelector(".overlay");
-            const mobileNav = document.querySelector(".mobile-nav");
-            const submitBtn = document.querySelector(".cta-btn.submit-btn");
-            const acctForm = document.querySelector(".acct-form");
-            if (hamburger) {
-                hamburger.addEventListener("click", function () {
-                    overlay.classList.add("visible");
-                    mobileNav.classList.add("slideIn");
-                    document.body.classList.add("hide-overflow");
-                });
-            }
-
-            if (cancelIcon)
-                [
-                    cancelIcon.addEventListener("click", function () {
-                        overlay.classList.remove("visible");
-                        mobileNav.classList.remove("slideIn");
-                        document.body.classList.remove("hide-overflow");
-                    }),
-                ];
-
-            if (submitBtn && acctForm) {
-                submitBtn.addEventListener("click", function () {
-                    acctForm.submit();
-                });
-            }
-        </script>
-        <script>
-            const phoneInput = document.querySelector("#phone");
-            const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "auto", // Automatically detect user's country
-            geoIpLookup: function(callback) {
-                fetch('https://ipinfo.io/json?token=YOUR_TOKEN') // Replace YOUR_TOKEN with your IPInfo API token
-                .then(resp => resp.json())
-                .then(data => callback(data.country))
-                .catch(() => callback("us"));
-            },
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/utils.js" // for number formatting/validation
-            });
-
-            // Example: Get the selected country code
-            phoneInput.addEventListener("blur", () => {
-            const selectedCountryData = iti.getSelectedCountryData();
-            console.log("Selected country: ", selectedCountryData.name);
-            console.log("Dial code: ", selectedCountryData.dialCode);
-            });
-        </script>
-    </body>
-</html>
+        // Example: Get the selected country code
+        phoneInput.addEventListener("blur", () => {
+        const selectedCountryData = iti.getSelectedCountryData();
+        console.log("Selected country: ", selectedCountryData.name);
+        console.log("Dial code: ", selectedCountryData.dialCode);
+        });
+    </script>
+{% endblock content %}
