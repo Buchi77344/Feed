@@ -3,5 +3,12 @@ from admix.views import *
 
 app_name="admix"
 urlpatterns = [
-    path('dashboard',dashboard,name='dashboard')
+    path('dashboard',dashboard,name='dashboard'),
+    path('list_campaign',list_campaign,name='list_campaign'),
+    path('emergency',emergency,name='emergency'),
+    path('signup',signup,name='signup'),
+    path('config',config,name='config'),
+    path('login',login,name='login'),
+    path('approve/<str:token>/',approve, name='approve'),
+    path('delete/<str:token>/', delete_campaign, name='delete_campaign'),
 ]

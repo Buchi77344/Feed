@@ -363,3 +363,19 @@ if (document.querySelector(".recurring-btn")) {
 		}
 	})
 }
+
+//Percentage Progress
+
+if(document.querySelector(".percent-progress")){
+	let percentProgress = document.querySelectorAll(".percent-progress");
+	percentProgress.forEach(pr => {
+		// console.log(pr.querySelector(".percent-progress-bar" ));
+		let progressBar = pr.querySelector(".percent-progress-bar");
+		setTimeout(() => {
+			progressBar.style.width = `${pr.dataset.percent}%`;
+		}, 1000)
+		// pr.querySelector(
+		// 	".percent-progress-bar"
+		// ).style.width = `${pr.dataset.percent}%`;
+	})
+}
