@@ -297,7 +297,7 @@ def start_campaign(request):
     category = Campaign.CATEGORY_CHOICES
     event = Campaign.EVENT_CHOICE
 
-    # You need to define the 'countries' variable, either from a model or a static list
+    # You need to define the 'countries' variable, either from a model
   # Example list, replace with actual data
 
     context = {
