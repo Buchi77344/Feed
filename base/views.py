@@ -464,6 +464,31 @@ def donate(request, token):
             return redirect('donate', token=token)
 
     return render(request, 'donate.html')
+def paypal_payment_link(request,token):
+    
+        campaign = get_object_or_404(campaign, token=token)
+        amount = request.POST.get('amount')
+        message = request.POST.get('message', '')
+
+        try:
+            amount = Decimal(amount)  # Validate and convert the amount
+            if amount <= 0:
+                raise ValueError("Donation amount must be greater than zero.")
+
+            # Create a new donation
+            Donation.objects.create(
+                user=request.user,
+                campaign=campaign,
+                amount=amount,
+                message=message
+            )
+
+            messages.success(request, f"Thank you for donating {amount} to {campaign.campaign_name}!")
+            return redirect('donate', token=token)
+
+        except Exception as e:
+            messages.error(request, f"Error processing donation: {e}")
+            return redirect('donate', token=token)
 
 
 @login_required(login_url="login")

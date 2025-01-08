@@ -414,7 +414,7 @@
 						<p class="bold-p mt-2">Kindness can transform the world around us. Amazing things happen when people come together! Make a donation to this cause, share it with people you know, and you may ignite the generosity in others.</p>
 						<div class="flex-column gp-15 align-center mt-3">
 							<button class="donate-btn flex gp-5">
-								<span class="text">Donate</span>
+								<a href="{% url 'donate' campaign_details.token  %}"><span class="text">Donate</span></a>
 								<span class="icon flex-center">
 									<img src="{% static '../static/img/svg/love-icon.svg' %}" alt="love icon by svgrepo">
 								</span>
