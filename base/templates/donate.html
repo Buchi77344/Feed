@@ -228,7 +228,7 @@
 
 							<div class="flex-between w-100">
 								<p class="fs-16 fw-500">Your donation:</p>
-								<p class="fs-16 fw-600">R 0.00</p>
+								<p class="fs-16 fw-600 donation-price-text">R 0.00</p>
 							</div>
 
 							<div class="flex-between w-100">
@@ -240,39 +240,39 @@
 						<div class="pt-3 pb-4 flex-column align-start gap-15 br-b">
 							<div class="flex-between w-100">
 								<p class="fs-16 fw-500">Total to pay:</p>
-								<p class="fs-16 fw-600">R 0.00</p>
+								<p class="fs-16 fw-600 donation-price-text">R 0.00</p>
 							</div>
 						</div>
 
 						<div class="pt-3 pd-4 flex-column align-start gap-15 br">
 							<div class="flex-between w-100">
 								<p class="fs-16 fw-500">Display Name:</p>
-								<p class="fs-16 fw-600"></p>
+								<p class="fs-16 fw-600 donation-name-input-val"></p>
 							</div>
 
 							<div class="flex-between w-100">
 								<p class="fs-16 fw-500">Message:</p>
-								<p class="fs-16 fw-600"></p>
+								<p class="fs-16 fw-600 donation-message-input-val"></p>
 							</div>
 						</div>
 					</div>
 
-					<div class="payment-gateway mt-3">
-						<h5 class="fs-20 fw-600 text-center">Donations</h5>
+					<div class="payment-gateway mt-5">
+						<h5 class="fs-30 mb-3 fw-600 text-center">Donations</h5>
 						<div class="flex-column align-stretch gp-15">
-							<div class="payment-div pp flex-center">
+							<a href = "#" class="payment-link pp flex-center">
 								<img
-									src="{% static 'img/svg/paypal-logo-svgrepo-com.svg' %}"
+									src="{% static 'img/paypal.png' %}"
 									alt=""
 								/>
-							</div>
+							</a>
 
-							<div class="payment-div sp flex-center">
+							<a href = "#" class="payment-link sp flex-center">
 								<img
 									src="{% static 'img/svg/stripe-svgrepo-com.svg' %}"
 									alt=""
 								/>
-							</div>
+							</a>
 						</div>
 					</div>
 				</div>

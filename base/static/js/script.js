@@ -1,5 +1,7 @@
 let dropDownHead = document.querySelectorAll(".select-head");
 let selectDropDown = document.querySelectorAll(".select-dropdown");
+console.log(document.querySelector(".profile-util-item-head"));
+
 if (document.querySelector(".select-head")) {
 	dropDownHead.forEach((dropHead) => {
 		dropHead.addEventListener("click", function () {
@@ -41,14 +43,11 @@ function allRemovePopup(highlightEl, dropEl) {
 			removePopup(dropEl);
 		}
 
-		// console.log(highlightEl);
-		console.log(dropEl.dataset.select);
 	});
 }
 
 /** Profile Page script */
-
-if (document.querySelector(".profile.page")) {
+if (document.querySelector("main.profile")) {
 	let profileUtilItemHead = document.querySelectorAll(
 		".profile-util-item-head"
 	);
@@ -60,6 +59,7 @@ if (document.querySelector(".profile.page")) {
 
 	profileUtilItemHead.forEach((el, index) => {
 		el.addEventListener("click", function () {
+			console.log(el)
 			removeOtherOption(index);
 			profileUtilItemHead[index].classList.toggle("active");
 			let ctaSet = this.dataset.profile_cta;
@@ -74,7 +74,6 @@ if (document.querySelector(".profile.page")) {
 			});
 
 			let parent = this.parentElement;
-			console.log(parent);
 			let mobileProfileInfo = parent.querySelector(
 				".profile-donations-container.mobile"
 			);
@@ -228,8 +227,11 @@ if (document.querySelector(".recurring-btn")) {
 		this.classList.add("active");
 	});
 
-	let donationPrice = document.querySelectorAll(".make-donation-cta-primary");
-	let donationAmountInput = document.querySelector(".donation-amount-input");
+	const donationPrice = document.querySelectorAll(".make-donation-cta-primary");
+	const donationAmountInput = document.querySelector(".donation-amount-input");
+	const donationPriceText = document.querySelectorAll(".donation-price-text")
+
+
 
 	donationPrice.forEach((cta) => {
 		cta.addEventListener("click", function () {
@@ -237,9 +239,11 @@ if (document.querySelector(".recurring-btn")) {
 			this.classList.add("active");
 			let num = this.querySelector(".text").textContent;
 			let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "");
-			console.log(trimNum);
+			// console.log(trimNum);
 
 			donationAmountInput.value = trimNum;
+			console.log(num)
+			donationPriceText.forEach(text => text.textContent = num)
 			calcDonateSliderVal()
 		});
 	});
@@ -357,5 +361,17 @@ if (document.querySelector(".recurring-btn")) {
 			donationNameInput.classList.remove("hide");
 
 		}
+	})
+}
+
+//Percentage Progress
+
+if(document.querySelector(".percent-progress")){
+	let percentProgress = document.querySelectorAll(".percent-progress");
+	percentProgress.forEach(function(pr) {
+		let progressBar = pr.querySelector(".percent-progress-bar");
+		setTimeout(() => {
+			progressBar.style.width = `${pr.dataset.percent}%`;
+		}, 1000)
 	})
 }

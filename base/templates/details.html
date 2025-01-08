@@ -1,96 +1,26 @@
-
+{% extends "base2.html" %}
+{% block content %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="{% static '../static/css/style.css' %}" />
-    <title>FEED</title>
-  </head>
-  <body>
-    <div class="overlay"></div>
-    <div class="mobile-nav">
-      <div class="flex-between">
-        <a href="{% url 'login' %}" class="login-cta">Login/Register</a>
-        <span class="cancel-icon flex-center">
-          <svg
-            width="54"
-            height="54"
-            viewBox="0 0 54 54"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M27 0C12.0789 0 0 12.0789 0 27C0 41.9211 12.0789 54 27 54C41.9211 54 54 41.9211 54 27C54 12.0789 41.9211 0 27 0ZM27 51.1579C13.6421 51.1579 2.84211 40.3579 2.84211 27C2.84211 13.6421 13.6421 2.84211 27 2.84211C40.3579 2.84211 51.1579 13.6421 51.1579 27C51.1579 40.3579 40.3579 51.1579 27 51.1579ZM28.9895 27L37.9421 18.0474C38.5105 17.4789 38.5105 16.6263 37.9421 16.0579C37.3737 15.4895 36.521 15.4895 35.9526 16.0579L27 25.0105L18.0474 16.0579C17.4789 15.4895 16.6263 15.4895 16.0579 16.0579C15.4895 16.6263 15.4895 17.4789 16.0579 18.0474L25.0105 27L16.0579 35.9526C15.4895 36.521 15.4895 37.3737 16.0579 37.9421C16.6263 38.5105 17.4789 38.5105 18.0474 37.9421L27 28.9895L35.9526 37.9421C36.521 38.5105 37.3737 38.5105 37.9421 37.9421C38.5105 37.3737 38.5105 36.521 37.9421 35.9526L28.9895 27Z"
-              fill="#9835EF"
-            />
-          </svg>
-        </span>
-      </div>
-
-      <ul class="mobile-nav-links-container flex-column gp-15 mt-5">
-        <li><a href="/" class="mobile-nav-link">Home</a></li>
-        <li><a href="{% url 'find_campaign' %}" class="mobile-nav-link">Find campaign</a></li>
-        <li><a href="{% url 'start_campaign' %}" class="mobile-nav-link">Start campaign</a></li>
-        <li><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
-        <li><a href="{% url 'about' %}" class="mobile-nav-link">About</a></li>
-        <li><a href="{% url 'faq' %}" class="mobile-nav-link">FAQ</a></li>
-        <li><a href="{% url 'fee_payout' %}" class="mobile-nav-link">Fees & Payment</a></li>
-        <li><a href="#" class="mobile-nav-link">Support</a></li>
-      </ul>
-    </div>
-    <div class="home page">
-		<nav class="navbar sticky-top align-items-center">
-			<div class="container">
-			<img class="logo-img" src="{% static '../static/img/Feed-logo.png' %}" alt="logo img" />
-			<div
-				class="nav-util-cta-container ms-md-3 d-flex align-items-center gap-4"
-			>
-				<img
-				class="search-icon"
-				src="{% static '../static/img/svg/search-icon.svg' %}"
-				alt="search icon"
-				/>
-				<a href="{% url 'start_campaign' %}" class="start-camp-cta">START CAMPAIGN</a>
-				<div class="profile-cta-container">
-				<img
-					class="profile-icon"
-					src="{% static '../static/img/profile-icon.png' %}"
-					alt="profile icon"
-				/>
-				<img
-					class="down-arrow"
-					src="{% static '../static/img/svg/down-arrow.svg' %}"
-					alt="down arrow icon"
-				/>
-				</div>
-			</div>
-			<div class="hamburger">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-
-			<!-- <div class="nav-cta-container d-flex">
-			</div> -->
-			</div>
-		</nav>
-
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap"
+		rel="stylesheet"
+	/>
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+		crossorigin="anonymous"
+	/>
+	<title>Find campaign</title>
+</head>
 
 		<main class="light-bg-clr pd-down">
+			<span class="page-highlight-span">DETAILS</span>
 			<div class="details-wrapper">
 				<section>
 					<div class="row details-hero-section">
@@ -103,8 +33,8 @@
 							<div class="details-donation-cta-section mt-3 px-md-3">
 								<div class="util-box-container">
 									<h3 class="text-center donation-price-head-text page-sub-head fw-700">R 20</h3>
-									<div class="percent-bar my-3">
-										<span class="percent-val flex-center">{{ percentage_achieved|floatformat:0 }}%</span>
+									<div data-percent="{{ percentage_achieved|floatformat:0 }}" class="percent-bar my-3 percent-progress">
+										<span class="percent-val percent-progress-bar flex-center">{{ percentage_achieved|floatformat:0 }}%</span>
 									</div>
 									<p class="text-center donation-price-text">of R {{campaign_details.monetary}} goal</p>
 									<div class="btn-container flex-center gp-10 my-3">
@@ -436,128 +366,5 @@
 			</div>
 		</main>
 
-		<footer class="pos-rel mt-5">
-			<div class="campaign-container">
-				<a href="#" class="start-campaign">START CAMPAIGN</a>
-				<a href="#" class="find-campaign">FIND CAMPAIGN</a>
-			</div>
-
-			<div class="footer-bottom-wrapper">
-				<div class="w-100">
-				<ul class="footer-links-container grid">
-					<li><a href="#" class="footer-links">FAQ</a></li>
-					<li><a href="#" class="footer-links">Contact us</a></li>
-					<li>
-					<a href="#" class="footer-links">Online fundraising Ideas</a>
-					</li>
-					<li><a href="#" class="footer-links">Bitcoin Fundraising</a></li>
-					<li><a href="#" class="footer-links">Learn More</a></li>
-					<li><a href="#" class="footer-links">Countries</a></li>
-					<li><a href="#" class="footer-links">Read Blog</a></li>
-					<li><a href="#" class="footer-links">How to fundraise</a></li>
-					<li><a href="#" class="footer-links">Facebook Fundraising</a></li>
-					<li><a href="#" class="footer-links">Facebook Fundraising</a></li>
-					<li><a href="#" class="footer-links">About</a></li>
-					<li><a href="#" class="footer-links">Help center</a></li>
-				</ul>
-
-				<div class="flex-wrap gp-20 footer-bottom-link-container mt-5">
-					<a href="#" class="footer-bottom-link">Privacy Policy</a>
-					<a href="#" class="footer-bottom-link">Terms & Conditions</a>
-					<div class="social-media-container flex-wrap">
-					<a href="#" class="flex-center">
-						<img
-						class="social-icon"
-						src="{% static '../static/img/svg/socials/facebook.svg' %}"
-						alt="Facebook icon"
-						/>
-					</a>
-
-					<a href="#" class="flex-center">
-						<img
-						class="social-icon"
-						src="{% static '../static/img/svg/socials/twitter.svg' %}"
-						alt="Twitter icon"
-						/>
-					</a>
-
-					<a href="#" class="flex-center">
-						<img
-						class="social-icon"
-						src="{% static '../static/img/svg/socials/instagram.svg' %}"
-						alt="Instagram icon"
-						/>
-					</a>
-
-					<a href="#" class="flex-center">
-						<img
-						class="social-icon"
-						src="{% static '../static/img/svg/socials/linkedIn.svg' %}"
-						alt="LinkedIn icon"
-						/>
-					</a>
-
-					<a href="#" class="flex-center">
-						<img
-						class="social-icon"
-						src="{% static '../static/img/svg/socials/tiktok.svg' %}"
-						alt="Tiktok icon"
-						/>
-					</a>
-
-					<a href="#" class="flex-center">
-						<img
-						class="social-icon"
-						src="{% static '../static/img/svg/socials/whatsapp.svg' %}"
-						alt="Whatsapp icon"
-						/>
-					</a>
-
-					<a href="#" class="flex-center">
-						<img
-						class="social-icon"
-						src="{% static '../static/img/svg/socials/telegram.svg' %}"
-						alt="Telegram icon"
-						/>
-					</a>
-
-					<a href="#" class="flex-center">
-						<img
-						class="social-icon"
-						src="{% static '../static/img/svg/socials/youtube.svg' %}"
-						alt="Youtube icon"
-						/>
-					</a>
-					</div>
-					<div class="copyright-container pos-rel flex gp-15">
-					<p class="copyright-text">2024 Feed Needs</p>
-					<span class="dash"></span>
-					<p class="copyright-text">All rights reserved</p>
-					</div>
-				</div>
-				</div>
-			</div>
-		</footer>
-	</div>
-
-	<script>
-		const hamburger = document.querySelector(".hamburger");
-		const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
-		const overlay = document.querySelector(".overlay");
-		const mobileNav = document.querySelector(".mobile-nav");
-
-		hamburger.addEventListener("click", function () {
-		overlay.classList.add("visible");
-		mobileNav.classList.add("slideIn");
-		document.body.classList.add("hide-overflow");
-		});
-
-		cancelIcon.addEventListener("click", function () {
-		overlay.classList.remove("visible");
-		mobileNav.classList.remove("slideIn");
-		document.body.classList.remove("hide-overflow");
-		});
-	</script>
-		</body>
-</html>
+		
 			
