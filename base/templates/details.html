@@ -34,8 +34,7 @@
 								<div class="util-box-container">
 									<h3 class="text-center donation-price-head-text page-sub-head fw-700">R 20</h3>
 									<div class="percent-bar my-3">
-										<!-- <span  class="percent-hidden"></span> -->
-										<span data-percent = "" class="percent-val flex-center">11%</span>
+										<span class="percent-val flex-center">{{ percentage_achieved|floatformat:0 }}%</span>
 									</div>
 									<p class="text-center donation-price-text">of R {{campaign_details.monetary}} goal</p>
 									<div class="btn-container flex-center gp-10 my-3">

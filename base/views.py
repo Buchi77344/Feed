@@ -470,7 +470,7 @@ def donate(request, token):
 def find_campaign(request):
     campaigns = Campaign.objects.filter(is_launch=True)
     campaigns_with_percentage = []
-    if Campaign.objects.filter(user =request.user).exists: 
+    if Campaign.objects.filter(user =request.user).exists:
       for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
@@ -543,14 +543,29 @@ def support(request):
     return render (request, 'support.html')
 
 
+
 @login_required(login_url="login")
-def details(request,token):
-    campaign_details = get_object_or_404(Campaign,token=token )
-    context ={
-        'campaign_details':campaign_details,
-        
+def details(request, token):
+    # Get the specific campaign
+    campaign_details = get_object_or_404(Campaign, token=token)
+
+    # Calculate total donations for this campaign
+    total_donations = campaign_details.donations.aggregate(Sum('amount'))['amount__sum'] or 0
+
+    # Calculate percentage achieved
+    percentage_achieved = (
+        (total_donations / campaign_details.monetary) * 100
+        if campaign_details.monetary > 0 else 0
+    )
+
+    # Pass the campaign details and percentage to the template
+    context = {
+        'campaign_details': campaign_details,
+        'total_donations': total_donations,
+        'percentage_achieved': percentage_achieved,
     }
-    return render (request, 'details.html',context)
+    return render(request, 'details.html', context)
+
 
 @login_required(login_url="login")
 def preview(request,token):
