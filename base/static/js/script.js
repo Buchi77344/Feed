@@ -233,13 +233,129 @@ if (document.querySelector(".recurring-btn")) {
 
 	donationPrice.forEach((cta) => {
 		cta.addEventListener("click", function () {
-			donationPrice.forEach(cta => cta.classList.remove("active"))
+			donationPrice.forEach((cta) => cta.classList.remove("active"));
 			this.classList.add("active");
 			let num = this.querySelector(".text").textContent;
-			let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "")
+			let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "");
 			console.log(trimNum);
-			
+
 			donationAmountInput.value = trimNum;
+			calcDonateSliderVal()
 		});
 	});
+
+	const sliderContainer = document.querySelector(".slider-container");
+	const sliderBar = document.querySelector(".slider-bar");
+	const sliderHandle = document.querySelector(".slider-handle");
+	const sliderMarks = document.querySelector(".slider-marks");
+	const donationBarCalcWrapper = document.querySelector(
+		".donate-bar-calculation-container"
+	);
+	const donationBarPercent = document.querySelector(".donate-bar-percent");
+	const donationBarCalcVal = document.querySelector(".donate-bar-calc-val");
+
+	let currentPercentage = 0;
+	let isDragging = false;
+	const maxPercentage = 30; // Total range is 30%
+	const numberOfMarks = 15; // 15 marks representing increments
+	const initialIncrement = 1; // Initial increment for first mark
+	const subsequentIncrement = 2; // Subsequent increment for odd numbers
+
+	// Create marks
+	for (let i = 0; i < numberOfMarks; i++) {
+		const mark = document.createElement("div");
+		mark.classList.add("slider-mark");
+		mark.addEventListener("click", () => handleMarkClick(i));
+		sliderMarks.appendChild(mark);
+	}
+
+	sliderHandle.addEventListener("mousedown", startDrag);
+	window.addEventListener("mouseup", endDrag);
+	window.addEventListener("mousemove", drag);
+
+	sliderHandle.addEventListener("touchstart", startDrag);
+	window.addEventListener("touchend", endDrag);
+	window.addEventListener("touchmove", drag);
+
+	sliderContainer.addEventListener("click", (e) => {
+		if (!isDragging) updatePosition(e);
+	});
+
+	function startDrag(e) {
+		isDragging = true;
+		updatePosition(e);
+	}
+
+	function endDrag() {
+		isDragging = false;
+	}
+
+	function drag(e) {
+		if (!isDragging) return;
+		updatePosition(e);
+	}
+
+	function updatePosition(e) {
+		const rect = sliderContainer.getBoundingClientRect();
+		const position = getPositionX(e);
+		let offset = position - rect.left;
+		offset = Math.max(0, Math.min(offset, rect.width)); // Ensure within bounds
+
+		const percentage = (offset / rect.width) * maxPercentage;
+		currentPercentage = calculateOddPercentage(percentage);
+		donationBarPercent.textContent = Math.floor(currentPercentage) + "%";
+		updateSlider(currentPercentage);
+	}
+
+	function getPositionX(e) {
+		console.log(e);
+		return e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+	}
+
+	function updateSlider(percentage) {
+		const displayedPercentage = (percentage / maxPercentage) * 100;
+		sliderBar.style.width = `${displayedPercentage}%`;
+		sliderHandle.style.left = `${displayedPercentage}%`;
+		donationBarCalcWrapper.style.left = `${displayedPercentage}%`;
+		calcDonateSliderVal(displayedPercentage)
+	}
+
+	function handleMarkClick(markIndex) {
+		let targetPercentage = initialIncrement + markIndex * subsequentIncrement;
+		currentPercentage = Math.min(targetPercentage, maxPercentage); // Cap at maxPercentage
+		donationBarPercent.textContent = Math.floor(currentPercentage) + "%";
+		updateSlider(currentPercentage);
+	}
+
+	function calculateOddPercentage(percentage) {
+		// Convert percentage to the nearest odd percentage
+		const oddPercentage =
+			Math.ceil(percentage / subsequentIncrement) * subsequentIncrement;
+		return Math.min(oddPercentage, maxPercentage); // Ensure it doesn't exceed maxPercentage
+	}
+
+	function calcDonateSliderVal(){
+		let percent = donationBarPercent.textContent
+		let inputVal;
+		if(donationAmountInput.value == ""){
+			inputVal = 0;
+		}else{
+			inputVal = Number(donationAmountInput.value)
+		}
+		let val = (Number(percent.split("%")[0]) / 100) * inputVal;
+		donationBarCalcVal.textContent = val.toFixed(2)
+	}
+
+	const donationSwitch = document.querySelector(".donation.switch");
+	const donationSwitchInput = document.querySelector(".donation.switch .switch-input");
+	const donationNameInput = document.querySelector(".donation-name-input");
+
+	donationSwitch.addEventListener("click", function(){
+		if(donationSwitchInput.checked){
+			donationNameInput.classList.add("hide")
+		}else{
+			donationNameInput.classList.remove("hide");
+
+		}
+	})
 }
