@@ -2142,13 +2142,14 @@ ul.list {
 
 .payment-div{
 	padding : 7px 0px;
-	width : 80%;
-	margin : 0 auto;
+	/* width : 80%;
+	margin : 0 auto; */
 	border-radius: 10px;
 }
 
 .payment-div.pp{
 	background-color: rgb(197, 197, 12);
+
 }
 
 .payment-div.sp{
@@ -2157,7 +2158,11 @@ ul.list {
 
 .payment-div img{
 	width : 100px;
-	height : 100px;
+	height :70px;
+}
+
+.payment-div.pp img{
+	height : 100px
 }
 
 @media (max-width: 1300px) {
