@@ -5,7 +5,7 @@ if (document.querySelector(".select-head")) {
 		dropHead.addEventListener("click", function () {
 			let parent = dropHead.parentElement;
 			let selectDropDown = parent.querySelector(".select-dropdown");
-			console.log(parent)
+			console.log(parent);
 			if (selectDropDown.classList.contains("popup")) {
 				removePopup(selectDropDown);
 			} else {
@@ -93,19 +93,23 @@ if (document.querySelector(".profile.page")) {
 
 /** Profile Page script */
 
-if(document.querySelector(".existing-cta-div")){
+if (document.querySelector(".existing-cta-div")) {
 	const existingRadioEl = document.querySelectorAll(
 		"input[name = 'existing_radio']"
 	);
 	const existingCta = document.querySelectorAll(".existing-cta-div");
 	let selectedRadio = null;
-	
-	const supportCtaBtn = document.querySelectorAll(".support-cta-container .btn");
+
+	const supportCtaBtn = document.querySelectorAll(
+		".support-cta-container .btn"
+	);
 	const supportCtaTabs = document.querySelectorAll(".support-tab");
-	
-	const feedPayoutCategoryCta = document.querySelectorAll(".feed-payout-category-cta");
+
+	const feedPayoutCategoryCta = document.querySelectorAll(
+		".feed-payout-category-cta"
+	);
 	const feedPayoutCategory = document.querySelectorAll(".feed-payout-category");
-	
+
 	existingRadioEl.forEach((radio) => {
 		radio.addEventListener("click", function () {
 			if (selectedRadio == this) {
@@ -114,7 +118,7 @@ if(document.querySelector(".existing-cta-div")){
 			} else {
 				selectedRadio = this;
 			}
-	
+
 			existingCta.forEach((cta) => {
 				if (radio.id == cta.dataset.content) {
 					cta.classList.add("show");
@@ -124,30 +128,118 @@ if(document.querySelector(".existing-cta-div")){
 			});
 		});
 	});
-	
+
 	supportCtaBtn.forEach((btn) => {
 		btn.addEventListener("click", function () {
-			let btnDataset = btn.dataset.content
-			tabChangeFunc(supportCtaBtn, supportCtaTabs, this, btnDataset)
+			let btnDataset = btn.dataset.content;
+			tabChangeFunc(supportCtaBtn, supportCtaTabs, this, btnDataset);
 		});
 	});
-	
+
 	feedPayoutCategoryCta.forEach((cta) => {
 		cta.addEventListener("click", function () {
-			let ctaDataset = cta.dataset.content
-			tabChangeFunc(feedPayoutCategoryCta, feedPayoutCategory, this, ctaDataset)
+			let ctaDataset = cta.dataset.content;
+			tabChangeFunc(
+				feedPayoutCategoryCta,
+				feedPayoutCategory,
+				this,
+				ctaDataset
+			);
 		});
 	});
-	
-	
-	function tabChangeFunc(allbtns, allTabs, el, btnDataset){
-		allbtns.forEach(btn => btn.classList.remove("active"))
-		el.classList.add("active")
+
+	function tabChangeFunc(allbtns, allTabs, el, btnDataset) {
+		allbtns.forEach((btn) => btn.classList.remove("active"));
+		el.classList.add("active");
 		allTabs.forEach((tab) => {
-			tab.classList.remove("show")
-			document.querySelector(`#${btnDataset}`).classList.add("show")
+			tab.classList.remove("show");
+			document.querySelector(`#${btnDataset}`).classList.add("show");
 		});
 	}
 }
 
+//Dropdown
 
+if (document.querySelector(".dropdown-util")) {
+	let dropdownBtn = document.querySelectorAll(".dropdown-util-btn");
+	let dropdown = document.querySelectorAll(".dropdown-util");
+	let dropdownItem = document.querySelectorAll(".dropdown-util-item");
+	let currencySpan = document.querySelectorAll(".curr-span");
+
+	dropdownBtn.forEach((btn, index) => {
+		btn.addEventListener("click", function () {
+			console.log("work");
+			dropdown[index].classList.toggle("show");
+		});
+	});
+
+	dropdownItem.forEach((item) => {
+		item.addEventListener("click", () => {
+			let dropdownBtn =
+				item.parentElement.parentElement.querySelector(".dropdown-util-btn");
+			dropdownBtn.textContent = item.textContent;
+			changeCurrency(item.textContent);
+		});
+	});
+
+	function changeCurrency(currency) {
+		let currVal = "";
+		if (currency == "ZAR") {
+			currVal = "R" + " ";
+		} else if (currency == "USD") {
+			currVal = "$";
+		}
+
+		currencySpan.forEach((curr) => {
+			curr.textContent = currVal;
+		});
+	}
+
+	document.addEventListener("click", (event) => {
+		if (!event.target.matches(".dropdown-util-btn")) {
+			dropdown.forEach((dp) => {
+				if (dp.classList.contains("show")) {
+					dp.classList.remove("show");
+				}
+			});
+		}
+	});
+}
+
+if (document.querySelector(".recurring-btn")) {
+	let recurringBtn = document.querySelector(".recurring-btn");
+	let oneOffBtn = document.querySelector(".one-off-btn");
+	let recurringSelectContainer = document.querySelector(
+		".recurring-select-container"
+	);
+	recurringBtn.addEventListener("click", function () {
+		recurringSelectContainer.classList.add("show");
+		if (oneOffBtn.classList.contains("active")) {
+			oneOffBtn.classList.remove("active");
+		}
+		this.classList.add("active");
+	});
+
+	oneOffBtn.addEventListener("click", function () {
+		recurringSelectContainer.classList.remove("show");
+		if (recurringBtn.classList.contains("active")) {
+			recurringBtn.classList.remove("active");
+		}
+		this.classList.add("active");
+	});
+
+	let donationPrice = document.querySelectorAll(".make-donation-cta-primary");
+	let donationAmountInput = document.querySelector(".donation-amount-input");
+
+	donationPrice.forEach((cta) => {
+		cta.addEventListener("click", function () {
+			donationPrice.forEach(cta => cta.classList.remove("active"))
+			this.classList.add("active");
+			let num = this.querySelector(".text").textContent;
+			let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "")
+			console.log(trimNum);
+			
+			donationAmountInput.value = trimNum;
+		});
+	});
+}

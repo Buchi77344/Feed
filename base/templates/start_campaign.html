@@ -116,7 +116,7 @@
 							<div class="emergency-cta-div mt-2">
 								<label class="terms-label" name = "" for="emergency_case">
 									FOR EMERGENCY CASES
-									<input id="emergency_case" type="checkbox" />
+									<input name="is_emergency" id="emergency_case" type="checkbox" />
 									<span class="terms-checkmark"></span>
 								</label>                        
 							</div>
@@ -141,6 +141,7 @@
 			</main>
 			<script>
 				// Get the 'SAVE & PREVIEW' link and form element
+				const launchbtn =document.querySelector('.launch.secondary-cta-btn')
 				const savePreviewBtn = document.querySelector('.save.secondary-cta-btn');
 				const form = document.getElementById('myForm');
 				const loadingSpinner = document.getElementById('loadingSpinner');
@@ -176,6 +177,39 @@
 							if (response.ok) {
 								const { id } = await response.json(); // Parse the JSON response
 								window.location.href = `/preview/${id}/`; // Redirect
+							} else {
+								const errorMessage = await response.text();
+								alert('Error saving data: ' + errorMessage);
+							}
+						} catch (error) {
+							console.error('Error during fetch request:', error);
+							alert('An error occurred while submitting the form.');
+						} finally {
+							hideLoading(); // Always hide the spinner, even on error
+						}
+					}, 100); // Delay for 100ms to ensure spinner visibility
+				});
+				
+				launchbtn.addEventListener('click', async function(event) {
+					event.preventDefault(); // Prevent default behavior
+					showLoading(); // Show the spinner
+				
+					// Add a slight delay to allow the spinner to render before proceeding
+					setTimeout(async () => {
+						// Create a FormData object from the form
+						const formData = new FormData(form);
+				
+						try {
+							// Send POST request to the backend with form data
+							const response = await fetch('/start_campaign/', {
+								method: 'POST',
+								body: formData, // Send form data (including file) to backend
+							});
+				
+							// Check if the response is successful
+							if (response.ok) {
+								const { id } = await response.json(); // Parse the JSON response
+								window.location.href = `{% url 'profile' %}`; // Redirect
 							} else {
 								const errorMessage = await response.text();
 								alert('Error saving data: ' + errorMessage);

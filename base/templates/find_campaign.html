@@ -174,16 +174,16 @@
 											/>
 											<p class="location-name page-mini-head d-flex">
 											<span class="highlight-span-clr me-1"
-												>Accra,</span
+												>{{campaigns.campaign.country.name}},</span
 											>
 											{{campaigns.campaign.country}}
 											</p>
 										</div>
 
 										<div class="mt-3">
-											<p class="bold-p">$23, 000</p>
+											<p class="bold-p">${{campaigns.campaign.monetary|floatformat:0}}</p>
 											<span class="bold-p highlight-span-clr">
-											30% FUNDED
+												{{campaigns.percentage_achieved|floatformat:0}}% FUNDED
 											</span>
 										</div>
 									</div>

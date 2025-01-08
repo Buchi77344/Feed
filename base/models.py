@@ -96,6 +96,7 @@ class Campaign(models.Model):
     token = models.CharField( max_length=32, unique=True, blank=True, default=generate_unique_token)
     is_launch =models.BooleanField(default=False)
     is_status = models.BooleanField(default=False)
+    is_emergency =models.BooleanField(default=False)
     def save(self, *args, **kwargs):
         # Ensure the token is generated only if it's not already assigned
         if not self.token:
@@ -124,3 +125,15 @@ class Newsletter(models.Model):
 
      def __str__(self):
          return  f"{self.email}"  
+
+
+class PaymentData(models.Model):
+    paypal_secret_key = models.CharField( max_length=500)
+    paypal_api_key =models.CharField( max_length=500)
+    stripe_secret_key =models.CharField( max_length=500)
+    stripe_api_key =models.CharField( max_length=500)
+    currency = models.CharField( max_length=500)
+
+
+    def __str__(self):
+        return self.currency

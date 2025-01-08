@@ -1,0 +1,59 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Manual Payment Method Setup</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- PayPal Configuration -->
+            <div class="mb-3">
+                <label for="paypalSecretKey" class="form-label">PayPal Secret Key</label>
+                <input type="text" class="form-control" id="paypalSecretKey" value="{{paypal_secret_key}}" name="paypal_secret_key" placeholder="Enter PayPal Secret Key">
+            </div>
+            <div class="mb-3">
+                <label for="paypalApiKey" class="form-label">PayPal API Key</label>
+                <input type="text" class="form-control" id="paypalApiKey" name="paypal_api_key" value="{{paypal_api_key}}" placeholder="Enter PayPal API Key">
+            </div>
+
+            <!-- Stripe Configuration -->
+            <div class="mb-3">
+                <label for="stripeSecretKey" class="form-label">Stripe Secret Key</label>
+                <input type="text" class="form-control" id="stripeSecretKey" name="stripe_secret_key" value="{{stripe_secret_key}}" placeholder="Enter Stripe Secret Key">
+            </div>
+            <div class="mb-3">
+                <label for="stripeApiKey" class="form-label">Stripe API Key</label>
+                <input type="text" class="form-control" id="stripeApiKey" name="stripe_api_key" value="{{stripe_api_key}}" placeholder="Enter Stripe API Key">
+            </div>
+
+            <!-- Currency Selector (CDN) -->
+            <div class="mb-3">
+                <label for="currencySelector" class="form-label">Select Currency</label>
+                <select class="form-select" name="currency" id="currencySelector">
+                    <!-- Currency options will be populated dynamically -->
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Configuration</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS Bundle CDN (includes Popper) -->
+    
+    
+    <!-- Fetch and populate currency list using a public CDN/API -->
+    <script>
+        fetch('https://api.exchangerate-api.com/v4/latest/USD')
+            .then(response => response.json())
+            .then(data => {
+                const currencySelector = document.getElementById('currencySelector');
+                for (const currency in data.rates) {
+                    const option = document.createElement('option');
+                    option.value = currency;
+                    option.textContent = `${currency} - ${data.rates[currency]}`;
+                    currencySelector.appendChild(option);
+                }
+            })
+            .catch(error => console.error('Error fetching currency data:', error));
+    </script>
+</body>
+</html>
+{% endblock content %}

@@ -13,7 +13,7 @@ def index(request):
     
     # Trending Campaigns: Define based on most recent or highest monetary goal
     trending_campaigns = Campaign.objects.filter(
-        end_date__gte=datetime.now()  # Campaigns still active
+        end_date__gte=datetime.now(),is_launch= True # Campaigns still active
     ).order_by('-monetary')[:3]
 
     campaigns = Campaign.objects.all()
@@ -227,6 +227,13 @@ def reset_password(request, uidb64, token):
 from django.contrib import messages
 from .models import Campaign
 from datetime import datetime
+
+
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Campaign
 from django_countries import countries
 
 @login_required(login_url="login")
@@ -247,20 +254,22 @@ def start_campaign(request):
             city = request.POST.get('city')
             state = request.POST.get('state')
             country = request.POST.get('country')
-            start_date =request.POST.get('start_date')
-            end_date =request.POST.get('end_date')
-           
-            # organization_payment = request.POST.get('organization_payment') == 'on'
-            # single_payment = request.POST.get('single_payment') == 'on'
-            # is_featured = request.POST.get('is_featured') == 'on'
-           
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            
+            # Check if 'is_emergency' checkbox is checked (True) or not (False)
+            is_emergency = 'is_emergency' in request.POST
+
+            # Validate required fields here, for example:
+            # if not all([campaign_name, monetary, category, story, event, start_date, end_date]):
+            #     raise ValueError("Please fill in all required fields.")
+
             # Create and save the campaign object
             campaign = Campaign.objects.create(
                 campaign_name=campaign_name,
                 monetary=monetary,
                 category=category,
                 story=story,
-              
                 event=event,
                 images=images,
                 video_url=video_url,
@@ -268,32 +277,37 @@ def start_campaign(request):
                 address=address,
                 address1=address1,
                 city=city,
-              
-                state=state,
+                state=state, 
                 country=country,
-               
                 start_date=start_date,
                 end_date=end_date, 
-                user =request.user,
-                is_status =True
-                
-            ) 
-           
-            messages.success(request, f'Campaign "{campaign_name}" created successfully!')
-            return redirect('profile')  # Adjust redirect as needed
+                user=request.user,
+                is_status=True,
+                is_emergency=is_emergency  # Directly set the boolean value for is_emergency
+            )
+
+            # Return the created campaign's token as JSON response
+            return JsonResponse({'id': campaign.token})
 
         except Exception as e:
             messages.error(request, f"Error creating campaign: {str(e)}")
             return render(request, 'start_campaign.html', status=400)
+
+    # Define category and event choices
     category = Campaign.CATEGORY_CHOICES
-    event =Campaign.EVENT_CHOICE
+    event = Campaign.EVENT_CHOICE
+
+    # You need to define the 'countries' variable, either from a model or a static list
+  # Example list, replace with actual data
+
     context = {
-        'countries':countries,
-        'category':category,
-        'event':event,
+        'countries': countries,
+        'category': category,
+        'event': event,
     }
 
-    return render(request, 'start_campaign.html',context)
+    return render(request, 'start_campaign.html', context)
+
 
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -462,7 +476,7 @@ def find_campaign(request):
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
         # Calculate percentage achieved
-        percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+        percentage_achieved = (total_donations / campaign.monetary) * 100 if campaign.monetary > 0 else 0
 
         # Add campaign data and percentage to the list
         campaigns_with_percentage.append({
