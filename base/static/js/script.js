@@ -375,3 +375,82 @@ if(document.querySelector(".percent-progress")){
 		}, 1000)
 	})
 }
+
+//Client Side Validation
+
+let inputVd = document.querySelectorAll(".input-vd")
+
+inputVd.forEach(vd => {
+	console.log(vd)
+	vd.addEventListener("blur", validateField)
+	vd.addEventListener("input", clearErrorMessage)
+})
+
+function validateField(event){
+	let input = event.target
+	console.log(input.checkValidity())
+	if(input.value.trim() == "" || !input.checkValidity()){
+		showErrorMessage(input, getErrorMessage(input))
+	}else{
+		clearErrorMessage(input)
+	}
+}
+
+function getErrorMessage(input){
+	if(input.validity.valueMissing){
+		return 'This Field is required'
+	}
+
+	if(input.validity.typeMismatch){
+		return 'Please enter a valid Value.'
+	}
+
+	if(input.validity.tooShort){
+		return `Please lengthen this text to ${input.minLength} characters or more.`
+	}
+
+	return `Invalid input.`;
+}
+
+function showErrorMessage(input, msg){
+	let errorMessage = input.nextElementSibling;
+	console.log(errorMessage)
+	if(!errorMessage || !errorMessage.classList.contains(".error-message")){
+		errorMessage.textContent = msg
+		errorMessage.style.display = "block"
+	}
+}
+
+function clearErrorMessage(input){
+	let errorMessage = input.nextElementSibling;
+	console.log(input);
+	if(errorMessage && errorMessage.classList.contains("error-message")){
+		console.log(errorMessage);
+		errorMessage.style.display = "none"
+	}
+}
+
+// File Upload Script
+const fileInfo = document.querySelector(".fileInfo")
+const fileInput = document.querySelector("#image_upload")
+const fileName = document.querySelector(".fileName");
+const fileSize = document.querySelector(".fileSize");
+const imgPreview = document.querySelector(".filePreview");
+
+fileInput.addEventListener("change", function(event){
+	const file = event.target.files[0]
+	if(file){
+		fileInfo.style.display = "flex"
+
+		fileName.textContent = `File Name : ${file.name}`
+
+		fileSize.textContent = `File Size : ${(file.size / 1024).toFixed(2)}KB`
+
+		const reader = new FileReader()
+		reader.onload = function(e){
+			imgPreview.src = e.target.result;
+			imgPreview.style.display = "block"
+		}
+		reader.readAsDataURL(file)
+	}
+})
