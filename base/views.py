@@ -464,31 +464,60 @@ def donate(request, token):
             return redirect('donate', token=token)
 
     return render(request, 'donate.html')
-def paypal_payment_link(request,token):
-    
-        campaign = get_object_or_404(campaign, token=token)
-        amount = request.POST.get('amount')
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from decimal import Decimal
+from paypalrestsdk import Payment
+import paypalrestsdk
+import logging
+
+# Configure PayPal SDK
+paypalrestsdk.configure({
+    "mode": "sandbox",  # Change to "live" for production
+    "client_id": "YOUR_PAYPAL_CLIENT_ID",
+    "client_secret": "YOUR_PAYPAL_SECRET_KEY"
+})
+
+def paypal_payment_link(request, token):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request method. Only POST is allowed."}, status=400)
+
+    campaign = get_object_or_404(Campaign, token=token)
+    try:
+        amount = Decimal(request.POST.get('amount'))  # Validate and convert the amount
         message = request.POST.get('message', '')
 
-        try:
-            amount = Decimal(amount)  # Validate and convert the amount
-            if amount <= 0:
-                raise ValueError("Donation amount must be greater than zero.")
+        if amount <= 0:
+            raise ValueError("Donation amount must be greater than zero.")
 
-            # Create a new donation
-            Donation.objects.create(
-                user=request.user,
-                campaign=campaign,
-                amount=amount,
-                message=message
-            )
+        # Create a PayPal payment
+        payment = Payment({
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "transactions": [{
+                "amount": {
+                    "total": str(amount),
+                    "currency": "USD"
+                },
+                "description": f"Donation to {campaign.campaign_name}"
+            }],
+            "redirect_urls": {
+                "return_url": request.build_absolute_uri(f"/paypal-success/{token}/?payment_id={payment.id}&amount={amount}&message={message}"),
+                "cancel_url": request.build_absolute_uri(f"/paypal-cancel/{token}/")
+            }
+        })
 
-            messages.success(request, f"Thank you for donating {amount} to {campaign.campaign_name}!")
-            return redirect('donate', token=token)
+        if payment.create():
+            approval_url = next(link.href for link in payment.links if link.rel == "approval_url")
+            return JsonResponse({"success": True, "approval_url": approval_url})
+        else:
+            logging.error(payment.error)
+            return JsonResponse({"error": "Unable to create PayPal payment."}, status=500)
 
-        except Exception as e:
-            messages.error(request, f"Error processing donation: {e}")
-            return redirect('donate', token=token)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=400)
 
 
 @login_required(login_url="login")
