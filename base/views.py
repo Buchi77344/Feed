@@ -438,32 +438,16 @@ from django.contrib import messages
 
 @login_required(login_url="login")
 def donate(request, token):
-    if request.method == 'POST':
-        campaign = get_object_or_404(campaign, token=token)
-        amount = request.POST.get('amount')
-        message = request.POST.get('message', '')
+    campaign = get_object_or_404(Campaign, token=token)
+  
+            
 
-        try:
-            amount = Decimal(amount)  # Validate and convert the amount
-            if amount <= 0:
-                raise ValueError("Donation amount must be greater than zero.")
-
-            # Create a new donation
-            Donation.objects.create(
-                user=request.user,
-                campaign=campaign,
-                amount=amount,
-                message=message
-            )
-
-            messages.success(request, f"Thank you for donating {amount} to {campaign.campaign_name}!")
-            return redirect('donate', token=token)
-
-        except Exception as e:
-            messages.error(request, f"Error processing donation: {e}")
-            return redirect('donate', token=token)
-
-    return render(request, 'donate.html')
+           
+   
+    context ={
+            'campaign':campaign
+        }
+    return render(request, 'donate.html',context)
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from decimal import Decimal
@@ -474,18 +458,31 @@ import logging
 # Configure PayPal SDK
 paypalrestsdk.configure({
     "mode": "sandbox",  # Change to "live" for production
-    "client_id": "YOUR_PAYPAL_CLIENT_ID",
-    "client_secret": "YOUR_PAYPAL_SECRET_KEY"
+    "client_id": "AYZiSvqeeleSoGAc9VlL0MwArUKV-4kSqR-EAQPaqV8aQtVqLgZ2lvFFC2YgJSKzbYwtx8RYk0EfvMm9",
+    "client_secret": "ECQ4_9AVQsM78XyB_liUcesFXghJh6m4citwi_7yWsO5SEAwO-jnnKvZxLIRP72i_aBVhbZ_GV-J4ZCW"
 })
+
+from django.http import JsonResponse
+from decimal import Decimal
+import logging
+
+from paypalrestsdk import Payment
+import json
 
 def paypal_payment_link(request, token):
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request method. Only POST is allowed."}, status=400)
 
+    # Get the campaign object based on the token
     campaign = get_object_or_404(Campaign, token=token)
+
     try:
-        amount = Decimal(request.POST.get('amount'))  # Validate and convert the amount
-        message = request.POST.get('message', '')
+        # Parse the request body as JSON
+        data = json.loads(request.body)
+
+        # Extract amount and message from the data
+        amount = Decimal(data.get('amount'))  # Validate and convert the amount
+        message = data.get('message', '')
 
         if amount <= 0:
             raise ValueError("Donation amount must be greater than zero.")
@@ -511,13 +508,18 @@ def paypal_payment_link(request, token):
 
         if payment.create():
             approval_url = next(link.href for link in payment.links if link.rel == "approval_url")
-            return JsonResponse({"success": True, "approval_url": approval_url})
+            return JsonResponse({
+                "success": True,
+                "approval_url": approval_url,
+                "campaign_token": campaign.token  # Dynamically include the campaign.token
+            })
         else:
             logging.error(payment.error)
             return JsonResponse({"error": "Unable to create PayPal payment."}, status=500)
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
+
 
 
 @login_required(login_url="login")

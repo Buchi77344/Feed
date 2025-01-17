@@ -21,6 +21,7 @@ urlpatterns = [
     path('create_campaign/',create_campaign,name="create_campaign"),
     path('edit_campaign/<str:token>/',edit_campaign,name="edit_campaign"),
     path('donate/<str:token>/', donate, name="donate"),
+    path('paypal_payment_link/<str:token>/', paypal_payment_link, name="paypal_payment_link"),
 ]
 
 
