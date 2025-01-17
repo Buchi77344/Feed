@@ -437,20 +437,35 @@ const fileName = document.querySelector(".fileName");
 const fileSize = document.querySelector(".fileSize");
 const imgPreview = document.querySelector(".filePreview");
 
-fileInput.addEventListener("change", function(event){
-	const file = event.target.files[0]
-	if(file){
-		fileInfo.style.display = "flex"
 
-		fileName.textContent = `File Name : ${file.name}`
+if (document.querySelector(".fileInfo")){
+	fileInput.addEventListener("change", function (event) {
+		const file = event.target.files[0];
+		if (file) {
+			fileInfo.style.display = "flex";
 
-		fileSize.textContent = `File Size : ${(file.size / 1024).toFixed(2)}KB`
+			fileName.textContent = `File Name : ${file.name}`;
 
-		const reader = new FileReader()
-		reader.onload = function(e){
-			imgPreview.src = e.target.result;
-			imgPreview.style.display = "block"
+			fileSize.textContent = `File Size : ${(file.size / 1024).toFixed(2)}KB`;
+
+			const reader = new FileReader();
+			reader.onload = function (e) {
+				imgPreview.src = e.target.result;
+				imgPreview.style.display = "block";
+			};
+			reader.readAsDataURL(file);
 		}
-		reader.readAsDataURL(file)
-	}
-})
+	});
+}
+
+if(document.querySelector(".drop-down-circle.mc-cta")){
+	let dropDownCircle = document.querySelector(".drop-down-circle.mc-cta");
+	let dropdown = document.querySelector(".my-campaign.drop-down-cta");
+
+	dropDownCircle.addEventListener("click", function(e){
+		let dropdownHeight = dropdown.scrollHeight
+		dropdown.style.setProperty("--dropdown-height", `${dropdownHeight + 20}px`);
+		dropdown.classList.toggle("show")
+		this.classList.toggle("active")
+	})
+}
