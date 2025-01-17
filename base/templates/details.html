@@ -147,24 +147,28 @@
 								</div>
 
 								<div class="user-donation-container mt-3">
+								    {% if donation  %}
+									{%  for donation in donation %}
 									<div class="user-donation-item flex-between">
 										<div class="price">
-											<span class="fw-700 highlight-span-clr">R 200</span>
+											<span class="fw-700 highlight-span-clr">$ {{donation.amount}}</span>
 										</div>
 
 										<div class="details-container">
 											<div class="flex-between">
-												<span class="fw-700">Hanna</span>
+												<span class="fw-700">{{donation.user.first_name}}</span>
 												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>1 Jan '25</span>
+												<span>{{donation.created_at|date}}</span>
 											</div>
 
 											<div>
-												<p>Lief vir julle!</p>
+												<p>{{donation.campaign.campaign_name}}</p>
 											</div>
 										</div>
 									</div>
-
+                                    {%endfor%}
+								   {% else %}
+								
 									<div class="user-donation-item flex-between">
 										<div class="price">
 											<span class="fw-700 highlight-span-clr">R 2 000</span>
@@ -183,131 +187,8 @@
 										</div>
 									</div>
 
-									<div class="user-donation-item flex-between">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">US$500</span>
-										</div>
 
-										<div class="details-container">
-											<div class="flex-between">
-												<span class="fw-700">Anonymous</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>31 Dec '24</span>
-											</div>
-
-											<div>
-												<p>With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
-											</div>
-										</div>
-									</div>
-
-									<div class="user-donation-item flex-between">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">US$500</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-between">
-												<span class="fw-700">Anonymous</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>31 Dec '24</span>
-											</div>
-
-											<div>
-												<p></p>
-											</div>
-										</div>
-									</div>
-
-									<div class="user-donation-item flex-between">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">US$500</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-between">
-												<span class="fw-700">Anonymous</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>31 Dec '24</span>
-											</div>
-
-											<div>
-												<p>With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
-											</div>
-										</div>
-									</div>
-									
-									<div class="user-donation-item flex-between">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">R 10 000</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-between">
-												<span class="fw-700">Philip en Johanika</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>31 Dec '24</span>
-											</div>
-
-											<div>
-												<p>Baie sterkte!!</p>
-											</div>
-										</div>
-									</div>
-
-									<div class="user-donation-item flex-between">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">R 10 000</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-between">
-												<span class="fw-700">Philip en Johanika</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>31 Dec '24</span>
-											</div>
-
-											<div>
-												<p>Baie sterkte!!</p>
-											</div>
-										</div>
-									</div>
-
-									<div class="user-donation-item flex-between">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">US$500</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-between">
-												<span class="fw-700">Anonymous</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>31 Dec '24</span>
-											</div>
-
-											<div>
-												<p>With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
-											</div>
-										</div>
-									</div>
-
-									<div class="user-donation-item flex-between">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">R 10 000</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-between">
-												<span class="fw-700">Philip en Johanika</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>31 Dec '24</span>
-											</div>
-
-											<div>
-												<p>Baie sterkte!!</p>
-											</div>
-										</div>
-									</div>
+						
 
 									<div class="user-donation-item flex-between">
 										<div class="price">
@@ -326,6 +207,7 @@
 											</div>
 										</div>
 									</div>
+								  {% endif %}
 								</div>
 
 								<div class="view-more-container text-center mt-3">

@@ -9,28 +9,30 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
-    featured_campaigns = Campaign.objects.filter(is_featured=True)[:3]
+    featured_campaigns = Campaign.objects.all()[:3]
     
     # Trending Campaigns: Define based on most recent or highest monetary goal
     trending_campaigns = Campaign.objects.filter(
         end_date__gte=datetime.now(),is_launch= True # Campaigns still active
     ).order_by('-monetary')[:3]
 
-    campaigns = Campaign.objects.all()
+    campaigns = Campaign.objects.all() 
     campaigns_with_percentage = []
     # if Campaign.objects.filter(profile__user =request.user).exists: 
     for campaign in campaigns:
         # Calculate total donations for the campaign
+       
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
         # Calculate percentage achieved
-        percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+        percentage_achieved = (total_donations / campaign.monetary) * 100 if campaign.monetary > 0 else 0
 
         # Add campaign data and percentage to the list
         campaigns_with_percentage.append({
             'campaign': campaign,
             'total_donations': total_donations,
             'percentage_achieved': percentage_achieved,
+            'trending_campaigns':trending_campaigns,
         })
     
     # Calculate the percentage achieved
@@ -118,6 +120,11 @@ def login (request):
     else:
 
        return render (request, 'login.html')
+    
+
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
 
 
 from django.shortcuts import render, redirect
@@ -469,6 +476,14 @@ import logging
 from paypalrestsdk import Payment
 import json
 
+from decimal import Decimal
+import json
+import logging
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Campaign
+from paypalrestsdk import Payment
+
 def paypal_payment_link(request, token):
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request method. Only POST is allowed."}, status=400)
@@ -480,12 +495,21 @@ def paypal_payment_link(request, token):
         # Parse the request body as JSON
         data = json.loads(request.body)
 
-        # Extract amount and message from the data
-        amount = Decimal(data.get('amount'))  # Validate and convert the amount
-        message = data.get('message', '')
+        # Extract and validate the amount
+        amount_str = data.get('amount')
+        if not amount_str:
+            return JsonResponse({"error": "Donation amount is required."}, status=400)
+        
+        try:
+            amount = Decimal(amount_str)
+        except (ValueError, TypeError):
+            return JsonResponse({"error": "Invalid donation amount."}, status=400)
 
         if amount <= 0:
-            raise ValueError("Donation amount must be greater than zero.")
+            return JsonResponse({"error": "Donation amount must be greater than zero."}, status=400)
+
+        # Extract optional message
+        message = data.get('message', '')
 
         # Create a PayPal payment
         payment = Payment({
@@ -495,29 +519,107 @@ def paypal_payment_link(request, token):
             },
             "transactions": [{
                 "amount": {
-                    "total": str(amount),
+                    "total": f"{amount:.2f}",
                     "currency": "USD"
                 },
                 "description": f"Donation to {campaign.campaign_name}"
             }],
             "redirect_urls": {
-                "return_url": request.build_absolute_uri(f"/paypal-success/{token}/?payment_id={payment.id}&amount={amount}&message={message}"),
+                "return_url": request.build_absolute_uri(
+                    f"/paypal-success/{token}/?amount={amount}&message={message}"
+                ),
                 "cancel_url": request.build_absolute_uri(f"/paypal-cancel/{token}/")
             }
         })
 
+        # Attempt to create the payment
         if payment.create():
-            approval_url = next(link.href for link in payment.links if link.rel == "approval_url")
-            return JsonResponse({
-                "success": True,
-                "approval_url": approval_url,
-                "campaign_token": campaign.token  # Dynamically include the campaign.token
-            })
+            approval_url = next((link.href for link in payment.links if link.rel == "approval_url"), None)
+            if approval_url:
+                return JsonResponse({
+                    "success": True,
+                    "approval_url": approval_url,
+                    "campaign_token": campaign.token  # Dynamically include the campaign token
+                })
+            else:
+                return JsonResponse({"error": "Approval URL not found in PayPal response."}, status=500)
         else:
             logging.error(payment.error)
-            return JsonResponse({"error": "Unable to create PayPal payment."}, status=500)
+            return JsonResponse({"error": "Unable to create PayPal payment. Check the logs for more details."}, status=500)
 
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data in the request body."}, status=400)
     except Exception as e:
+        logging.exception("An error occurred while processing the payment request.")
+        return JsonResponse({"error": str(e)}, status=400)
+
+
+import json
+import logging
+from decimal import Decimal
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Campaign
+import stripe
+
+# Set your Stripe secret key
+stripe.api_key = "your_stripe_secret_key"
+
+def stripe_payment_link(request, token):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request method. Only POST is allowed."}, status=400)
+
+    # Get the campaign object based on the token
+    campaign = get_object_or_404(Campaign, token=token)
+
+    try:
+        # Parse the request body as JSON
+        data = json.loads(request.body)
+
+        # Extract and validate the amount
+        amount_str = data.get('amount')
+        if not amount_str:
+            return JsonResponse({"error": "Donation amount is required."}, status=400)
+
+        try:
+            amount = Decimal(amount_str)
+        except (ValueError, TypeError):
+            return JsonResponse({"error": "Invalid donation amount."}, status=400)
+
+        if amount <= 0:
+            return JsonResponse({"error": "Donation amount must be greater than zero."}, status=400)
+
+        # Convert amount to cents (Stripe processes amounts in the smallest currency unit)
+        amount_in_cents = int(amount * 100)
+
+        # Extract optional message
+        message = data.get('message', '')
+
+        # Create a Stripe PaymentIntent
+        payment_intent = stripe.PaymentIntent.create(
+            amount=amount_in_cents,
+            currency="usd",
+            description=f"Donation to {campaign.campaign_name}",
+            metadata={
+                "campaign_name": campaign.campaign_name,
+                "message": message,
+            },
+        )
+
+        # Return the client secret for the PaymentIntent
+        return JsonResponse({
+            "success": True,
+            "client_secret": payment_intent.client_secret,
+            "campaign_token": campaign.token
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data in the request body."}, status=400)
+    except stripe.error.StripeError as e:
+        logging.error(f"Stripe error: {e.user_message}")
+        return JsonResponse({"error": f"Stripe error: {e.user_message}"}, status=400)
+    except Exception as e:
+        logging.exception("An error occurred while processing the payment request.")
         return JsonResponse({"error": str(e)}, status=400)
 
 
@@ -605,11 +707,13 @@ def details(request, token):
     # Get the specific campaign
     campaign_details = get_object_or_404(Campaign, token=token)
 
+    donation = Donation.objects.filter(campaign=campaign_details)
+
     # Calculate total donations for this campaign
     total_donations = campaign_details.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
     # Calculate percentage achieved
-    percentage_achieved = (
+    percentage_achieved = (  
         (total_donations / campaign_details.monetary) * 100
         if campaign_details.monetary > 0 else 0
     )
@@ -619,6 +723,7 @@ def details(request, token):
         'campaign_details': campaign_details,
         'total_donations': total_donations,
         'percentage_achieved': percentage_achieved,
+        'donation':donation
     }
     return render(request, 'details.html', context)
 

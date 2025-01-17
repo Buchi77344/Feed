@@ -283,54 +283,185 @@
 
 <script>
 	
-	document.querySelector('.payment-link').addEventListener('click', function(event) {
-		event.preventDefault();  // Prevent the default link behavior
+	document.querySelector('.payment-link').addEventListener('click', function (event) {
+		event.preventDefault(); // Prevent the default link behavior
 	
-		// Extract the token from the link's href attribute
-		 // Assuming the token is the last part of the URL
-	    const token = "{{ campaign.token }}"; 
-		const amount = 10;  // Replace with the actual amount
-		const message = 'Thank you for your support';  // Optional message
+		// Show a Bootstrap loading spinner
+		showLoading();
 	
+		const token = "{{ campaign.token }}"; // Replace with the actual campaign token dynamically
+		const amount = 10; // Replace with the actual amount (could be dynamically retrieved)
+		const message = 'Thank you for your support'; // Optional message
+	
+		// Perform a POST request to initiate the payment
 		fetch(`/paypal_payment_link/${token}/`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-CSRFToken': getCookie('csrftoken')  // Include CSRF token if needed
+				'X-CSRFToken': getCookie('csrftoken') // Include CSRF token if needed
 			},
 			body: JSON.stringify({
 				amount: amount,
 				message: message
 			})
 		})
-		.then(response => response.json())
-		.then(data => {
-			if (data.success) {
-				window.location.href = data.approval_url;  // Redirect to PayPal approval URL
-			} else {
-				alert('Error: ' + data.error);
-			}
-		})
-		.catch(error => {
-			console.error('Error:', error);
-			alert('An error occurred while processing the payment.');
-		});
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.success) {
+					window.location.href = data.approval_url; // Redirect to PayPal approval URL
+				} else {
+					alert(`Error: ${data.error}`);
+					hideLoading(); // Hide loading spinner if an error occurs
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('An error occurred while processing the payment. Please try again.');
+				hideLoading(); // Hide loading spinner if an error occurs
+			});
 	});
 	
+	// Utility function to retrieve a specific cookie by name
 	function getCookie(name) {
-		let cookieValue = null;
-		if (document.cookie && document.cookie !== '') {
-			const cookies = document.cookie.split(';');
-			for (let i = 0; i < cookies.length; i++) {
-				const cookie = cookies[i].trim();
-				if (cookie.substring(0, name.length + 1) === (name + '=')) {
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-					break;
-				}
+		const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+		for (const cookie of cookies) {
+			if (cookie.startsWith(`${name}=`)) {
+				return decodeURIComponent(cookie.substring(name.length + 1));
 			}
 		}
-		return cookieValue;
+		return null;
 	}
+	
+	// Function to show a Bootstrap loading spinner
+	function showLoading() {
+		const loadingDiv = document.createElement('div');
+		loadingDiv.id = 'loading-spinner';
+		loadingDiv.style.position = 'fixed';
+		loadingDiv.style.top = '0';
+		loadingDiv.style.left = '0';
+		loadingDiv.style.width = '100%';
+		loadingDiv.style.height = '100%';
+		loadingDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+		loadingDiv.style.display = 'flex';
+		loadingDiv.style.justifyContent = 'center';
+		loadingDiv.style.alignItems = 'center';
+		loadingDiv.style.zIndex = '1000';
+		loadingDiv.innerHTML = `
+			<div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		`;
+		document.body.appendChild(loadingDiv);
+	}
+	
+	// Function to hide the loading spinner
+	function hideLoading() {
+		const loadingDiv = document.getElementById('loading-spinner');
+		if (loadingDiv) {
+			document.body.removeChild(loadingDiv);
+		}
+	}
+	
+
+	document.querySelector('.payment-link.sp.flex-center').addEventListener('click', function (event) {
+		event.preventDefault(); // Prevent the default link behavior
+	
+		// Show a Bootstrap loading spinner
+		showLoading();
+	
+		const token = "{{ campaign.token }}"; // Replace with the actual campaign token dynamically
+		const amount = 10; // Replace with the actual amount (could be dynamically retrieved)
+		const message = 'Thank you for your support'; // Optional message
+	
+		// Perform a POST request to initiate the payment
+		fetch(`/stripe_payment_link/${token}/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': getCookie('csrftoken') // Include CSRF token if needed
+			},
+			body: JSON.stringify({
+				amount: amount,
+				message: message
+			})
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.success) {
+					const stripe = Stripe('your_stripe_publishable_key'); // Replace with your Stripe publishable key
+					stripe.confirmCardPayment(data.client_secret)
+						.then(result => {
+							if (result.error) {
+								alert(`Payment failed: ${result.error.message}`);
+							} else {
+								alert("Payment succeeded!");
+								// Redirect or show a success message
+							}
+							hideLoading(); // Hide the loading spinner after processing
+						});
+				} else {
+					alert(`Error: ${data.error}`);
+					hideLoading(); // Hide loading spinner if an error occurs
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('An error occurred while processing the payment. Please try again.');
+				hideLoading(); // Hide loading spinner if an error occurs
+			});
+	});
+	
+	// Utility function to retrieve a specific cookie by name
+	function getCookie(name) {
+		const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+		for (const cookie of cookies) {
+			if (cookie.startsWith(`${name}=`)) {
+				return decodeURIComponent(cookie.substring(name.length + 1));
+			}
+		}
+		return null;
+	}
+	
+	// Function to show a Bootstrap loading spinner
+	function showLoading() {
+		const loadingDiv = document.createElement('div');
+		loadingDiv.id = 'loading-spinner';
+		loadingDiv.style.position = 'fixed';
+		loadingDiv.style.top = '0';
+		loadingDiv.style.left = '0';
+		loadingDiv.style.width = '100%';
+		loadingDiv.style.height = '100%';
+		loadingDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+		loadingDiv.style.display = 'flex';
+		loadingDiv.style.justifyContent = 'center';
+		loadingDiv.style.alignItems = 'center';
+		loadingDiv.style.zIndex = '1000';
+		loadingDiv.innerHTML = `
+			<div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		`;
+		document.body.appendChild(loadingDiv);
+	}
+	
+	// Function to hide the loading spinner
+	function hideLoading() {
+		const loadingDiv = document.getElementById('loading-spinner');
+		if (loadingDiv) {
+			document.body.removeChild(loadingDiv);
+		}
+	}
+	
 	
 </script>
 {% endblock content %}
