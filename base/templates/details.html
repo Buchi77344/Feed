@@ -80,7 +80,7 @@
 							</div>
 							<div class="row mt-3">
 								<div class="col-sm-6 text-center details-location-container">
-									<span class="icon flex-center">
+									<span class="icon flex-center mx-auto">
 										<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 										<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -90,7 +90,7 @@
 									<p class="smaller-text">South Africa</p>
 								</div>	
 								<div class="col-sm-6 text-center details-manage-container">
-									<span class="icon flex-center">
+									<span class="icon flex-center mx-auto">
 										<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
 										<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="hsl(0,0%,80%)"/>
@@ -114,7 +114,7 @@
 							<div class="flex gp-10">
 								<img class="about-campaign profile-img" src="{% static '../static/img/profile-img.png' %}" alt="">
 								<div class="about-campaign-profile-content flex-column align-start py-2 ">
-									<p class="profile-name highlight-span-clr fw-600">{{campaign_details.user.first_name|capfirst}} {{campaign_details.user.last_name|capfirst}}</p>
+									<p class="profile-name highlight-span-clr fw-600 mb-0">{{campaign_details.user.first_name|capfirst}} {{campaign_details.user.last_name|capfirst}}</p>
 									<div class="flex gp-5">
 										<span class="about-campaign title-span">Organiser</span>
 										<span class="smallest-text">1 BaB campaign</span>
@@ -247,6 +247,43 @@
 				</section>
 			</div>
 		</main>
+
+		/**<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+		<script>
+			function showCustomToast() {
+				// Create a custom element
+				const customElement = document.createElement("div");
+				customElement.className = "custom-toast";
+	
+				// Add content to the custom element
+				const img = document.createElement("img");
+				img.src = "{% static 'img/svg/check-green.svg' %}" // Example image URL
+				img.alt = "check icon";
+	
+				const message = document.createElement("div");
+				message.className = "message";
+				message.innerText = "Hello! This is a custom toast.";
+	
+				// Append the content to the custom element
+				customElement.appendChild(img);
+				customElement.appendChild(message);
+	
+				// Show the toast with the custom element
+				Toastify({
+					node: customElement, // Use the custom element
+					duration: 1000,
+					gravity: "top",
+					position: "right",
+					style: {
+						background: "white",
+						borderRadius: "5px",
+						padding: "0px",
+					},
+				}).showToast();
+			}
+
+			showCustomToast()
+		</script>*/
 
 {% endblock %}
 		

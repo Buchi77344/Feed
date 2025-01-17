@@ -77,6 +77,8 @@ if (document.querySelector("main.profile")) {
 			let mobileProfileInfo = parent.querySelector(
 				".profile-donations-container.mobile"
 			);
+			let dropdownHeight = mobileProfileInfo.scrollHeight
+			parent.style.setProperty("--dropdown-height", `${dropdownHeight + 20}px`);
 			mobileProfileInfo.classList.toggle("slide-down");
 		});
 	});
@@ -458,14 +460,21 @@ if (document.querySelector(".fileInfo")){
 	});
 }
 
-if(document.querySelector(".drop-down-circle.mc-cta")){
-	let dropDownCircle = document.querySelector(".drop-down-circle.mc-cta");
-	let dropdown = document.querySelector(".my-campaign.drop-down-cta");
 
-	dropDownCircle.addEventListener("click", function(e){
-		let dropdownHeight = dropdown.scrollHeight
-		dropdown.style.setProperty("--dropdown-height", `${dropdownHeight + 20}px`);
-		dropdown.classList.toggle("show")
-		this.classList.toggle("active")
+if(document.querySelector(".drop-down-circle.mc-cta")){
+	let dropDownCircle = document.querySelectorAll(".drop-down-circle.mc-cta");
+	let dropdown = document.querySelectorAll(".my-campaign.drop-down-cta");
+
+
+	dropDownCircle.forEach(circle => {
+		circle.addEventListener("click", function(e){
+			console.log("hi there")
+			dropdown.forEach(dp => {
+				let dropdownHeight = dp.scrollHeight
+				dp.style.setProperty("--dropdown-height", `${dropdownHeight + 20}px`);
+				dp.classList.toggle("show")
+			})
+			this.classList.toggle("active")
+		})
 	})
 }

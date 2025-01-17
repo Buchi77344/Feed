@@ -112,6 +112,7 @@ def login (request):
 
         if user is not None:
             auth.login(request,user)
+            messages.success(request, 'login sucessfully')
             return redirect('/')
 
         else:
@@ -124,6 +125,7 @@ def login (request):
 
 def logout(request):
     auth.logout(request)
+    messages.success(request, 'you have sucessfully logout')
     return redirect('login')
 
 
