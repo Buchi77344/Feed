@@ -2258,6 +2258,11 @@ ul.list {
 	border-radius: 50%;
 }
 
+.log-icon{
+	width : 20px;
+	height : 20px;
+}
+
 @media (max-width: 1300px) {
 	.feature-desc-item {
 		text-align: left;
