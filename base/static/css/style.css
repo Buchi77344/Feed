@@ -2345,6 +2345,8 @@ ul.list {
 	border-top: 1px solid hsl(0, 0%, 60%);
 	max-height: var(--dropdown-height);
 	transition: max-height 0.3s ease;
+	overflow: auto;
+
 }
 
 .drop-down-cta-item {
