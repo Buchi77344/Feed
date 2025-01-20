@@ -40,27 +40,27 @@
 						</div>
 						<div class="flex-wrap mt-4 gp-10">
 							<button class="make-donation-cta-primary">
-								<span class="curr-span highlight-span-clr">R </span
+								<span class="curr-span highlight-span-clr">$ </span
 								><span class="text highlight-span-clr">200.00</span>
 							</button>
 							<button class="make-donation-cta-primary">
-								<span class="curr-span highlight-span-clr">R </span
+								<span class="curr-span highlight-span-clr">$ </span
 								><span class="text highlight-span-clr">500.00</span>
 							</button>
 							<button class="make-donation-cta-primary">
-								<span class="curr-span highlight-span-clr">R </span
+								<span class="curr-span highlight-span-clr">$</span
 								><span class="text highlight-span-clr">1000.00</span>
 							</button>
 							<button class="make-donation-cta-primary">
-								<span class="curr-span highlight-span-clr">R </span
+								<span class="curr-span highlight-span-clr">$</span
 								><span class="text highlight-span-clr">2000.00</span>
 							</button>
 							<button class="make-donation-cta-primary">
-								<span class="curr-span highlight-span-clr">R </span
+								<span class="curr-span highlight-span-clr">$</span
 								><span class="text highlight-span-clr">5000.00</span>
 							</button>
 							<button class="make-donation-cta-primary">
-								<span class="curr-span highlight-span-clr">R </span
+								<span class="curr-span highlight-span-clr">$</span
 								><span class="text highlight-span-clr">10 000.00</span>
 							</button>
 						</div>
@@ -71,11 +71,13 @@
 								class="donation-amount-input"
 								name="donation_amount"
 								placeholder="Enter amount *"
+								id="donation_amount"
+								
 							/>
 							<div class="curr-container pos-rel">
-								<button class="dropdown-util-btn fw-500">ZAR</button>
+								<button class="dropdown-util-btn fw-500">USD</button>
 								<div class="dropdown-util">
-									<span class="dropdown-util-item">ZAR</span>
+									<span class="dropdown-util-item">CD</span>
 									<span class="dropdown-util-item">USD</span>
 								</div>
 							</div>
@@ -222,17 +224,17 @@
 							<div class="flex-between w-100">
 								<p class="fs-16 fw-500">Campaign:</p>
 								<p class="fs-16 fw-700">
-									Mission for Marlee: A Journey to Healing
+									{{campaign.campaign_name}}
 								</p>
 							</div>
 
 							<div class="flex-between w-100">
 								<p class="fs-16 fw-500">Your donation:</p>
-								<p class="fs-16 fw-600 donation-price-text">R 0.00</p>
+								<p class="fs-16 fw-600 donation-price-text">$ 0.00</p>
 							</div>
 
 							<div class="flex-between w-100">
-								<p class="fs-16 fw-500">BackaBuddy tip:</p>
+								<p class="fs-16 fw-500">Feed Needs tip:</p>
 								<p class="fs-16 fw-600">-</p>
 							</div>
 						</div>
@@ -240,7 +242,7 @@
 						<div class="pt-3 pb-4 flex-column align-start gap-15 br-b">
 							<div class="flex-between w-100">
 								<p class="fs-16 fw-500">Total to pay:</p>
-								<p class="fs-16 fw-600 donation-price-text">R 0.00</p>
+								<p class="fs-16 fw-600 donation-price-text">$ 0.00</p>
 							</div>
 						</div>
 
@@ -260,7 +262,7 @@
 					<div class="payment-gateway mt-5">
 						<h5 class="fs-30 mb-3 fw-600 text-center">Donations</h5>
 						<div class="flex-column align-stretch gp-15">
-							<a href = "#" class="payment-link pp flex-center">
+							<a href = "#" style="pointer-events: none; opacity: 0.5;"  class="payment-link pp flex-center" id="payment-link">
 								<img
 									src="{% static 'img/paypal.png' %}"
 									alt=""
@@ -280,8 +282,44 @@
 		</div>
 	</section>
 </main>
+<script>
+	function checkAmount() {
+        const donationInput = document.getElementById("donation_amount"); // Input field
+        const paymentLink = document.getElementById("payment-link"); // Payment link
+
+        // Get the input value
+        const rawValue = donationInput.value;
+        console.log("Raw input value:", rawValue);
+
+        // Convert the value to a float or default to 0
+        const amount = parseFloat(rawValue) || 0;
+        console.log("Converted amount:", amount);
+
+        // Condition to check if amount is greater than 0
+        if (amount > 0) {
+            console.log("Valid amount entered, enabling the link.");
+            paymentLink.style.pointerEvents = "auto"; // Enable the link
+            paymentLink.style.opacity = "1"; // Make the link visually active
+        } else {
+            console.log("Invalid or empty amount, disabling the link.");
+            paymentLink.style.pointerEvents = "none"; // Disable the link
+            paymentLink.style.opacity = "0.5"; // Make the link visually inactive
+        }
+    }
+
+    // Add event listener for real-time input changes
+    const donationInput = document.getElementById("donation_amount");
+    donationInput.addEventListener("input", checkAmount);
+
+    // Initial state check on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("Page loaded. Running initial check.");
+        checkAmount();
+    });
+</script>
 
 <script>
+
 	
 	document.querySelector('.payment-link').addEventListener('click', function (event) {
 		event.preventDefault(); // Prevent the default link behavior
@@ -290,7 +328,11 @@
 		showLoading();
 	
 		const token = "{{ campaign.token }}"; // Replace with the actual campaign token dynamically
-		const amount = 10; // Replace with the actual amount (could be dynamically retrieved)
+		// Extract the amount from the element
+		const amountText = document.querySelector('.donation-price-text').textContent.trim();
+		// Parse the amount and remove the dollar sign, then convert to a number
+		const amount = parseFloat(amountText.replace('$', '').trim()) || 0; // Default to 0 if no valid amount
+	
 		const message = 'Thank you for your support'; // Optional message
 	
 		// Perform a POST request to initiate the payment
@@ -336,6 +378,7 @@
 		}
 		return null;
 	}
+	
 	
 	// Function to show a Bootstrap loading spinner
 	function showLoading() {

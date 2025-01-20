@@ -404,40 +404,55 @@ def edit_campaign(request,token):
 
 from django.contrib.auth.decorators import login_required
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
+from .models import Campaign, Donation, Profile
+
 @login_required(login_url="login")
 def profile(request):
-    campaign = Campaign.objects.filter(user=request.user)
+    # Fetch the user's campaigns, limiting to the first 2
+    campaigns = Campaign.objects.filter(user=request.user)[:2]
+    
+    # Fetch the user's profile
     profile = get_object_or_404(Profile, user=request.user)
-
-
-    # Get all donations for campaigns created by this user
+    
+    # Get all donations associated with campaigns created by this user
     donations = Donation.objects.filter(campaign__user=request.user).select_related("campaign", "user")
+    
+    # Calculate total donations for each campaign and update the campaign's goal
+    for campaign in campaigns:
+        total_donations = campaign.donations.aggregate(total=Sum('amount'))['total'] or 0
+        campaign.goal = total_donations  # Assuming 'goal' represents total donations here
+        campaign.save()
 
     if request.method == "POST":
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        phone_number = request.POST.get('phone_number')
-        address =request.POST.get('address')
+        # Extract form data
+        first_name = request.POST.get('first_name', '').strip()
+        last_name = request.POST.get('last_name', '').strip()
+        phone_number = request.POST.get('phone_number', '').strip()
+        address = request.POST.get('address', '').strip()
         
-
+        # Update user information
         user = request.user
         user.first_name = first_name
         user.last_name = last_name
-        user.phone_number =phone_number
-        user.save()  
+        user.save()
         
+        # Update profile information
         profile.address = address
         profile.save()
-     
-        return redirect('profile')
         
+        return redirect('profile')  # Redirect to the profile page after saving
 
+    # Context to pass to the template
     context = {
-        "campaign": campaign,
+        "campaigns": campaigns,
         "donations": donations,
         "profile": profile,
     }
     return render(request, 'profile.html', context)
+
 
 
 from django.shortcuts import redirect, get_object_or_404
@@ -463,12 +478,16 @@ from decimal import Decimal
 from paypalrestsdk import Payment
 import paypalrestsdk
 import logging
+from .models import PaymentData
+if  PaymentData.objects.all().exists():
+
+   data = get_object_or_404(PaymentData)
 
 # Configure PayPal SDK
 paypalrestsdk.configure({
     "mode": "sandbox",  # Change to "live" for production
-    "client_id": "AYZiSvqeeleSoGAc9VlL0MwArUKV-4kSqR-EAQPaqV8aQtVqLgZ2lvFFC2YgJSKzbYwtx8RYk0EfvMm9",
-    "client_secret": "ECQ4_9AVQsM78XyB_liUcesFXghJh6m4citwi_7yWsO5SEAwO-jnnKvZxLIRP72i_aBVhbZ_GV-J4ZCW"
+    "client_id": data.paypal_api_key,
+    "client_secret": data.paypal_secret_key,
 })
 
 from django.http import JsonResponse

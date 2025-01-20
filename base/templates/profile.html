@@ -33,6 +33,117 @@
 			border: 4px solid #76b30f;
 		}
 	</style>
+	
+	<div id="popup" class="popup hidden">
+		<div class="popup-content">
+			<span id="close-popup">&times;</span>
+			{% for campaign in campaigns %}
+				<div data-profile_category="my-campaigns" style = "{% if forloop.counter > 2 %}display: none;{% endif %}" class="info-item profile-campaigns-container text-center w-100 bd mt-4 p-4 br-10">
+					<div class="flex-column align-start gp-10">
+						<h5 class="fs-20 highlight-span-clr">My campaigns</h5>
+
+						<div class="my-campaigns-user-info w-100">
+							<div class="box-wrapper flex-between align-center">
+								<div class="my-campaign-username">
+									<span>{{request.user.first_name|slice:"1"}}</span>
+								</div>
+								
+								<div class="my-campaign-userinfo-content">
+									<div class="flex-between align-start">
+										<div class="mb-2">
+											<h5 class="fs-20 fw-600">{{ campaign.campaign_name }} </h5>
+											<p class="fw-700 text-start mb-0">{{ campaign.start_date|date }}  Open</p>
+											<div class="flex gp-10">
+												<div class="flex gp-5">
+													<span class="flex-center">
+														<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+														<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+														</svg>
+													</span>
+													<span class="location-span variant-text-clr">{{ campaign.city}}</span>
+												</div>
+		
+												<span class="fs-16 fw-500">{{ campaign.country.name }} </span>
+											</div>
+										</div>
+
+										<span class="flex-center">
+											<img class="profile icon" src="../static/img/svg/profile-1341-svgrepo-com.svg" alt="profile icon">
+										</span>
+									</div>
+
+									<div class="flex-between">
+										<div class="flex align-center gp-10">
+											{% if campaign.is_status %}
+											<p class="campaign-status mb-0 fw-500">STATUS: <span class="highlight-span-clr">ACTIVE</span></p>
+											{% else %}
+											<p class="campaign-status mb-0 fw-500">STATUS: <span class="highlight-span-clr">INACTIVE</span></p>
+											{% endif %}
+											<div class="flex gp-5">
+												<span class="flex-center">
+													<img class="flag icon" src="../static/img/svg/flag-2-svgrepo-com.svg" alt="flag icon">
+												</span>
+												{% if campaign.is_launch %}
+												<span class="danger-clr mac-italic-text fs-16">launched</span>
+												{% else %}
+												<span class="danger-clr mac-italic-text fs-16">Not launched</span>
+												{% endif %}
+											</div>
+										</div>
+
+										<span class="flex-center drop-down-circle mc-cta">
+											<svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<line x1="1.30871" y1="1.93934" x2="15.2897" y2="15.9203" stroke="#76B30F" stroke-width="3"/>
+											<line y1="-1.5" x2="19.7721" y2="-1.5" transform="matrix(-0.707107 0.707107 0.707107 0.707107 28 3.41724)" stroke="#76B30F" stroke-width="3"/>
+											</svg>
+										</span>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="my-campaign drop-down-cta w-100">
+							<div class="flex-column drop-down-cta-item">
+								<p class="fs-18 fw-500">Time left</p>
+								<span class="fs-18 fw-700">Open</span>
+							</div>
+
+							<div class="flex-column drop-down-cta-item">
+								<p class="fs-18 fw-500">Raised</p>
+								<span class="fs-18 fw-700">${{ campaign.goal }}</span>
+							</div>
+
+							<div class="flex-between align-center gp-15 drop-down-cta-item">
+								<div class="flex-column">
+									<p class="fs-18 fw-500">Verified</p>
+									{% if campaign.is_launch %}
+									<span class="fs-18 fw-700">Yes</span>
+									{% else %}
+									<span class="fs-18 fw-700">No</span>
+									{% endif %}
+								</div>
+
+								<a href="#" class="m-campaign">MANAGE CAMPAIGN</a>
+
+								<button id = "share-button" class="flex gp-5 cs-pointer">
+									<span class="variant-text-clr fw-600">Share</span>
+									<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<g id="Communication / Share_iOS_Export">
+									<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									</g>
+									</svg>
+								</button>
+
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+</div>
 	<main class="profile light-bg-clr pd-down">
 		<span class="page-highlight-span">Profile</span>
 		<div class="flex-column justify-content-center">
@@ -132,120 +243,7 @@
 
 
 				<!--Mobile View For profile stuff-->
-				<div  class="profile-util-item">
-					<div data-profile_cta="my-campaigns" class="profile-util-item-head campaign">
-						<img class="icon" src="../static/img/svg/megaphone.svg" alt="profile icon">
-						<span class="mac-text-mid">My Campaigns</span>
-					</div>
-
-					
-					<div data-profile_category="my-campaigns" class="info-item profile-donations-container mobile text-center w-100 bd p-4 br-10">
-						<div class="flex-column align-start gp-10 h-100">
-							<h5 class="fs-20 highlight-span-clr">My campaigns</h5>
-
-							<div class="my-campaigns-user-info w-100">
-								<div class="box-wrapper flex-between align-center">
-									<div class="my-campaign-username">
-										<span>{{request.user.first_name|slice:"1"}}</span>
-									</div>
-									
-									<div class="my-campaign-userinfo-content">
-										<div class="flex-between align-start">
-											<div class="mb-2">
-												<h5 class="fs-20 fw-600">Onyebuchi Festus</h5>
-												<p class="fw-700 text-start mb-0">01-01-2025 Open</p>
-												<div class="flex gp-10">
-													<div class="flex gp-5">
-														<span class="flex-center">
-															<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-															<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-															<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-															</svg>
-														</span>
-														<span class="location-span variant-text-clr">Lagos</span>
-													</div>
-			
-													<span class="fs-16 fw-500">South Africa</span>
-												</div>
-											</div>
-
-											<span class="flex-center">
-												<img class="profile icon" src="../static/img/svg/profile-1341-svgrepo-com.svg" alt="profile icon">
-											</span>
-										</div>
-
-										<div class="flex-between">
-											<div class="flex align-center gp-10">
-												<p class="campaign-status mb-0 fw-500">STATUS: <span class="highlight-span-clr">ACTIVE</span></p>
-												<div class="flex gp-5">
-													<span class="flex-center">
-														<img class="flag icon" src="../static/img/svg/flag-2-svgrepo-com.svg" alt="flag icon">
-													</span>
-		
-													<span class="danger-clr mac-italic-text fs-16">Not launched</span>
-												</div>
-											</div>
-
-											<span class="flex-center drop-down-circle mc-cta">
-												<svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<line x1="1.30871" y1="1.93934" x2="15.2897" y2="15.9203" stroke="#76B30F" stroke-width="3"/>
-												<line y1="-1.5" x2="19.7721" y2="-1.5" transform="matrix(-0.707107 0.707107 0.707107 0.707107 28 3.41724)" stroke="#76B30F" stroke-width="3"/>
-												</svg>
-											</span>
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-							<div class="my-campaign drop-down-cta w-100">
-								<div class="flex-column drop-down-cta-item">
-									<p class="fs-18 fw-500">Time left</p>
-									<span class="fs-18 fw-700">Open</span>
-								</div>
-
-								<div class="flex-column drop-down-cta-item">
-									<p class="fs-18 fw-500">Raised</p>
-									<span class="fs-18 fw-700">R 0</span>
-								</div>
-
-								<div class="flex-between align-center gp-15 drop-down-cta-item">
-									<div class="flex-column">
-										<p class="fs-18 fw-500">Verified</p>
-										<span class="fs-18 fw-700">No</span>
-									</div>
-
-									<a href="#" class="m-campaign">MANAGE CAMPAIGN</a>
-
-									<div class="flex gp-5 cs-pointer">
-										<span class="variant-text-clr fw-600">Share</span>
-										<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<g id="Communication / Share_iOS_Export">
-										<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										</g>
-										</svg>
-									</div>
-
-								</div>
-						</div>
-						<!-- <div class="flex-column gp-10 h-100">
-							<span class="donate-text mac-text-mid">You have not made any donations</span>
-							<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>		
-							
-							{% for campaign in campaign %}
-							<span class="donate-text mac-text-mid">
-								{{ campaign.campaign_name }} 
-								status: {% if campaign.is_status %}Active{% else %}Inactive{% endif %}
-								launch: {% if campaign.is_launch %}Launched{% else %}Not Launched{% endif %}
-							</span>
-						{% empty %}
-							<span class="donate-text mac-text-mid">No campaigns available.</span>
-						{% endfor %}
-						<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>	
-						</div> -->
-					</div>
-					</div>
-				</div>
+			 
 
 				<div  class="profile-util-item">
 					<div data-profile_cta="my-donations" class="profile-util-item-head">
@@ -253,7 +251,7 @@
 						<span class="mac-text-mid">My Donations</span>
 					</div>
 
-					<div data-profile_category="my-campaigns" class="info-item profile-donations-container mobile text-center w-100 bd p-4 br-10">
+					<div data-profile_category="my-donations" class="info-item profile-donations-container down-profile-cta mobile text-center w-100 bd p-4 br-10">
 						<div class="flex-column">
 							<span class="donate-text mac-text-mid">You have not made any donations</span>
 							<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>
@@ -262,58 +260,58 @@
 						<div class="user-donation-container mt-3">
 							{% if donation  %}
 							{%  for donation in donation %}
-							<div class="user-donation-item flex-between">
+							<div class="user-donation-item flex-between gp-15">
 								<div class="price">
 									<span class="fw-700 highlight-span-clr">$ {{donation.amount}}</span>
 								</div>
 	
 								<div class="details-container">
-									<div class="flex-between">
+									<div class="flex-wrap justify-between gp-7">
 										<span class="fw-700">{{donation.user.first_name}}</span>
 										<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
 										<span>{{donation.created_at|date}}</span>
 									</div>
 	
 									<div>
-										<p class = "text-start">{{donation.campaign.campaign_name}}</p>
+										<p class = "text-start mt-2">{{donation.campaign.campaign_name}}</p>
 									</div>
 								</div>
 							</div>
 							{%endfor%}
 						   {% else %}
 						
-							<div class="user-donation-item flex-between">
+							<div class="user-donation-item flex-between gp-15">
 								<div class="price">
 									<span class="fw-700 highlight-span-clr">R 2 000</span>
 								</div>
 	
 								<div class="details-container">
-									<div class="flex-between">
+									<div class="flex-wrap justify-between gp-7">
 										<span class="fw-700">Anonymous</span>
 										<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
 										<span>1 Jan '25</span>
 									</div>
 	
 									<div>
-										<p class = "text-start">Blessings for healing Marlee</p>
+										<p class = "text-start mt-2">Blessings for healing Marlee</p>
 									</div>
 								</div>
 							</div>
 	
-							<div class="user-donation-item flex-between">
+							<div class="user-donation-item flex-between gp-15">
 								<div class="price">
 									<span class="fw-700 highlight-span-clr">US$500</span>
 								</div>
 	
 								<div class="details-container">
-									<div class="flex-between">
+									<div class="flex-wrap justify-between gp-7">
 										<span class="fw-700">Anonymous</span>
 										<img title="Platform fee covered" class="donation-icon" src="{% static 'img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
 										<span>31 Dec '24</span>
 									</div>
 	
 									<div>
-										<p class = "text-start">With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
+										<p class = "text-start mt-2">With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
 									</div>
 								</div>
 							</div>
@@ -395,123 +393,116 @@
 				</div>
 
 				<!--Laptop View For profile stuff-->
-
-				<div data-profile_category="my-campaigns" class="info-item profile-donations-container text-center w-100 bd p-4 br-10">
-					<div class="flex-column align-start gp-10">
-						<h5 class="fs-20 highlight-span-clr">My campaigns</h5>
-
-						<div class="my-campaigns-user-info w-100">
-							<div class="box-wrapper flex-between align-center">
-								<div class="my-campaign-username">
-									<span>{{request.user.first_name|slice:"1"}}</span>
-								</div>
-								
-								<div class="my-campaign-userinfo-content">
-									<div class="flex-between align-start">
-										<div class="mb-2">
-											<h5 class="fs-20 fw-600">Onyebuchi Festus</h5>
-											<p class="fw-700 text-start mb-0">01-01-2025 Open</p>
-											<div class="flex gp-10">
+				
+					{% for campaign in campaigns  %}
+					<div data-profile_category="my-campaigns" style = "{% if forloop.counter > 1 %}display: none!important;{% endif %}" class="info-item profile-campaigns-container text-center w-100 bd mt-4 p-4 br-10">
+						<div class="flex-column align-start gp-10">
+							<h5 class="fs-20 highlight-span-clr">My campaigns</h5>
+	
+							<div class="my-campaigns-user-info w-100">
+								<div class="box-wrapper flex-between align-center">
+									<div class="my-campaign-username">
+										<span>{{request.user.first_name|slice:"1"}}</span>
+									</div>
+									
+									<div class="my-campaign-userinfo-content">
+										<div class="flex-between align-start">
+											<div class="mb-2">
+												<h5 class="fs-20 fw-600">{{ campaign.campaign_name }} </h5>
+												<p class="fw-700 text-start mb-0">{{ campaign.start_date|date }}  Open</p>
+												<div class="flex gp-10">
+													<div class="flex gp-5">
+														<span class="flex-center">
+															<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+															<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+															<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+															</svg>
+														</span>
+														<span class="location-span variant-text-clr">{{ campaign.city}}</span>
+													</div>
+			
+													<span class="fs-16 fw-500">{{ campaign.country.name }} </span>
+												</div>
+											</div>
+	
+											<span class="flex-center">
+												<img class="profile icon" src="../static/img/svg/profile-1341-svgrepo-com.svg" alt="profile icon">
+											</span>
+										</div>
+	
+										<div class="flex-between">
+											<div class="flex align-center gp-10">
+												{% if campaign.is_status %}
+												<p class="campaign-status mb-0 fw-500">STATUS: <span class="highlight-span-clr">ACTIVE</span></p>
+												{% else %}
+												<p class="campaign-status mb-0 fw-500">STATUS: <span class="highlight-span-clr">INACTIVE</span></p>
+												{% endif %}
 												<div class="flex gp-5">
 													<span class="flex-center">
-														<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-														<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-														<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-														</svg>
+														<img class="flag icon" src="../static/img/svg/flag-2-svgrepo-com.svg" alt="flag icon">
 													</span>
-													<span class="location-span variant-text-clr">Lagos</span>
+													{% if campaign.is_launch %}
+													<span class="danger-clr mac-italic-text fs-16">launched</span>
+													{% else %}
+													<span class="danger-clr mac-italic-text fs-16">Not launched</span>
+													{% endif %}
 												</div>
-		
-												<span class="fs-16 fw-500">South Africa</span>
 											</div>
-										</div>
-
-										<span class="flex-center">
-											<img class="profile icon" src="../static/img/svg/profile-1341-svgrepo-com.svg" alt="profile icon">
-										</span>
-									</div>
-
-									<div class="flex-between">
-										<div class="flex align-center gp-10">
-											<p class="campaign-status mb-0 fw-500">STATUS: <span class="highlight-span-clr">ACTIVE</span></p>
-											<div class="flex gp-5">
-												<span class="flex-center">
-													<img class="flag icon" src="../static/img/svg/flag-2-svgrepo-com.svg" alt="flag icon">
-												</span>
 	
-												<span class="danger-clr mac-italic-text fs-16">Not launched</span>
-											</div>
+											<span class="flex-center drop-down-circle mc-cta">
+												<svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<line x1="1.30871" y1="1.93934" x2="15.2897" y2="15.9203" stroke="#76B30F" stroke-width="3"/>
+												<line y1="-1.5" x2="19.7721" y2="-1.5" transform="matrix(-0.707107 0.707107 0.707107 0.707107 28 3.41724)" stroke="#76B30F" stroke-width="3"/>
+												</svg>
+											</span>
 										</div>
-
-										<span class="flex-center drop-down-circle mc-cta">
-											<svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<line x1="1.30871" y1="1.93934" x2="15.2897" y2="15.9203" stroke="#76B30F" stroke-width="3"/>
-											<line y1="-1.5" x2="19.7721" y2="-1.5" transform="matrix(-0.707107 0.707107 0.707107 0.707107 28 3.41724)" stroke="#76B30F" stroke-width="3"/>
-											</svg>
-										</span>
 									</div>
+	
 								</div>
-
 							</div>
-						</div>
-
-						<div class="my-campaign drop-down-cta w-100">
-							<div class="flex-column drop-down-cta-item">
-								<p class="fs-18 fw-500">Time left</p>
-								<span class="fs-18 fw-700">Open</span>
-							</div>
-
-							<div class="flex-column drop-down-cta-item">
-								<p class="fs-18 fw-500">Raised</p>
-								<span class="fs-18 fw-700">R 0</span>
-							</div>
-
-							<div class="flex-between align-center gp-15 drop-down-cta-item">
-								<div class="flex-column">
-									<p class="fs-18 fw-500">Verified</p>
-									<span class="fs-18 fw-700">No</span>
+	
+							<div class="my-campaign drop-down-cta w-100">
+								<div class="flex-column drop-down-cta-item">
+									<p class="fs-18 fw-500">Time left</p>
+									<span class="fs-18 fw-700">Open</span>
 								</div>
-
-								<a href="#" class="m-campaign">MANAGE CAMPAIGN</a>
-
-								<div class="flex gp-5 cs-pointer">
-									<span class="variant-text-clr fw-600">Share</span>
-									<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<g id="Communication / Share_iOS_Export">
-									<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-									</g>
-									</svg>
+	
+								<div class="flex-column drop-down-cta-item">
+									<p class="fs-18 fw-500">Raised</p>
+									<span class="fs-18 fw-700">${{ campaign.goal }}</span>
 								</div>
-
+	
+								<div class="flex-between align-center gp-15 drop-down-cta-item">
+									<div class="flex-column">
+										<p class="fs-18 fw-500">Verified</p>
+										<span class="fs-18 fw-700">No</span>
+									</div>
+	
+									<a href="#" class="m-campaign">MANAGE CAMPAIGN</a>
+	
+									<button id = "share-button" class="flex gp-5 cs-pointer">
+										<span class="variant-text-clr fw-600">Share</span>
+										<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<g id="Communication / Share_iOS_Export">
+										<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#65c6e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</g>
+										</svg>
+									</button>
+	
+								</div>
 							</div>
-						</div>
-						<!-- <div class="flex-column gp-10 h-100">
-							<span class="donate-text mac-text-mid">You have not made any donations</span>
-							<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>		
 							
-							{% for campaign in campaign %}
-							<span class="donate-text mac-text-mid">
-								{{ campaign.campaign_name }} 
-								status: {% if campaign.is_status %}Active{% else %}Inactive{% endif %}
-								launch: {% if campaign.is_launch %}Launched{% else %}Not Launched{% endif %}
-							</span>
-						{% empty %}
-							<span class="donate-text mac-text-mid">No campaigns available.</span>
-						{% endfor %}
-						<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>	
-						</div> -->
+						</div>
 					</div>
-				</div>
+					{% endfor %}		
+					
+					<button class = "my-campaigns hidden view-more-btn" id="view-more-btn">View More</button>
 
 				<div data-profile_category="my-donations" class="info-item profile-donations-container text-center w-100 bd p-4 br-10">
-					<div class="flex-column gp-10">
-						<span class="donate-text mac-text-mid">You have not made any donations</span>
-						<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>								
-					</div>
-
+					
 					<div class="user-donation-container mt-3">
-						{% if donation  %}
-						{%  for donation in donation %}
+						{% if donations  %}
+						{%  for donation in donations %}
 						<div class="user-donation-item flex-between">
 							<div class="price">
 								<span class="fw-700 highlight-span-clr">$ {{donation.amount}}</span>
@@ -532,6 +523,10 @@
 						{%endfor%}
 					   {% else %}
 					
+					   <div class="flex-column gp-10">
+						<span class="donate-text mac-text-mid">You have not made any donations</span>
+						<a href="#" class="cta-btn mt-3 highlight-span-clr">Donate</a>								
+					</div>
 						<div class="user-donation-item flex-between">
 							<div class="price">
 								<span class="fw-700 highlight-span-clr">R 2 000</span>
@@ -573,12 +568,33 @@
 					
 				</div>
 
+
+
+
 				<!--Laptop View For profile stuff-->
 
 			</div>
 		</div>
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		document.querySelectorAll("#share-button").forEach(btn => btn.addEventListener("click", async () => {
+		  if (navigator.share) {
+			try {
+			  await navigator.share({
+				title: "Check this out!",
+				text: "I found this amazing website, take a look!",
+				url: window.location.href, // Use the current page URL
+			  });
+			  console.log("Content shared successfully!");
+			} catch (error) {
+			  console.error("Error sharing content:", error);
+			}
+		  } else {
+			alert("Sorry, your browser does not support the Web Share API.");
+		  }
+		}));
+		</script>
 
 {% endblock content %}
 
