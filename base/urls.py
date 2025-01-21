@@ -6,6 +6,7 @@ urlpatterns = [
     path('',index,name="index"),
     path('login',login,name="login"),
     path('signup',signup,name="signup"),
+    path('logout',logout,name="logout"),
     path('forget',forget,name="forget"),
     path('reset-password/<uidb64>/<token>/', reset_password, name='reset_password'),
     path('profile',profile,name="profile"),
@@ -21,6 +22,8 @@ urlpatterns = [
     path('create_campaign/',create_campaign,name="create_campaign"),
     path('edit_campaign/<str:token>/',edit_campaign,name="edit_campaign"),
     path('donate/<str:token>/', donate, name="donate"),
+    path('paypal_payment_link/<str:token>/', paypal_payment_link, name="paypal_payment_link"),
+    path('stripe_payment_link/<str:token>/', stripe_payment_link, name="stripe_payment_link"),
 ]
 
 

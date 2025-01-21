@@ -42,7 +42,58 @@
                   <div class="head-div">
                     <h4 class="page-sub-head">Featured Campaigns</h4>
                   </div>
+                  {% if  featured_campaigns %}
+                  {% for featured_campaigns in  campaigns_with_percentage %}
+                  <div class="feature-item d-sm-flex gap-3">
+                    <img
+                      class="feature-img mt-2"
+                      src="{{featured_campaigns.campaign.images.url}}"
+                      alt="feature image"
+                    />
+                    <div class="feature-desc-container">
+                      <h5 class="page-sub-h5-head">
+                       {{ featured_campaigns.campaign.campaign_name}}
+                      </h5>
+                      <p class="mac-text-sm my-2">
+                        Helping children to admissions to school getting Helping
+                        children to admissions to school ang getting
+                      </p>
 
+                      <div class="d-sm-flex justify-content-between">
+                        <div class="location-container pe-2">
+                          <div class="location-val-container d-flex gap-2">
+                            <img
+                              class="location-icon"
+                              src="../static/img/location-icon.png"
+                              alt="location icon"
+                            />
+                            <p class="location-name page-mini-head d-flex">
+                              <span class="highlight-span-clr me-1"
+                                >{{featured_campaigns.campaign.country}},</span
+                              >
+                              {{featured_campaigns.campaign.country.name}}
+                            </p>
+                          </div>
+
+                          <div class="mt-3">
+                            <p class="bold-p">${{featured_campaigns.campaign.monetary|floatformat:0}}</p>
+                            <span class="bold-p highlight-span-clr">
+                              {{featured_campaigns.percentage_achieved|floatformat:0}}% FUNDED
+                            </span>
+                          </div>
+                        </div>
+                        <div class="donation-container ps-2">
+                          <p class="mac-text-sm">Last donation</p>
+                          <span
+                            class="donation-time mac-text-sm highlight-span-clr mt-1"
+                            >{{featured_campaigns.campaign.start_date|timesince}} AGO</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  {% else %}
                   <div class="feature-item d-sm-flex gap-3">
                     <img
                       class="feature-img mt-2"
@@ -201,6 +252,7 @@
                       </div>
                     </div>
                   </div>
+                  {% endif %}
                 </div>
 
                 <div class="feature-desc-item sec">
@@ -341,12 +393,12 @@
                   <div class="feature-item d-sm-flex gap-3">
                     <img
                       class="feature-img mt-2"
-                      src="../static/img/hero-banner-(1).jpeg"
+                      src="{{campaigns.campaign.images.url}}"
                       alt="feature image"
                     />
                     <div class="feature-desc-container">
                       <h5 class="page-sub-h5-head">
-                        Helping children to school
+                        {{campaigns.campaign.campaign_name}}
                       </h5>
                       <p class="mac-text-sm my-2">
                         Helping children to admissions to school getting Helping
@@ -363,9 +415,9 @@
                             />
                             <p class="location-name page-mini-head d-flex">
                               <span class="highlight-span-clr me-1"
-                                >Accra,</span
+                                >{{campaigns.campaign.country}},</span
                               >
-                              Ghana
+                              {{campaigns.campaign.country.name}}
                             </p>
                           </div>
 
@@ -374,9 +426,9 @@
                           </div>
 
                           <div class="mt-3">
-                            <p class="bold-p">$23, 000</p>
+                            <p class="bold-p">${{campaigns.campaign.monetary|floatformat:0}}</p>
                             <span class="bold-p highlight-span-clr">
-                              30% FUNDED
+                              {{campaigns.percentage_achieved|floatformat:0}}% FUNDED
                             </span>
                           </div>
                         </div>
@@ -384,7 +436,7 @@
                           <p class="mac-text-sm">Last donation</p>
                           <span
                             class="donation-time mac-text-sm highlight-span-clr mt-1"
-                            >12 HOURS AGO</span
+                            >{{campaigns.campaign.start_date|timesince}} AGO</span
                           >
                         </div>
                       </div>
@@ -646,4 +698,55 @@
         </section>
       </main>
 
+      <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+      {% if messages %}
+      <script>
+        const messages = [
+          "{% for message in messages %}",
+            {
+              message: "{{ message }}",
+              tags: "{{ message.tags }}"
+            },
+          "{% endfor %}",
+        ];
+      
+        messages.forEach((msg) => {
+          const customElement = document.createElement("div");
+          customElement.className = "custom-toast";
+      
+          // Add content to the custom element
+          const img = document.createElement("img");
+          img.alt = "Notification Icon";
+      
+          const messageText = document.createElement("div");
+          messageText.className = "message";
+          messageText.innerText = msg.message;
+      
+          // Adjust style based on tag
+          const isSuccess = msg.tags.includes("success");
+          customElement.style.setProperty("--toast-clr", isSuccess ? "green" : "red");
+          img.src = isSuccess 
+            ? "{% static 'img/svg/check-green.svg' %}" 
+            : "{% static 'img/svg/info-red.svg' %}";
+      
+          customElement.appendChild(img);
+          customElement.appendChild(messageText);
+      
+          // Show toast with custom element
+          Toastify({
+            node: customElement,
+            duration: 5000,
+            gravity: "top", // Ensure it appears at the top
+            position: "right",  // Ensure it appears at the right
+            close : true,
+            style: {
+              background: "white",
+              borderRadius: "8px",
+              padding: "0px",
+              maxWidth: "350px", // Restrict the width
+            },
+          }).showToast();
+        });
+      </script>
+      {% endif %}
   {% endblock content %}

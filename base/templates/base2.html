@@ -16,6 +16,7 @@
 			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 			crossorigin="anonymous"
 		/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
         <script defer src="{% static 'js/script.js' %}"></script>
 		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 	</head>
@@ -66,7 +67,7 @@
                             src="{% static '../static/img/svg/search-icon.svg' %}"
                             alt="search icon"
                         />
-                        <a href="#" class="start-camp-cta">START CAMPAIGN</a>
+                        <a href="{% url 'start_campaign' %}" class="start-camp-cta">START CAMPAIGN</a>
                     </div>
                     <div class="hamburger">
                         <span></span>

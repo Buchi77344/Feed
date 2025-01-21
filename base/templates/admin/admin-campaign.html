@@ -27,6 +27,10 @@
                         onclick="launchModal(this, '{{ campaign.campaign_name }}', '{{ campaign.start_date }}', '{{ campaign.monetary }}', '{{ campaign.goal }}', '{{ campaign.user.first_name }} {{ campaign.user.last_name }}')">
                         Launch
                     </button>
+                    <button  disabled class="btn btn-danger mt-2 w-100" onclick="confirmDelete('{{ campaign.token }}')">
+                        Delete
+                        
+                    </button>
                     {% else %}
                     <button class="btn btn-primary w-100" 
                     
@@ -34,8 +38,9 @@
                       onclick="launchModal(this, '{{ campaign.campaign_name }}', '{{ campaign.start_date }}', '{{ campaign.monetary }}', '{{ campaign.goal }}', '{{ campaign.user.first_name }} {{ campaign.user.last_name }}')">
                       Launch
                   </button>
-                  <button class="btn btn-danger mt-2 w-100" onclick="confirmDelete('{{ campaign.token }}')">
+                  <button  class="btn btn-danger mt-2 w-100" onclick="confirmDelete('{{ campaign.token }}')">
                     Delete
+                    
                 </button>
                 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog">

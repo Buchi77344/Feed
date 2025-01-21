@@ -16,6 +16,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="{% static '../static/css/style.css' %}" />
     <script defer src = "../static/js/script.js"></script>
     <title>FEED</title>
@@ -78,23 +79,34 @@
                 alt="down arrow icon"
               />
               </div>
+              {% if request.user.is_authenticated %}
               <ul class="profile-dropdown">
-                <li><a href="#">My Profile</a></li>
-                <li><a href="#">My campaigns</a></li>
-                <li><a href="#">My Donations</a></li>
+                <li><a href="{% url 'profile' %}">My Profile</a></li>
+                <li><a href="{% url 'profile' %}">My campaigns</a></li>
+                <li><a href="{% url 'profile' %}">My Donations</a></li>
                 <li>
-                  <a class="flex gp-10" href="#">
-                    Login 
+                 
+                  <a class="flex gp-10" href="{% url 'logout' %}">
+                    logout 
                     <img class="log-icon" src="../static/img/svg/login-svgrepo-com.svg" alt="login icon">
                   </a>
                 </li>
+              </ul>
+              {% else %}
+              <ul class="profile-dropdown">
+                <li><a href="{% url 'profile' %}">My Profile</a></li>
+                <li><a href="{% url 'profile' %}">My campaigns</a></li>
+                <li><a href="{% url 'profile' %}">My Donations</a></li>
+                       
                   <li>
-                  <a class="flex gp-10" href="#">
-                    Logout 
+                   
+                  <a class="flex gp-10" href="{% url 'login' %}">
+                    Login 
                     <img class="log-icon" src="../static/img/svg/login-svgrepo-com.svg" alt="logout icon">
                   </a>
                 </li>
               </ul>
+              {% endif %}
             </div>
           </div>
           <div class="hamburger">

@@ -12,3 +12,4 @@ urlpatterns = [
     path('approve/<str:token>/',approve, name='approve'),
     path('delete/<str:token>/', delete_campaign, name='delete_campaign'),
 ]
+

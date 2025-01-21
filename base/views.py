@@ -9,28 +9,30 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
-    featured_campaigns = Campaign.objects.filter(is_featured=True)[:3]
+    featured_campaigns = Campaign.objects.all()[:3]
     
     # Trending Campaigns: Define based on most recent or highest monetary goal
     trending_campaigns = Campaign.objects.filter(
         end_date__gte=datetime.now(),is_launch= True # Campaigns still active
     ).order_by('-monetary')[:3]
 
-    campaigns = Campaign.objects.all()
+    campaigns = Campaign.objects.all() 
     campaigns_with_percentage = []
     # if Campaign.objects.filter(profile__user =request.user).exists: 
     for campaign in campaigns:
         # Calculate total donations for the campaign
+       
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
         # Calculate percentage achieved
-        percentage_achieved = (total_donations / campaign.goal) * 100 if campaign.goal > 0 else 0
+        percentage_achieved = (total_donations / campaign.monetary) * 100 if campaign.monetary > 0 else 0
 
         # Add campaign data and percentage to the list
         campaigns_with_percentage.append({
             'campaign': campaign,
             'total_donations': total_donations,
             'percentage_achieved': percentage_achieved,
+            'trending_campaigns':trending_campaigns,
         })
     
     # Calculate the percentage achieved
@@ -110,6 +112,7 @@ def login (request):
 
         if user is not None:
             auth.login(request,user)
+            messages.success(request, 'login sucessfully')
             return redirect('/')
 
         else:
@@ -118,6 +121,12 @@ def login (request):
     else:
 
        return render (request, 'login.html')
+    
+
+def logout(request):
+    auth.logout(request)
+    messages.success(request, 'you have sucessfully logout')
+    return redirect('login')
 
 
 from django.shortcuts import render, redirect
@@ -438,32 +447,183 @@ from django.contrib import messages
 
 @login_required(login_url="login")
 def donate(request, token):
-    if request.method == 'POST':
-        campaign = get_object_or_404(campaign, token=token)
-        amount = request.POST.get('amount')
-        message = request.POST.get('message', '')
+    campaign = get_object_or_404(Campaign, token=token)
+  
+            
+
+           
+   
+    context ={
+            'campaign':campaign
+        }
+    return render(request, 'donate.html',context)
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from decimal import Decimal
+from paypalrestsdk import Payment
+import paypalrestsdk
+import logging
+
+# Configure PayPal SDK
+paypalrestsdk.configure({
+    "mode": "sandbox",  # Change to "live" for production
+    "client_id": "AYZiSvqeeleSoGAc9VlL0MwArUKV-4kSqR-EAQPaqV8aQtVqLgZ2lvFFC2YgJSKzbYwtx8RYk0EfvMm9",
+    "client_secret": "ECQ4_9AVQsM78XyB_liUcesFXghJh6m4citwi_7yWsO5SEAwO-jnnKvZxLIRP72i_aBVhbZ_GV-J4ZCW"
+})
+
+from django.http import JsonResponse
+from decimal import Decimal
+import logging
+
+from paypalrestsdk import Payment
+import json
+
+from decimal import Decimal
+import json
+import logging
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Campaign
+from paypalrestsdk import Payment
+
+def paypal_payment_link(request, token):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request method. Only POST is allowed."}, status=400)
+
+    # Get the campaign object based on the token
+    campaign = get_object_or_404(Campaign, token=token)
+
+    try:
+        # Parse the request body as JSON
+        data = json.loads(request.body)
+
+        # Extract and validate the amount
+        amount_str = data.get('amount')
+        if not amount_str:
+            return JsonResponse({"error": "Donation amount is required."}, status=400)
+        
+        try:
+            amount = Decimal(amount_str)
+        except (ValueError, TypeError):
+            return JsonResponse({"error": "Invalid donation amount."}, status=400)
+
+        if amount <= 0:
+            return JsonResponse({"error": "Donation amount must be greater than zero."}, status=400)
+
+        # Extract optional message
+        message = data.get('message', '')
+
+        # Create a PayPal payment
+        payment = Payment({
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "transactions": [{
+                "amount": {
+                    "total": f"{amount:.2f}",
+                    "currency": "USD"
+                },
+                "description": f"Donation to {campaign.campaign_name}"
+            }],
+            "redirect_urls": {
+                "return_url": request.build_absolute_uri(
+                    f"/paypal-success/{token}/?amount={amount}&message={message}"
+                ),
+                "cancel_url": request.build_absolute_uri(f"/paypal-cancel/{token}/")
+            }
+        })
+
+        # Attempt to create the payment
+        if payment.create():
+            approval_url = next((link.href for link in payment.links if link.rel == "approval_url"), None)
+            if approval_url:
+                return JsonResponse({
+                    "success": True,
+                    "approval_url": approval_url,
+                    "campaign_token": campaign.token  # Dynamically include the campaign token
+                })
+            else:
+                return JsonResponse({"error": "Approval URL not found in PayPal response."}, status=500)
+        else:
+            logging.error(payment.error)
+            return JsonResponse({"error": "Unable to create PayPal payment. Check the logs for more details."}, status=500)
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data in the request body."}, status=400)
+    except Exception as e:
+        logging.exception("An error occurred while processing the payment request.")
+        return JsonResponse({"error": str(e)}, status=400)
+
+
+import json
+import logging
+from decimal import Decimal
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Campaign
+import stripe
+
+# Set your Stripe secret key
+stripe.api_key = "your_stripe_secret_key"
+
+def stripe_payment_link(request, token):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request method. Only POST is allowed."}, status=400)
+
+    # Get the campaign object based on the token
+    campaign = get_object_or_404(Campaign, token=token)
+
+    try:
+        # Parse the request body as JSON
+        data = json.loads(request.body)
+
+        # Extract and validate the amount
+        amount_str = data.get('amount')
+        if not amount_str:
+            return JsonResponse({"error": "Donation amount is required."}, status=400)
 
         try:
-            amount = Decimal(amount)  # Validate and convert the amount
-            if amount <= 0:
-                raise ValueError("Donation amount must be greater than zero.")
+            amount = Decimal(amount_str)
+        except (ValueError, TypeError):
+            return JsonResponse({"error": "Invalid donation amount."}, status=400)
 
-            # Create a new donation
-            Donation.objects.create(
-                user=request.user,
-                campaign=campaign,
-                amount=amount,
-                message=message
-            )
+        if amount <= 0:
+            return JsonResponse({"error": "Donation amount must be greater than zero."}, status=400)
 
-            messages.success(request, f"Thank you for donating {amount} to {campaign.campaign_name}!")
-            return redirect('donate', token=token)
+        # Convert amount to cents (Stripe processes amounts in the smallest currency unit)
+        amount_in_cents = int(amount * 100)
 
-        except Exception as e:
-            messages.error(request, f"Error processing donation: {e}")
-            return redirect('donate', token=token)
+        # Extract optional message
+        message = data.get('message', '')
 
-    return render(request, 'donate.html')
+        # Create a Stripe PaymentIntent
+        payment_intent = stripe.PaymentIntent.create(
+            amount=amount_in_cents,
+            currency="usd",
+            description=f"Donation to {campaign.campaign_name}",
+            metadata={
+                "campaign_name": campaign.campaign_name,
+                "message": message,
+            },
+        )
+
+        # Return the client secret for the PaymentIntent
+        return JsonResponse({
+            "success": True,
+            "client_secret": payment_intent.client_secret,
+            "campaign_token": campaign.token
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data in the request body."}, status=400)
+    except stripe.error.StripeError as e:
+        logging.error(f"Stripe error: {e.user_message}")
+        return JsonResponse({"error": f"Stripe error: {e.user_message}"}, status=400)
+    except Exception as e:
+        logging.exception("An error occurred while processing the payment request.")
+        return JsonResponse({"error": str(e)}, status=400)
+
 
 
 @login_required(login_url="login")
@@ -549,11 +709,13 @@ def details(request, token):
     # Get the specific campaign
     campaign_details = get_object_or_404(Campaign, token=token)
 
+    donation = Donation.objects.filter(campaign=campaign_details)
+
     # Calculate total donations for this campaign
     total_donations = campaign_details.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
     # Calculate percentage achieved
-    percentage_achieved = (
+    percentage_achieved = (  
         (total_donations / campaign_details.monetary) * 100
         if campaign_details.monetary > 0 else 0
     )
@@ -563,6 +725,7 @@ def details(request, token):
         'campaign_details': campaign_details,
         'total_donations': total_donations,
         'percentage_achieved': percentage_achieved,
+        'donation':donation
     }
     return render(request, 'details.html', context)
 

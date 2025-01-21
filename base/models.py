@@ -103,7 +103,8 @@ class Campaign(models.Model):
             self.token = generate_unique_token()
         super().save(*args, **kwargs)
 
-    
+    def __str__(self):
+         return  f"{self.campaign_name}" 
 
 
 
