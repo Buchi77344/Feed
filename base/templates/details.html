@@ -30,13 +30,13 @@
 							</div>
 							<span class="details smaller-text fw-400 mt-2">Started {{campaign_details.start_date|timesince}} ago</span>
 							<span class="details smaller-text fw-700">Open end-date</span>
-							<div class="details-donation-cta-section mt-3 px-md-3">
+							<div class="details-donation-cta-section my-3 px-md-3">
 								<div class="util-box-container">
-									<h3 class="text-center donation-price-head-text page-sub-head fw-700">R 20</h3>
+									<h3 class="text-center donation-price-head-text page-sub-head fw-700">$ 20</h3>
 									<div data-percent="{{ percentage_achieved|floatformat:0 }}" class="percent-bar my-3 percent-progress">
 										<span class="percent-val percent-progress-bar flex-center">{{ percentage_achieved|floatformat:0 }}%</span>
 									</div>
-									<p class="text-center donation-price-text">of R {{campaign_details.monetary}} goal</p>
+									<p class="text-center donation-price-text">of $ {{campaign_details.monetary}} goal</p>
 									<div class="btn-container flex-center gp-10 my-3">
 										<a href="{% url 'donate' campaign_details.token  %}"><button class="donate-btn flex gp-5">
 											<span class="text">Donate</span>
@@ -46,7 +46,7 @@
 										</button>
 									</a>
 
-										<button class="share-btn flex gp-5">
+										<button id = "share-button" class="share-btn flex gp-5">
 											<span class="text">Share</span>
 											<span class="icon">
 												<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +60,7 @@
 									<div class="donors-details-wrapper px-2">
 										<div class="donors-details-container row">
 											<div class="donor-item pt-3 flex-column justify-center offline col-md-6">
-												<h5>R 0</h5>
+												<h5>$ 0</h5>
 												<p class="donor-item-text">Offline donations</p>
 											</div>
 
@@ -86,8 +86,8 @@
 										<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 										</svg>
 									</span>
-									<h5 class="page-micro-head my-2">Pretoria</h5>
-									<p class="smaller-text">South Africa</p>
+									<h5 class="page-micro-head my-2">{{campaign_details.city}}</h5>
+									<p class="smaller-text">{{campaign_details.country.name}}</p>
 								</div>	
 								<div class="col-sm-6 text-center details-manage-container">
 									<span class="icon flex-center mx-auto">
@@ -117,7 +117,7 @@
 									<p class="profile-name highlight-span-clr fw-600 mb-0">{{campaign_details.user.first_name|capfirst}} {{campaign_details.user.last_name|capfirst}}</p>
 									<div class="flex gp-5">
 										<span class="about-campaign title-span">Organiser</span>
-										<span class="smallest-text">1 BaB campaign</span>
+										<span class="smallest-text">1 Feed campaign</span>
 									</div>
 								</div>
 							</div>
@@ -149,13 +149,13 @@
 								<div class="user-donation-container mt-3">
 								    {% if donation  %}
 									{%  for donation in donation %}
-									<div class="user-donation-item flex-between">
+									<div class="user-donation-item flex-between gp-15">
 										<div class="price">
 											<span class="fw-700 highlight-span-clr">$ {{donation.amount}}</span>
 										</div>
 
 										<div class="details-container">
-											<div class="flex-between">
+											<div class="flex-wrap justify-between gp-7">
 												<span class="fw-700">{{donation.user.first_name}}</span>
 												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
 												<span>{{donation.created_at|date}}</span>
@@ -169,13 +169,13 @@
                                     {%endfor%}
 								   {% else %}
 								
-									<div class="user-donation-item flex-between">
+									<div class="user-donation-item flex-between gp-15">
 										<div class="price">
 											<span class="fw-700 highlight-span-clr">R 2 000</span>
 										</div>
 
 										<div class="details-container">
-											<div class="flex-between">
+											<div class="flex-wrap justify-between gp-7">
 												<span class="fw-700">Anonymous</span>
 												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
 												<span>1 Jan '25</span>
@@ -190,13 +190,13 @@
 
 						
 
-									<div class="user-donation-item flex-between">
+									<div class="user-donation-item flex-between gp-15">
 										<div class="price">
 											<span class="fw-700 highlight-span-clr">US$500</span>
 										</div>
 
 										<div class="details-container">
-											<div class="flex-between">
+											<div class="flex-wrap justify-between gp-7">
 												<span class="fw-700">Anonymous</span>
 												<img title="Platform fee covered" class="donation-icon" src="{% static 'img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
 												<span>31 Dec '24</span>
@@ -232,7 +232,7 @@
 								</span>
 							</button>
 
-							<button class="share-btn flex gp-5">
+							<button id = "share-button" class="share-btn flex gp-5">
 								<span class="text">Share</span>
 								<span class="icon">
 									<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,7 +248,26 @@
 			</div>
 		</main>
 
-		/**<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+document.querySelectorAll("#share-button").forEach(btn => btn.addEventListener("click", async () => {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Check this out!",
+        text: "I found this amazing website, take a look!",
+        url: window.location.href, // Use the current page URL
+      });
+      console.log("Content shared successfully!");
+    } catch (error) {
+      console.error("Error sharing content:", error);
+    }
+  } else {
+    alert("Sorry, your browser does not support the Web Share API.");
+  }
+}));
+</script>
+		
+		{% comment %} <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 		<script>
 			function showCustomToast() {
 				// Create a custom element
@@ -283,7 +302,7 @@
 			}
 
 			showCustomToast()
-		</script>*/
+		</script> {% endcomment %}
 
 {% endblock %}
 		

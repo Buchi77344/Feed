@@ -75,6 +75,10 @@
                             </p>
                           </div>
 
+                          <div data-percent="{{featured_campaigns.percentage_achieved|floatformat:0}}" class="percent-progress">
+                            <div class="percent-progress-bar"></div>
+                          </div>
+
                           <div class="mt-3">
                             <p class="bold-p">${{featured_campaigns.campaign.monetary|floatformat:0}}</p>
                             <span class="bold-p highlight-span-clr">
@@ -702,12 +706,12 @@
       {% if messages %}
       <script>
         const messages = [
-          "{% for message in messages %}",
+          {% for message in messages %}
             {
               message: "{{ message }}",
               tags: "{{ message.tags }}"
             },
-          "{% endfor %}",
+          {% endfor %}
         ];
       
         messages.forEach((msg) => {
