@@ -77,7 +77,13 @@ if (document.querySelector("main.profile")) {
 			let mobileProfileInfo = parent.querySelector(
 				".profile-donations-container.mobile"
 			);
+			let elHeight = mobileProfileInfo.scrollHeight;
 			mobileProfileInfo.classList.toggle("slide-down");
+			dropdown.style.setProperty(
+				"--dropdown-height",
+				`${dropdownHeight + 20}px`
+			);
+			dropdown.classList.toggle("show");
 		});
 	});
 
@@ -457,6 +463,9 @@ if (document.querySelector(".fileInfo")){
 		}
 	});
 }
+
+
+// My campiagn dropdown
 
 if(document.querySelector(".drop-down-circle.mc-cta")){
 	let dropDownCircle = document.querySelector(".drop-down-circle.mc-cta");
