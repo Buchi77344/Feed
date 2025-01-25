@@ -1294,12 +1294,12 @@ input.search-input {
 	transition: max-height 0.3s ease;
 }
 
-.profile-donations-container.mobile.slide-down,
-.profile-campaigns-container.mobile.slide-down {
+.profile-donations-container.mobile.slide-down, 
+.profile-campaigns-container.mobile.slide-down{
 	max-height: var(--dropdown-height);
 	height: auto;
 	border-color: rgba(0, 0, 0, 0.6);
-	padding: 15px 15px 10px !important;
+	padding : 15px 15px 10px !important;
 	overflow: auto;
 }
 
@@ -1423,6 +1423,8 @@ input.search-input {
 		text-align: center;
 		width: 100% !important;
 	}
+
+
 }
 
 @media (max-width: 700px) {
@@ -1473,6 +1475,11 @@ input.search-input {
 	.return-desc {
 		max-width: none;
 		width: 100%;
+	}
+
+	.tooltip-box{
+		right: -50px;
+		top : 130%;
 	}
 
 	.find-campaign-item {
@@ -2215,7 +2222,7 @@ ul.list {
 	position: absolute;
 	top: 100%;
 	background-color: var(--primary-clr);
-	min-width: 280px;
+	min-width: 250px;
 	padding: 10px;
 	border-radius: 10px;
 	display: none;

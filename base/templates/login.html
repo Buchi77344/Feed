@@ -334,12 +334,12 @@
 		{% if messages %}
 		<script>
 			const messages = [
-				"{% for message in messages %}",
+				{% for message in messages %}
 					{
 						message: "{{ message }}",
 						tags: "{{ message.tags }}"
 					},
-				"{% endfor %}"
+				{% endfor %}
 			];
 		
 			messages.forEach((msg) => {

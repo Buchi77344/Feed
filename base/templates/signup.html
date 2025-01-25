@@ -419,64 +419,88 @@
 				})
 			}
 
-			const inputs = acctForm.querySelectorAll(".acct-input");
-			inputs.forEach(input => input.addEventListener("click", () => clearErrorMessage(input)))
+		const inputs = acctForm.querySelectorAll(".acct-input");
 
-			function validateField(el) {
-				let bool;
-				let inputs = el.querySelectorAll(".acct-input");
-				inputs.forEach(i => {
-					if (i.value.trim() == "" || !i.checkValidity()) {
-						showErrorMessage(i, getErrorMessage(i));
-						
-					} else {
-						clearErrorMessage(i)
-						// acctForm.submit()
+			// Attach event listeners to each input for clearing error messages on focus
+			inputs.forEach(input => {
+				input.addEventListener("focus", clearErrorMessage);
+				input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
+			});
+
+			// Validate all fields before form submission
+			function validateField(form) {
+				const inputs = form.querySelectorAll(".acct-input");
+				let isValid = true;
+
+				inputs.forEach(input => {
+					if (input.value.trim() === "" || !input.checkValidity()) {
+						showErrorMessage(input, getErrorMessage(input));
+						isValid = false;
 					}
+				});
 
-					i.checkValidity() ? bool = true : bool =  false
-				})
-				return bool
+				return isValid;
 			}
 
+			// Get specific error messages based on input validation state
 			function getErrorMessage(input) {
 				if (input.validity.valueMissing) {
-					return "This Field is required";
+					return "This field is required.";
 				}
-
 				if (input.validity.typeMismatch) {
-					return "Please enter a valid Value.";
+					if (input.type === "email") {
+						return "Invalid email address.";
+					}
+					return "Please enter a valid value.";
 				}
-
 				if (input.validity.tooShort) {
 					return `Please lengthen this text to ${input.minLength} characters or more.`;
 				}
-
-				return `Invalid input.`;
+				return "Invalid input.";
 			}
 
+			// Show error message below the input
 			function showErrorMessage(input, msg) {
 				let errorMessage = input.nextElementSibling;
-				if (!errorMessage || !errorMessage.classList.contains(".error-message")) {
-					errorMessage.textContent = msg;
-					errorMessage.style.display = "block";
+
+				// Create error message element if it doesn't exist
+				if (!errorMessage || !errorMessage.classList.contains("error-message")) {
+					errorMessage = document.createElement("div");
+					errorMessage.className = "error-message";
+					input.parentNode.insertBefore(errorMessage, input.nextSibling);
 				}
+
+				errorMessage.textContent = msg;
+				errorMessage.style.display = "block";
 			}
 
-			function clearErrorMessage(el) {
-				let errorMessage = el.nextElementSibling;
+			// Clear error message when user focuses on the input
+			function clearErrorMessage(event) {
+				const errorMessage = event.target.nextElementSibling;
+
 				if (errorMessage && errorMessage.classList.contains("error-message")) {
 					errorMessage.style.display = "none";
 				}
 			}
 
-			if (submitBtn && acctForm) {
-				submitBtn.addEventListener("click", function (e) {
-					validateField(acctForm)
-					console.log(validateField(acctForm))
-				});
+			// Validate a single input field dynamically
+			function validateSingleField(input) {
+				if (input.value.trim() === "" || !input.checkValidity()) {
+					showErrorMessage(input, getErrorMessage(input));
+				} else {
+					clearErrorMessage({ target: input });
+				}
 			}
 
+			// Handle form submission
+			if (submitBtn && acctForm) {
+				submitBtn.addEventListener("click", function (e) {
+					e.preventDefault(); // Prevent default form submission
+					if (validateField(acctForm)) {
+						acctForm.submit(); // Submit form only if all inputs are valid
+					}
+				});
+			}
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
