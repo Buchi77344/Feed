@@ -214,5 +214,59 @@
 				});
 			}
 		</script>
+
+        <!-- Toastify script -->
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+		{% if messages %}
+		<script>
+			const messages = [
+				{% for message in messages %}
+					{
+						message: "{{ message }}",
+						tags: "{{ message.tags }}"
+					},
+				{% endfor %}
+			];
+		
+			messages.forEach((msg) => {
+				const customElement = document.createElement("div");
+				customElement.className = "custom-toast";
+		
+				// Add content to the custom element
+				const img = document.createElement("img");
+				img.alt = "Notification Icon";
+		
+				const messageText = document.createElement("div");
+				messageText.className = "message";
+				messageText.innerText = msg.message;
+		
+				// Adjust style based on tag
+				const isSuccess = msg.tags.includes("success");
+				customElement.style.setProperty("--toast-clr", isSuccess ? "green" : "red");
+				img.src = isSuccess 
+					? "{% static 'img/svg/check-green.svg' %}" 
+					: "{% static 'img/svg/info-red.svg' %}";
+		
+				customElement.appendChild(img);
+				customElement.appendChild(messageText);
+		
+				// Show toast with custom element
+				Toastify({
+					node: customElement,
+					duration: 5500,
+					gravity: "top", // Ensure it appears at the top
+					position: "right",  // Ensure it appears at the right
+					close : true,
+					style: {
+						background: "white",
+						borderRadius: "8px",
+						padding: "0px",
+						maxWidth: "350px", // Restrict the width
+					},
+				}).showToast();
+			});
+		</script>
+		{% endif %}
     </body>
 </html>
