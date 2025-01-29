@@ -759,4 +759,12 @@ def preview(request,token):
     return render (request, 'preview.html',context)
 
 def fee_payout(request):
-    return render (request , 'feeds-payout.html')
+    return render (request,'feeds-payout.html')
+
+
+
+
+
+
+
+
