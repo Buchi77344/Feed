@@ -433,7 +433,7 @@ if (document.querySelector(".percent-progress")) {
 const submitBtn = document.querySelector(".cta-btn.submit-btn");
 const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
 
-const inputs = acctForm.querySelectorAll(".acct-input");
+// const inputs = acctForm.querySelectorAll(".acct-input");
 
 // Attach event listeners to each input for clearing error messages on focus
 // inputs.forEach((input) => {
