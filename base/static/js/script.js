@@ -1,6 +1,8 @@
 let dropDownHead = document.querySelectorAll(".select-head");
 let selectDropDown = document.querySelectorAll(".select-dropdown");
 console.log(document.querySelector(".profile-util-item-head"));
+console.log(document.querySelector(".nav-util-cta-container .search-icon-btn"));
+
 
 if (document.querySelector(".select-head")) {
   dropDownHead.forEach((dropHead) => {
@@ -552,4 +554,32 @@ if (document.querySelector(".my-campaigns.view-more-btn")) {
       popup.classList.remove("show");
     }
   });
+}
+
+// Search functionaliy
+
+console.log(document.querySelector(".nav-util-cta-container .search-icon-btn"));
+
+if (document.querySelector(".nav-util-cta-container .search-icon-btn")) {
+  const items = ["Laptop", "Monitor", "Keyboard", "Mouse", "Headphones"];
+
+	const searchIconBtn = document.querySelector(
+		".nav-util-cta-container .search-icon-btn"
+	);
+	const searchBar = document.querySelector(".search-bar-util-search");
+  const searchFuncDiv = document.querySelector(".search-func-div")
+  const searchUtilInput = document.querySelector(".search-bar-util-search input");
+
+	searchIconBtn.addEventListener("click", () => {
+		console.log("Search functioality");
+    searchFuncDiv.classList.toggle("reveal")
+    setTimeout(() => {
+      searchBar.classList.toggle("active");
+    }, 500)
+	});
+
+  searchUtilInput.addEventListener("input", function(){
+    
+  })
+
 }

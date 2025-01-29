@@ -56,15 +56,18 @@
     <div class="home page">
       <nav class="navbar sticky-top align-items-center bos">
         <div class="container">
-          <img class="logo-img" src="{% static '../static/img/Feed-logo.png' %}" alt="logo img" />
+          <a href="/">
+            <img class="logo-img" src="{% static '../static/img/Feed-logo.png' %}" alt="logo img" />
+          </a>
           <div
             class="nav-util-cta-container ms-md-3 d-flex align-items-center gap-4"
           >
-            <img
-              class="search-icon"
-              src="{% static '../static/img/svg/search-icon.svg' %}"
-              alt="search icon"
-            />
+            <button
+              class="search-icon-btn"
+            >
+              <img class="search-icon"  src="{% static '../static/img/svg/search-icon.svg' %}"
+              alt="search icon">
+            </button>
             <a href="{% url 'start_campaign' %}" class="start-camp-cta">START CAMPAIGN</a>
             <div class="profile-cta-container pos-rel">
               <div class="flex gp-5 profile-cta-head">
@@ -114,6 +117,52 @@
             <span></span>
             <span></span>
           </div>
+
+           <div class="search-func-div">
+              
+              <div class="search-bar-util-search">
+                <input type="text" placeholder="Search for Product" />
+                <span class="search-icon-span mobile-search-icon">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M9.93946 9.11412C10.6582 8.21557 11.088 7.0758 11.088 5.83565C11.088 2.93483 8.73646 0.583252 5.83565 0.583252C2.93483 0.583252 0.583252 2.93483 0.583252 5.83565C0.583252 8.73646 2.93483 11.088 5.83565 11.088C7.0758 11.088 8.21557 10.6582 9.11412 9.93946L12.4203 13.2457C12.6482 13.4736 13.0177 13.4736 13.2457 13.2457C13.4736 13.0177 13.4736 12.6482 13.2457 12.4203L9.93946 9.11412ZM5.83565 9.9267C3.57622 9.9267 1.74459 8.09507 1.74459 5.83565C1.74459 3.57622 3.57622 1.74459 5.83565 1.74459C8.09507 1.74459 9.9267 3.57622 9.9267 5.83565C9.9267 8.09507 8.09507 9.9267 5.83565 9.9267Z"
+                      fill="#0F0F0F"
+                    />
+                  </svg>
+                </span>
+              </div>
+
+              <div class="keyword-search-results p-4 gp-20 mt-2 flex-wrap">
+                <div class="keyword-item">
+                  <span class="fs-18 fw-500 ">TECHNOLOGY</span>
+                </div>
+
+                <div class="keyword-item">
+                  <span class="fs-18 fw-500 ">EDUCATION</span>
+                </div>
+
+                <div class="keyword-item">
+                  <span class="fs-18 fw-500 ">FOOD</span>
+                </div>
+
+                <div class="keyword-item">
+                  <span class="fs-18 fw-500 ">FASHION</span>
+                </div>
+
+                <div class="keyword-item">
+                  <span class="fs-18 fw-500 ">ARTS</span>
+                </div>
+              </div>
+            </div>
+     
 
           <!-- <div class="nav-cta-container d-flex">
           </div> -->
