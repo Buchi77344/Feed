@@ -516,7 +516,6 @@ if (submitBtn && acctForm) {
 	});
 }
 
-
 // File Upload Script
 const fileInfo = document.querySelector(".fileInfo");
 const fileInput = document.querySelector("#image_upload");
@@ -606,6 +605,10 @@ if (document.querySelector(".nav-util-cta-container .search-icon-btn")) {
 	const searchUtilInput = document.querySelector(
 		".search-bar-util-search input"
 	);
+	const mobileSearchBtn = document.querySelector(".mobile-search-btn");
+
+	const keywordItems = document.querySelectorAll(".keyword-item")
+	const pageEl = document.querySelector(".page");
 
 	searchIconBtn.addEventListener("click", () => {
 		console.log("Search functioality");
@@ -615,5 +618,48 @@ if (document.querySelector(".nav-util-cta-container .search-icon-btn")) {
 		}, 500);
 	});
 
-	searchUtilInput.addEventListener("input", function () {});
+	mobileSearchBtn.addEventListener("click", highlightText)
+
+	searchUtilInput.addEventListener("keypress", function (e) {
+		if(e.key == "Enter"){
+			highlightText()
+		}
+	});
+
+	function highlightText(){
+		const searchUtilInputValue = searchUtilInput.value.trim()
+		removeHighlights(pageEl)
+		if (searchUtilInputValue === "") return;
+		const elements = pageEl.querySelectorAll("p, h1, h2, h3, h4, h5, h6, a, button")
+
+		elements.forEach((element) => {
+			highlightElement(element, searchUtilInputValue);
+			
+		})
+	}
+
+	function highlightElement(element, searchInput){
+		const regex = new RegExp(`(${searchInput})`, "gi");
+			if(element.childNodes.length > 0){
+				element.childNodes.forEach((child) => {
+					if(child.nodeType === 3 && regex.test(child.nodeValue)){
+						const span = document.createElement("span")
+						span.innerHTML = child.nodeValue.replace(regex, `<span class = "highlight">$1</span>`)
+						child.replaceWith(...span.childNodes)
+					}
+				})
+			}
+	}
+
+	function removeHighlights(container){
+		container.querySelectorAll(".highlight").forEach(span => {
+			span.replaceWith(document.createTextNode(span.textContent))
+		})
+	}
+
+	keywordItems.forEach(item => {
+		item.addEventListener("click", function(){
+			searchUtilInput.value = this.textContent.trim()
+		})
+	})
 }
