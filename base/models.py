@@ -97,6 +97,7 @@ class Campaign(models.Model):
     is_launch =models.BooleanField(default=False)
     is_status = models.BooleanField(default=False)
     is_emergency =models.BooleanField(default=False)
+    is_trending = models.BooleanField(default=False)
     def save(self, *args, **kwargs):
         # Ensure the token is generated only if it's not already assigned
         if not self.token:

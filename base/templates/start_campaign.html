@@ -21,18 +21,18 @@
 	<main class="light-bg-clr pd-down">
 		<span class="page-highlight-span">Campaign</span>
 		<div class="start-campaign-content-wrapper">
-			<form id="myForm" method="post"  enctype="multipart/form-data">
+			<form id="myForm" method="POST"  enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="start-campaign-item">
 					<p class="mac-text-mid highlight-span-clr fw-600">Campaign details</p>
 					<div class="acct-form mt-3">
 						<div class="pos-rel">
-							<input required type="text" name="campaign_name" id="" class="acct-input input-vd" placeholder="Campaign name *">
+							<input type="text" name="campaign_name" id=""  class="acct-input input-vd" placeholder="Campaign name *">
 							<span class="error-message" id="campaignName"></span>
 						</div>
 
 						<div class="pos-rel">
-							<input required type="text" name="monetary" id="" class="acct-input input-vd" placeholder="Monetary target *">
+							<input type="text" name="monetary" id="" class="acct-input input-vd" placeholder="Monetary target *">
 							<span class="error-message" id="monetaryTarget"></span>
 						</div>
 
@@ -70,7 +70,7 @@
 					</p>
 					<div class="acct-form mt-5">
 						<div class="pos-rel control-large">
-							<textarea required name="story" id="" class="acct-text-area input-vd" placeholder="Tell your story *"></textarea>
+							<textarea  name="story" id="" class="acct-text-area input-vd" placeholder="Tell your story *"></textarea>
 							<span class="error-message" id="storyErrorMsg"></span>
 						</div>
 						<select class="acct-select" id="" name ="event">
@@ -138,22 +138,22 @@
 						</p>
 						<div class="acct-form mt-3">
 							<div class="pos-rel">
-								<input required type="text" name="address" id="" class="acct-input input-vd" placeholder="Add address 1 *">
+								<input type="text" name="address" id="" class="acct-input input-vd" placeholder="Add address 1 *">
 								<span class="error-message" id="address1Msg"></span>
 							</div>
 
 							<div class="pos-rel">
-								<input required type="text" name="address1" id="" class="acct-input input-vd" placeholder="Add address 2 *">
+								<input type="text" name="address1" id="" class="acct-input input-vd" placeholder="Add address 2 *">
 								<span class="error-message" id="address2Msg"></span>
 							</div>
 
 							<div class="pos-rel">
-								<input required type="text" name="city" id="" class="acct-input input-vd" placeholder="City/town *">
+								<input type="text" name="city" id="" class="acct-input input-vd" placeholder="City/town *">
 								<span class="error-message" id="cityErrorMsg"></span>
 							</div>
 
 							<div class="pos-rel">
-								<input required type="text" name="state" id="" class="acct-input input-vd" placeholder="State *">
+								<input type="text" name="state" id="" class="acct-input input-vd" placeholder="State *">
 								<span class="error-message" id="stateErrorMsg"></span>
 							</div>
 							<select class="acct-select" id="" name = "country">
@@ -186,66 +186,16 @@
 				</div>
 
 				<div class="launch start-campaign-btn-container">
-					<a href="#" class="launch secondary-cta-btn flex-center">Launch</a>
+                      <button class=" secondary-cta-btn flex-center" type="submit" > launch</button>
 				</div>
 
 			</form>
 		</div>
-		<div class="spinner-border text-primary" role="status" id="loadingSpinner" style="display: none;">
-			<span class="visually-hidden">Loading...</span>
-		</div>
+		
 		
 	</main>
 	<script>
-		// Get the 'SAVE & PREVIEW' link and form element
-		const savePreviewBtn = document.querySelector('.save.secondary-cta-btn');
-		const form = document.getElementById('myForm');
-		const loadingSpinner = document.getElementById('loadingSpinner');
-		
-		function showLoading() {
-			loadingSpinner.style.display = 'inline-block'; // Show the spinner
-			savePreviewBtn.disabled = true; // Disable the button
-		}
-		
-		function hideLoading() {
-			loadingSpinner.style.display = 'none'; // Hide the spinner
-			savePreviewBtn.disabled = false; // Enable the button
-		}
-		
-		// Event listener for the "SAVE & PREVIEW" button click
-		savePreviewBtn.addEventListener('click', async function(event) {
-			event.preventDefault(); // Prevent default behavior
-			showLoading(); // Show the spinner
-		
-			// Add a slight delay to allow the spinner to render before proceeding
-			setTimeout(async () => {
-				// Create a FormData object from the form
-				const formData = new FormData(form);
-		
-				try {
-					// Send POST request to the backend with form data
-					const response = await fetch('/create_campaign/', {
-						method: 'POST',
-						body: formData, // Send form data (including file) to backend
-					});
-		
-					// Check if the response is successful
-					if (response.ok) {
-						const { id } = await response.json(); // Parse the JSON response
-						window.location.href = `/preview/${id}/`; // Redirect
-					} else {
-						const errorMessage = await response.text();
-						alert('Error saving data: ' + errorMessage);
-					}
-				} catch (error) {
-					console.error('Error during fetch request:', error);
-					alert('An error occurred while submitting the form.');
-				} finally {
-					hideLoading(); // Always hide the spinner, even on error
-				}
-			}, 100); // Delay for 100ms to ensure spinner visibility
-		});
-		
+
 	</script>
 </main>
 			

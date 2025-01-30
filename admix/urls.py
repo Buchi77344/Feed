@@ -11,5 +11,9 @@ urlpatterns = [
     path('login',login,name='login'),
     path('approve/<str:token>/',approve, name='approve'),
     path('delete/<str:token>/', delete_campaign, name='delete_campaign'),
+    path('feature',feature,name='feature'),
+    path('api/update-features/', update_features, name='update_features'),
+    path('trending',trending,name='trending'),
+    path('api/update-trend/', update_trend, name='update_trend'),
 ]
 

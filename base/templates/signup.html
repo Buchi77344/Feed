@@ -95,55 +95,75 @@
 						Personal Details
 					</h3>
 				
-					<form method="post" class="signup acct-form gp-20 mt-4">
+					<form data-attr="acct-form-el" method="post" class="signup acct-form gp-20 mt-4">
 						{% csrf_token %}
-						<input
-							class="acct-input"
-							type="text"
-							name="first_name"
-							placeholder="First name*"
-							required
-						/>
 
-						<input
-							class="acct-input"
-							type="password"
-							name="password"
-							placeholder="Password *"
-							required
-						/>
+						<div class="flex-column w-100">
+							<input
+								class="acct-input"
+								type="text"
+								name="first_name"
+								placeholder="First name*"
+								required
+							/>
+							<span class="error-message"></span>
+						</div>
 
-						<input
-							class="acct-input"
-							type="text"
-							name="last_name"
-							placeholder="Surname*"
-							required
-						/>
+						<div class="flex-column w-100">
+							<input
+								class="acct-input"
+								type="password"
+								name="password"
+								placeholder="Password *"
+								required
+							/>
+							<span class="error-message"></span>
+						</div>
 
-						<input
-							class="acct-input"
-							type="password"
-							name="password1"
-							placeholder="Re-enter Password *"
-							required
-						/>
+						<div class="flex-column w-100">
+							<input
+								class="acct-input"
+								type="text"
+								name="last_name"
+								placeholder="Surname*"
+								required
+							/>
+							<span class="error-message"></span>
+						</div>
 
-						<input
-							class="acct-input"
-							type="number"
-							name="phone_number"
-							placeholder="Mobile number"
-							required
-						/>
+						<div class="flex-column w-100">
+							<input
+								class="acct-input"
+								type="password"
+								name="password1"
+								placeholder="Re-enter Password *"
+								required
+							/>
+							<span class="error-message"></span>
+						</div>
 
-						<input
-							class="acct-input"
-							type="email"
-							name="email"
-							placeholder="Email Address*"
-							required
-						/>
+						<div class="flex-column w-100">
+							<input
+								class="acct-input"
+								type="number"
+								name="phone_number"
+								placeholder="Mobile number"
+								required
+							/>
+							<span class="error-message"></span>
+						</div>
+
+
+						<div class="flex-column w-100">
+							<input
+								class="acct-input"
+								type="email"
+								name="email"
+								placeholder="Email Address*"
+								required
+							/>
+							<span class="error-message"></span>
+						</div>
 						<div class="terms-container">
 							<label class="terms-label" for="terms-check">
 								I have read and understood the terms and conditions. *
@@ -164,7 +184,7 @@
 					</form>
 				</div>
 
-				<button class="cta-btn submit-btn">CREATE YOUR PROFILE</button>
+				<button type="button" class="cta-btn submit-btn">CREATE YOUR PROFILE</button>
 			</main>
 
 			<!-- <div class="container mt-5">
@@ -374,13 +394,15 @@
 
 		<!-- Bootstrap JS -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
+		<!-- Client validation script -->
 		<script>
 			const hamburger = document.querySelector(".hamburger");
 			const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
 			const overlay = document.querySelector(".overlay");
 			const mobileNav = document.querySelector(".mobile-nav");
-			const submitBtn = document.querySelector(".cta-btn.submit-btn")
-			const acctForm = document.querySelector(".acct-form")
+			const submitBtn = document.querySelector(".cta-btn.submit-btn");
+			const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
 			if(hamburger){
 				hamburger.addEventListener("click", function () {
 					overlay.classList.add("visible");
@@ -389,21 +411,100 @@
 				});
 			}
 
-			if(cancelIcon)[
+			if(cancelIcon){
 				cancelIcon.addEventListener("click", function () {
 					overlay.classList.remove("visible");
 					mobileNav.classList.remove("slideIn");
 					document.body.classList.remove("hide-overflow");
 				})
-			]
+			}
 
-			if(submitBtn && acctForm){
-				submitBtn.addEventListener("click", function(){
-					acctForm.submit()
-				})
+		const inputs = acctForm.querySelectorAll(".acct-input");
+
+			// Attach event listeners to each input for clearing error messages on focus
+			inputs.forEach(input => {
+				input.addEventListener("focus", clearErrorMessage);
+				input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
+			});
+
+			// Validate all fields before form submission
+			function validateField(form) {
+				const inputs = form.querySelectorAll(".acct-input");
+				let isValid = true;
+
+				inputs.forEach(input => {
+					if (input.value.trim() === "" || !input.checkValidity()) {
+						showErrorMessage(input, getErrorMessage(input));
+						isValid = false;
+					}
+				});
+
+				return isValid;
+			}
+
+			// Get specific error messages based on input validation state
+			function getErrorMessage(input) {
+				if (input.validity.valueMissing) {
+					return "This field is required.";
+				}
+				if (input.validity.typeMismatch) {
+					if (input.type === "email") {
+						return "Invalid email address.";
+					}
+					return "Please enter a valid value.";
+				}
+				if (input.validity.tooShort) {
+					return `Please lengthen this text to ${input.minLength} characters or more.`;
+				}
+				return "Invalid input.";
+			}
+
+			// Show error message below the input
+			function showErrorMessage(input, msg) {
+				let errorMessage = input.nextElementSibling;
+
+				// Create error message element if it doesn't exist
+				if (!errorMessage || !errorMessage.classList.contains("error-message")) {
+					errorMessage = document.createElement("div");
+					errorMessage.className = "error-message";
+					input.parentNode.insertBefore(errorMessage, input.nextSibling);
+				}
+
+				errorMessage.textContent = msg;
+				errorMessage.style.display = "block";
+			}
+
+			// Clear error message when user focuses on the input
+			function clearErrorMessage(event) {
+				const errorMessage = event.target.nextElementSibling;
+
+				if (errorMessage && errorMessage.classList.contains("error-message")) {
+					errorMessage.style.display = "none";
+				}
+			}
+
+			// Validate a single input field dynamically
+			function validateSingleField(input) {
+				if (input.value.trim() === "" || !input.checkValidity()) {
+					showErrorMessage(input, getErrorMessage(input));
+				} else {
+					clearErrorMessage({ target: input });
+				}
+			}
+
+			// Handle form submission
+			if (submitBtn && acctForm) {
+				submitBtn.addEventListener("click", function (e) {
+					e.preventDefault(); // Prevent default form submission
+					if (validateField(acctForm)) {
+						acctForm.submit(); // Submit form only if all inputs are valid
+					}
+				});
 			}
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+		<!-- Toastify script -->
 		{% if messages %}
 		<script>
 			const messages = [

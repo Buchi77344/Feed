@@ -8,22 +8,29 @@ if (document.querySelector(".select-head")) {
       let parent = dropHead.parentElement;
       let selectDropDown = parent.querySelector(".select-dropdown");
       console.log(parent);
-      if (selectDropDown.classList.contains("popup")) {
-        removePopup(selectDropDown);
-      } else {
-        addPopup(selectDropDown);
-      }
+      if (selectDropDown.classList.contains("scaleup")) {
+				removePopup(selectDropDown);
+			} else {
+				addPopup(selectDropDown);
+			}
       allRemovePopup(
         `[data-select = "${parent.dataset.select}"]`,
         selectDropDown
       );
+      const selectAllInput = parent.querySelector(".select-all-input")
+      selectAllInput.addEventListener("change", function(){
+        const allInputs = parent.querySelectorAll(".terms-label input")
+        allInputs.forEach(input => {
+          input.checked = this.checked
+        })
+      })
     });
   });
 }
 
 function removePopup(dropElement) {
-  dropElement.classList.add("popup-remove");
-  dropElement.classList.remove("popup");
+  dropElement.classList.add("scaleup-remove");
+  dropElement.classList.remove("scaleup");
   setTimeout(() => {
     dropElement.style.display = "none";
   }, 500);
@@ -31,8 +38,8 @@ function removePopup(dropElement) {
 
 function addPopup(dropElement) {
   dropElement.style.display = "block";
-  dropElement.classList.add("popup");
-  dropElement.classList.remove("popup-remove");
+  dropElement.classList.add("scaleup");
+  dropElement.classList.remove("scaleup-remove");
 }
 
 function allRemovePopup(highlightEl, dropEl) {
@@ -275,17 +282,20 @@ if (document.querySelector(".recurring-btn")) {
 
   donationPrice.forEach((cta) => {
     cta.addEventListener("click", function () {
-      donationPrice.forEach((cta) => cta.classList.remove("active"));
-      this.classList.add("active");
-      let num = this.querySelector(".text").textContent;
-      let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "");
-      // console.log(trimNum);
+			donationPrice.forEach((cta) => cta.classList.remove("active"));
+			this.classList.add("active");
+			let num = this.querySelector(".text").textContent;
+			let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "");
+			// console.log(trimNum);
 
-      donationAmountInput.value = trimNum;
-      console.log(num);
-      donationPriceText.forEach((text) => (text.textContent = num));
-      calcDonateSliderVal();
-    });
+			donationAmountInput.value = trimNum;
+			console.log(num);
+			donationPriceText.forEach((text) => (text.textContent = num));
+			calcDonateSliderVal();
+			const paymentLink = document.getElementById("payment-link");
+			paymentLink.style.pointerEvents = "auto"; // Enable the link
+			paymentLink.style.opacity = "1"; // Make the link visually active
+		});
   });
 
   const sliderContainer = document.querySelector(".slider-container");
@@ -419,13 +429,12 @@ if (document.querySelector(".percent-progress")) {
 
 //Client Side Validation
 
-let inputVd = document.querySelectorAll(".input-vd");
+// let inputVd = document.querySelectorAll(".input-vd");
 
-inputVd.forEach((vd) => {
-  console.log(vd);
-  vd.addEventListener("blur", validateField);
-  vd.addEventListener("input", clearErrorMessage);
-});
+// inputVd.forEach((vd) => {
+//   vd.addEventListener("blur", validateField);
+//   vd.addEventListener("input", clearErrorMessage);
+// });
 
 function validateField(event) {
   let input = event.target;

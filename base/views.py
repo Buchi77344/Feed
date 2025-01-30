@@ -9,17 +9,18 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
-    featured_campaigns = Campaign.objects.all()[:3]
-    
+    featured_campaigns = Campaign.objects.filter(is_featured=True)[:3]
+     
     # Trending Campaigns: Define based on most recent or highest monetary goal
     trending_campaigns = Campaign.objects.filter(
         end_date__gte=datetime.now(),is_launch= True # Campaigns still active
     ).order_by('-monetary')[:3]
 
-    campaigns = Campaign.objects.all() 
+    campaigns = Campaign.objects.all()[:3]
     campaigns_with_percentage = []
+    campaigns_with_percentages = []
     # if Campaign.objects.filter(profile__user =request.user).exists: 
-    for campaign in campaigns:
+    for campaign in featured_campaigns:
         # Calculate total donations for the campaign
        
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
@@ -34,6 +35,22 @@ def index(request):
             'percentage_achieved': percentage_achieved,
             'trending_campaigns':trending_campaigns,
         })
+    for campaign in campaigns:
+        # Calculate total donations for the campaign
+       
+        total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
+
+        # Calculate percentage achieved
+        percentage_achieved = (total_donations / campaign.monetary) * 100 if campaign.monetary > 0 else 0
+
+        # Add campaign data and percentage to the list
+        campaigns_with_percentages.append({
+            'campaign': campaign,
+            'total_donations': total_donations,
+            'percentage_achieved': percentage_achieved,
+            'trending_campaigns':trending_campaigns,
+        })
+    
     
     # Calculate the percentage achieved
     
@@ -52,6 +69,7 @@ def index(request):
         'campaigns':campaigns, 
         'trending_campaigns': trending_campaigns,
         'campaigns_with_percentage':campaigns_with_percentage,
+        'campaigns_with_percentages':campaigns_with_percentages,
     }
     return render (request, 'index.html',context)
 
@@ -296,7 +314,7 @@ def start_campaign(request):
             )
 
             # Return the created campaign's token as JSON response
-            return JsonResponse({'id': campaign.token})
+            return redirect ('profile')
 
         except Exception as e:
             messages.error(request, f"Error creating campaign: {str(e)}")
@@ -308,7 +326,7 @@ def start_campaign(request):
 
     # You need to define the 'countries' variable, either from a model
   # Example list, replace with actual data
-
+    
     context = {
         'countries': countries,
         'category': category,
@@ -486,8 +504,8 @@ if  PaymentData.objects.all().exists():
 # Configure PayPal SDK
 paypalrestsdk.configure({
     "mode": "sandbox",  # Change to "live" for production
-    "client_id": data.paypal_api_key,
-    "client_secret": data.paypal_secret_key,
+    "client_id": "",
+    "client_secret": "",
 })
 
 from django.http import JsonResponse

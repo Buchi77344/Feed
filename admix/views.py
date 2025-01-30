@@ -205,3 +205,73 @@ def delete_campaign(request, token):
         campaign.delete()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'fail'}, status=400)
+
+
+def feature(request):
+    feature = Campaign.objects.all()
+    context = {
+        'feature':feature
+    }
+    return render (request,  'admin/feature.html',context)
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
+
+@csrf_exempt
+def update_features(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            features = data.get("features", [])
+
+            # Iterate over the selected features
+            for feature in features:
+                feature_id = feature.get("id")
+
+                # Update the Campaign object based on the feature ID
+                if feature_id:
+                    # Assuming 'Feature' is related to 'Campaign' and 'id' is the primary key for features
+                    # Here you are updating the corresponding campaign with is_featured=True
+                    Campaign.objects.filter(id=feature_id).update(is_featured=True)
+
+            return JsonResponse({"message": "Features updated successfully!"}, status=200)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+@csrf_exempt
+def update_trend(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            features = data.get("features", [])
+
+            # Iterate over the selected features
+            for feature in features:
+                feature_id = feature.get("id")
+
+                # Update the Campaign object based on the feature ID
+                if feature_id:
+                    # Assuming 'Feature' is related to 'Campaign' and 'id' is the primary key for features
+                    # Here you are updating the corresponding campaign with is_featured=True
+                    Campaign.objects.filter(id=feature_id).update(is_trending=True)
+
+            return JsonResponse({"message": "Trending Campaign updated successfully!"}, status=200)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+
+def trending(request):
+    feature = Campaign.objects.all()
+    context = {
+        'feature':feature
+    }
+    return render (request,  'admin/trending.html',context)
