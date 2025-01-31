@@ -14,6 +14,7 @@ urlpatterns = [
     path('feature',feature,name='feature'),
     path('api/update-features/', update_features, name='update_features'),
     path('trending',trending,name='trending'),
+    path('social',social,name='social'),
     path('api/update-trend/', update_trend, name='update_trend'),
 ]
 

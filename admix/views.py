@@ -182,6 +182,7 @@ def config(request):
             'currency': pay.currency,
         }
     else:
+ 
         context = {
             'paypal_secret_key': 'Enter PayPal Secret Key',
             'paypal_api_key': 'Enter PayPal API Key',
@@ -190,7 +191,51 @@ def config(request):
             'currency': 'currency',
         }
 
+   
     return render(request, 'admin/set.html', context)
+
+def social(request):
+    social ,created = SocialMedia.objects.get_or_create(id=1)
+    if request.method == "POST":
+        social.whatsapp =request.POST.get('whatsapp',social.whatsapp)
+        social.telegram =request.POST.get('telegram',social.telegram)
+        social.linkdin =request.POST.get('linkdin',social.linkdin)
+        social.twitter =request.POST.get('twitter',social.twitter)
+        social.instagram =request.POST.get('instagram',social.instagram)
+        social.facebook =request.POST.get('facebook',social.facebook)
+        social.tiktok =request.POST.get('tiktok',social.tiktok)
+        social.youtube =request.POST.get('youtube',social.youtube)
+
+     
+       
+        social.save()
+        return redirect("admix:social") 
+    if  SocialMedia.objects.exists():
+            social = SocialMedia.objects.first()
+            context = {
+                'whatsapp':social.whatsapp,
+                'telegram' :social.telegram,
+                'linkdin':social.linkdin,
+                'twitter':social.twitter,
+                'instagram':social.instagram,
+                'facebook':social.facebook,
+                'tiktok':social.tiktok,
+                'youtube':social.youtube,
+            }
+    else:
+            context = {
+            'whatsapp': 'Enter Your Whatsapp Link',
+            'telegram': 'Enter Your telegram Link',
+             'linkdin': 'Enter Your linkedin Link',
+            'twitter': 'Enter Your Twitter Link',
+            'instagram': 'Enter Your Instagram Link',
+            'facebook': 'Enter Your Facebook Link',
+            'tiktok': 'Enter Your Tiktok Link',
+            'youtube': 'Enter Your Youtube Link',
+            }
+       
+
+    return render (request, 'admin/social.html',context)
 
 
 from django.http import JsonResponse

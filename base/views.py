@@ -62,14 +62,17 @@ def index(request):
             return redirect('index')
         else:
             Newsletter.objects.get_or_create(email=email)
-            messages.error(request, 'email added sucessfully')
+            messages.success(request, 'email added sucessfully')
             return redirect('/')
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     context = {
         'featured_campaigns': featured_campaigns,
         'campaigns':campaigns, 
         'trending_campaigns': trending_campaigns,
         'campaigns_with_percentage':campaigns_with_percentage,
         'campaigns_with_percentages':campaigns_with_percentages,
+        'social':social
     }
     return render (request, 'index.html',context)
 
@@ -663,12 +666,12 @@ def stripe_payment_link(request, token):
 
 
 
-@login_required(login_url="login")
+
 def find_campaign(request):
     campaigns = Campaign.objects.filter(is_launch=True)
     campaigns_with_percentage = []
-    if Campaign.objects.filter(user =request.user).exists:
-      for campaign in campaigns:
+   
+    for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
@@ -741,30 +744,41 @@ def support(request):
 
 
 
-@login_required(login_url="login")
+
+from django.shortcuts import get_object_or_404, render
+from django.db.models import Sum
+from decimal import Decimal  # Import Decimal for correct type handling
+
 def details(request, token):
     # Get the specific campaign
     campaign_details = get_object_or_404(Campaign, token=token)
 
+    # Get all donations related to this campaign
     donation = Donation.objects.filter(campaign=campaign_details)
 
     # Calculate total donations for this campaign
-    total_donations = campaign_details.donations.aggregate(Sum('amount'))['amount__sum'] or 0
+    total_donations = donation.aggregate(total=Sum('amount'))['total'] or Decimal(0)
 
-    # Calculate percentage achieved
-    percentage_achieved = (  
-        (total_donations / campaign_details.monetary) * 100
-        if campaign_details.monetary > 0 else 0
-    )
+    # Update the campaign's goal with the total donations (if applicable)
+    campaign_details.goal = total_donations
+    campaign_details.save()
+
+    # Ensure both values are Decimal before performing division
+    if campaign_details.monetary > 0:
+        percentage_achieved = (total_donations / campaign_details.monetary) * Decimal(100)
+    else:
+        percentage_achieved = Decimal(0)
 
     # Pass the campaign details and percentage to the template
     context = {
         'campaign_details': campaign_details,
         'total_donations': total_donations,
         'percentage_achieved': percentage_achieved,
-        'donation':donation
+        'donation': donation
     }
     return render(request, 'details.html', context)
+
+
 
 
 @login_required(login_url="login")

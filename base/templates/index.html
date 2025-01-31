@@ -35,7 +35,7 @@
                     crowfunding platform focus on raising funds for urgent
                     medical emergencies and critical social causes.
                   </p>
-                  <a href="#" class="donate-cta">DONATE NOW</a>
+                  <a href="{% url "login" %}" class="donate-cta">DONATE NOW</a>
                 </div>
 
                 <div class="feature-campaign-item-container">
@@ -51,12 +51,13 @@
                       alt="feature image"
                     />
                     <div class="feature-desc-container">
+                      <a href="{% url 'details' featured_campaigns.campaign.token %}">
                       <h5 class="page-sub-h5-head">
                        {{ featured_campaigns.campaign.campaign_name}}
                       </h5>
+                    </a>
                       <p class="mac-text-sm my-2">
-                        Helping children to admissions to school getting Helping
-                        children to admissions to school ang getting
+                        {{ featured_campaigns.campaign.story|truncatechars:80}}
                       </p>
 
                       <div class="d-sm-flex justify-content-between">
@@ -348,7 +349,7 @@
                       </svg>
                     </span>
 
-                    <a href="#" class="discover cta-btn">Become a donor</a>
+                    <a href="{% url "find_campaign" %}" class="discover cta-btn">Become a donor</a>
                   </div>
 
                   <div class="discover-item flex-column gp-20">
@@ -367,7 +368,7 @@
                       </svg>
                     </span>
 
-                    <a href="#" class="discover cta-btn">Make a difference</a>
+                    <a href="{% url "find_campaign" %}" class="discover cta-btn">Make a difference</a>
                   </div>
 
                   <span class="long-arrow">
@@ -401,12 +402,13 @@
                       alt="feature image"
                     />
                     <div class="feature-desc-container">
+                      <a href="{% url 'details' campaigns.campaign.token %}">
                       <h5 class="page-sub-h5-head">
                         {{campaigns.campaign.campaign_name}}
                       </h5>
+                    </a>
                       <p class="mac-text-sm my-2">
-                        Helping children to admissions to school getting Helping
-                        children to admissions to school ang getting
+                        {{campaigns.campaign.story|truncatechars:70}}
                       </p>
 
                       <div class="d-sm-flex justify-content-between">

@@ -32,7 +32,7 @@
 							<span class="details smaller-text fw-700">Open end-date</span>
 							<div class="details-donation-cta-section my-3 px-md-3">
 								<div class="util-box-container">
-									<h3 class="text-center donation-price-head-text page-sub-head fw-700">$ 20</h3>
+									<h3 class="text-center donation-price-head-text page-sub-head fw-700">$ {{campaign_details.goal}} </h3>
 									<div data-percent="{{ percentage_achieved|floatformat:0 }}" class="percent-bar my-3 percent-progress">
 										<span class="percent-val percent-progress-bar flex-center">{{ percentage_achieved|floatformat:0 }}%</span>
 									</div>
@@ -122,13 +122,8 @@
 								</div>
 							</div>
 							<div class="mt-3">
-								<p class="">Marlee’s life has been one of unwavering service, selflessness, and love. Today, she needs your help to continue her journey of hope and healing as she battles a life-threatening diagnosis of leukemia.</p>
-								<p class="mt-3">For over two decades, Marlee Volschenk has dedicated her life to helping others. As a missionary since 2001, she and her husband Dries spent 22 years in Madagascar, creating safe spaces and nurturing positive opportunities for children in vulnerable communities. In April 2023, Marlee and Dries returned to their home country, South Africa to continue their important work.</p>
-								<p class="mt-3">Marlee is the proud mother of three incredible children, aged 24, 21, and 18. Her family has been her strength and motivation throughout this difficult journey. Together with her husband, Dries, they have weathered the storm of missionary life and built a legacy of hope in Madagascar. Marlee’s children now face the unimaginable reality of their mother’s illness, and they are determined to do everything possible to support her in this fight.</p>
-								<div class="mt-3">
-									<h5>Marlee’s Fight Against Leukemia</h5>
-									<p class="mt-3">At the end of November 2024, Marlee received the devastating diagnosis of B Acute Lymphoblastic Leukemia, a very aggressive blood cancer that requires immediate and intensive treatment. She has already started V.A.A.P chemotherapy treatment, which costs an astounding R33,000 per week. This gruelling regimen will continue for five weeks to prepare her body for the next critical step: a stem cell transplant.</p>
-									<p class="mt-3">The cost of the stem cell transplant alone is estimated to be between R1 million and R1.5 million. We are praying that one of Marlee’s siblings will be a match for the transplant. If no match is found within her family, the search for an unrelated donor will add another R500,000 to the total cost. Finding a bone marrow match outside the family is notoriously difficult due to the genetic complexities involved in compatibility, and the process often incurs additional financial and logistical challenges.</p>
+								<p class="">{{campaign_details.story}}</p>
+								
 								</div>
 							</div>
 						</div>

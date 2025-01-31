@@ -56,17 +56,16 @@
         <div class="campaign page">
             <nav class="navbar bos sticky-top align-items-center">
                 <div class="pd-nav flex-between w-100 align-center">
-                    <img
-                        class="logo-img"
-                        src="{% static '../static/img/Feed-logo.png' %}"
-                        alt="logo img"
-                    />
+                       <a href="/">
+                            <img class="logo-img" src="{% static '../static/img/Feed-logo.png' %}" alt="logo img" />
+                        </a>
                     <div class="nav-util-cta-container d-flex align-items-center gap-4 ms-sm-0 ms-auto me-sm-0 me-2">
-                        <img
-                            class="search-icon"
-                            src="{% static '../static/img/svg/search-icon.svg' %}"
-                            alt="search icon"
-                        />
+                        <button
+                            class="search-icon-btn"
+                            >
+                            <img class="search-icon"  src="{% static '../static/img/svg/search-icon.svg' %}"
+                            alt="search icon">
+                        </button>
                         <a href="{% url 'start_campaign' %}" class="start-camp-cta">START CAMPAIGN</a>
                     </div>
                     <div class="hamburger">

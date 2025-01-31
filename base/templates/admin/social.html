@@ -1,0 +1,59 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+    <div class="container my-5">
+    
+
+
+        <h2 class="text-center mb-4">Add social Media links</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- PayPal Configuration -->
+            <div class="mb-3">
+                <label for="paypalSecretKey" class="form-label">Whatsapp</label>
+                <input type="text" class="form-control" id="paypalSecretKey" value="{{whatsapp}}" name="whatsapp" placeholder="Enter PayPal Secret Key">
+            </div>
+            <div class="mb-3">
+                <label for="paypalApiKey" class="form-label">Telegram</label>
+                <input type="text" class="form-control" id="paypalApiKey" name="telegram" value="{{telegram}}" placeholder="Enter PayPal API Key">
+            </div>
+
+            <!-- Stripe Configuration -->
+            <div class="mb-3">
+                <label for="stripeSecretKey" class="form-label">Linkedin</label>
+                <input type="text" class="form-control" id="stripeSecretKey" name="linkdin" value="{{linkdin}}" placeholder="Enter A Link">
+            </div>
+            <div class="mb-3">
+                <label for="stripeApiKey" class="form-label">Twitter</label>
+                <input type="text" class="form-control" id="stripeApiKey" name="twitter" value="{{twitter}}" placeholder="Enter A Link">
+            </div>
+            <div class="mb-3">
+                <label for="stripeApiKey" class="form-label">Instagram</label>
+                <input type="text" class="form-control" id="stripeApiKey" name="instagram" value="{{instagram}}" placeholder="Enter A Link">
+            </div>
+            <div class="mb-3">
+                <label for="stripeApiKey" class="form-label">Facebook</label>
+                <input type="text" class="form-control" id="stripeApiKey" name="facebook" value="{{facebook}}" placeholder="Enter A Link">
+            </div>
+            <div class="mb-3">
+                <label for="stripeApiKey" class="form-label">Tiktok</label>
+                <input type="text" class="form-control" id="stripeApiKey" name="tiktok" value="{{tiktok}}" placeholder="Enter A Link">
+            </div>
+            <div class="mb-3">
+                <label for="stripeApiKey" class="form-label">Youtube</label>
+                <input type="text" class="form-control" id="stripeApiKey" name="youtube" value="{{youtube}}" placeholder="Enter A Link">
+            </div>
+
+            <!-- Currency Selector (CDN) -->
+      
+
+            <button type="submit" class="btn btn-primary">Save Configuration</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS Bundle CDN (includes Popper) -->
+    
+    
+ 
+</body>
+</html>
+{% endblock content %}

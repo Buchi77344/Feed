@@ -53,18 +53,22 @@
 	<div class="pass-reset acct page">
 		<nav class="navbar bos sticky-top align-items-center">
 			<div class="container">
-				<img
+				<a href="/" class="">
+					<img
 					class="logo-img"
 					src="../static/img/Feed-logo.png"
 					alt="logo img"
-				/>
-				<div class="nav-util-cta-container d-flex align-items-center gap-4">
-					<img
-						class="search-icon"
-						src="../static/img/svg/search-icon.svg"
-						alt="search icon"
 					/>
-					<a href="#" class="start-camp-cta">START CAMPAIGN</a>
+				</a>
+				<div class="nav-util-cta-container d-flex align-items-center gap-4">
+					<button
+						class="search-icon-btn"
+						>
+						<img class="search-icon"  src="{% static '../static/img/svg/search-icon.svg' %}"
+						alt="search icon">
+					</button>
+					<a href="{% url 'start_campaign' %}" class="start-camp-cta">START CAMPAIGN</a>
+				
 				</div>
 				<div class="hamburger">
 					<span></span>
@@ -75,7 +79,7 @@
 				<!-- <div class="nav-cta-container d-flex">
 			</div> -->
 			</div>
-			<span class="page-highlight-span">Login</span>
+			<span class="page-highlight-span">Forgot Password</span>
 		</nav>
 
 		<main class="light-bg-clr">
@@ -88,7 +92,7 @@
 			</p>
 
 			<div class="acct-form-container reset">
-				<h3 class="page-sub-head highlight-span-clr text-center">
+				<h3 class="page-sub-head highlight-span-clr text-center mb-2">
 					Profile Email
 				</h3>
 				{% if messages %}

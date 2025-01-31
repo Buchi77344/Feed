@@ -334,8 +334,8 @@ main {
 }
 
 .page-highlight-span {
-	position: absolute;
-	top: 0;
+	position: fixed;
+	top: 100px;
 	left: 60px;
 	background-color: var(--primary-clr);
 	color: var(--light-text-clr);
@@ -802,8 +802,6 @@ main.pd-down {
 	display: block;
 	font-size: 1.1rem;
 }
-
-
 
 .acct-text-area {
 	resize: none;
@@ -1294,12 +1292,12 @@ input.search-input {
 	transition: max-height 0.3s ease;
 }
 
-.profile-donations-container.mobile.slide-down, 
-.profile-campaigns-container.mobile.slide-down{
+.profile-donations-container.mobile.slide-down,
+.profile-campaigns-container.mobile.slide-down {
 	max-height: var(--dropdown-height);
 	height: auto;
 	border-color: rgba(0, 0, 0, 0.6);
-	padding : 15px 15px 10px !important;
+	padding: 15px 15px 10px !important;
 	overflow: auto;
 }
 
@@ -1423,8 +1421,6 @@ input.search-input {
 		text-align: center;
 		width: 100% !important;
 	}
-
-
 }
 
 @media (max-width: 700px) {
@@ -1477,9 +1473,9 @@ input.search-input {
 		width: 100%;
 	}
 
-	.tooltip-box{
+	.tooltip-box {
 		right: -50px;
-		top : 130%;
+		top: 130%;
 	}
 
 	.find-campaign-item {
@@ -2560,6 +2556,57 @@ ul.list {
 	cursor: pointer;
 	font-size: 3.125rem;
 	color: white;
+}
+
+.search-func-div{
+	display: none;
+	position: fixed;
+	top: 110px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 95%;
+	max-width : 800px;
+}
+
+.search-bar-util-search {
+	border-top-color: transparent;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	/* gap: 10px; */
+	padding: 7px 15px;
+	background-color: var(--light-theme-clr);
+	justify-content: space-between;
+	max-height: 0;
+	padding: 0px 15px;
+	overflow: hidden;
+	height: 50px;
+	transition: max-height 0.5s ease;
+	box-shadow: 5px 5px 15px 0px hsla(0, 0%, 0%, 0.2);
+}
+
+.search-bar-util-search.active {
+	max-height: 50px;
+}
+
+.search-bar-util-search input {
+	width: 95%;
+}
+
+.search-bar-util-search input:focus{
+	outline : none;
+	border: none;
+}
+
+.keyword-search-results{
+	background-color: white;
+	border-radius: 5px;
+}
+
+.keyword-item{
+	padding : 5px 12px;
+	border : 1px solid rgba(0, 0, 0, 0.6);
+	border-radius: 5px;
 }
 
 @keyframes moveWidth {

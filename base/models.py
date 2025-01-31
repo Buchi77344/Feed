@@ -139,3 +139,15 @@ class PaymentData(models.Model):
 
     def __str__(self):
         return self.currency
+class SocialMedia(models.Model):
+    whatsapp =models.CharField(max_length=300)
+    telegram =models.CharField(max_length=300)
+    linkdin =models.CharField(max_length=300)
+    twitter =models.CharField(max_length=300)
+    instagram =models.CharField(max_length=300)
+    facebook =models.CharField(max_length=300)
+    tiktok =models.CharField(max_length=300)
+    youtube =models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.facebook
