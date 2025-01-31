@@ -166,13 +166,11 @@
         </div>
 
 
-        <script>
+    <script>
 			const hamburger = document.querySelector(".hamburger");
 			const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
 			const overlay = document.querySelector(".overlay");
 			const mobileNav = document.querySelector(".mobile-nav");
-			const submitBtn = document.querySelector(".cta-btn.submit-btn");
-			const acctForm = document.querySelector(".acct-form");
 			if (hamburger) {
 				hamburger.addEventListener("click", function () {
 					overlay.classList.add("visible");
@@ -181,24 +179,19 @@
 				});
 			}
 
-			if (cancelIcon)
-				[
+			if (cancelIcon){
 					cancelIcon.addEventListener("click", function () {
 						overlay.classList.remove("visible");
 						mobileNav.classList.remove("slideIn");
 						document.body.classList.remove("hide-overflow");
-					}),
-				];
+					})
+        }
 
-			if (submitBtn && acctForm) {
-				submitBtn.addEventListener("click", function () {
-					acctForm.submit();
-				});
-			}
+		
 		</script>
 
-        <!-- Toastify script -->
-        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- Toastify script -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 		{% if messages %}
 		<script>
@@ -251,29 +244,29 @@
 		</script>
 		{% endif %}
 
-        <script>
-            if(document.querySelector("#phone")){
-                const phoneInput = document.querySelector("#phone");
-                const iti = window.intlTelInput(phoneInput, {
-                initialCountry: "auto", // Automatically detect user's country
-                geoIpLookup: function(callback) {
-                    fetch('https://ipinfo.io/json?token=YOUR_TOKEN') // Replace YOUR_TOKEN with your IPInfo API token
-                    .then(resp => resp.json())
-                    .then(data => callback(data.country))
-                    .catch(() => callback("us"));
-                },
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/utils.js" // for number formatting/validation
-                });
-        
-                // Example: Get the selected country code
-                phoneInput.addEventListener("blur", () => {
-                const selectedCountryData = iti.getSelectedCountryData();
-                console.log("Selected country: ", selectedCountryData.name);
-                console.log("Dial code: ", selectedCountryData.dialCode);
-                });
-            }
+    <script>
+        if(document.querySelector("#phone")){
+            const phoneInput = document.querySelector("#phone");
+            const iti = window.intlTelInput(phoneInput, {
+            initialCountry: "auto", // Automatically detect user's country
+            geoIpLookup: function(callback) {
+                fetch('https://ipinfo.io/json?token=YOUR_TOKEN') // Replace YOUR_TOKEN with your IPInfo API token
+                .then(resp => resp.json())
+                .then(data => callback(data.country))
+                .catch(() => callback("us"));
+            },
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/utils.js" // for number formatting/validation
+            });
     
-           
-        </script>
+            // Example: Get the selected country code
+            phoneInput.addEventListener("blur", () => {
+            const selectedCountryData = iti.getSelectedCountryData();
+            console.log("Selected country: ", selectedCountryData.name);
+            console.log("Dial code: ", selectedCountryData.dialCode);
+            });
+        }
+
+        
+    </script>
     </body>
 </html>

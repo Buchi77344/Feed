@@ -81,8 +81,8 @@ def index(request):
         'trending_campaigns': trending_campaigns,
         'campaigns_with_percentage':campaigns_with_percentage,
         'campaigns_with_percentages':campaigns_with_percentages,
-        'social':social,
-        'last':last,
+        'social':social if  social else None,
+        'last':last.created_at if last else None, 
     }
     return render (request, 'index.html',context)
 
@@ -350,7 +350,8 @@ def start_campaign(request):
         'countries': countries,
         'category': category,
         'event': event,
-        'social':social    }
+        'social':social if social else None
+    }
 
     return render(request, 'start_campaign.html', context)
 
@@ -489,7 +490,7 @@ def profile(request):
         "campaigns": campaigns,
         "donations": donations,
         "profile": profile,
-        "social": social
+        "social": social if social else None
     }
     return render(request, 'profile.html', context)
 
@@ -709,7 +710,7 @@ def find_campaign(request):
         social = get_object_or_404(SocialMedia)
     context ={
             'campaigns_with_percentage':campaigns_with_percentage,
-            'social':social
+            'social':social if social else None
         }
     return render (request, 'find_campaign.html',context)
 
@@ -796,13 +797,15 @@ def details(request, token):
     # Pass the campaign details and percentage to the template
     campaign_with_donations= get_object_or_404(Campaign.objects.annotate(total_donations =Count('donations')),token=token)
     
-
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     context = {
         'campaign_details': campaign_details,
         'total_donations': total_donations,
         'percentage_achieved': percentage_achieved,
         'donation': donation,
-        'campaign_with_donations':campaign_with_donations
+        'campaign_with_donations':campaign_with_donations,
+        'social':social if social else None
     }
     return render(request, 'details.html', context)
 

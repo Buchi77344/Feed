@@ -21,7 +21,7 @@
 	<main class="light-bg-clr pd-down">
 		<span class="page-highlight-span">Campaign</span>
 		<div class="start-campaign-content-wrapper">
-			<form id="myForm" method="POST"  enctype="multipart/form-data">
+			<form id="myForm" method="POST" data-attr = "acct-form-el"  enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="start-campaign-item">
 					<p class="mac-text-mid highlight-span-clr fw-600">Campaign details</p>
@@ -70,7 +70,7 @@
 					</p>
 					<div class="acct-form mt-5">
 						<div class="pos-rel control-large">
-							<textarea  name="story" id="" class="acct-text-area input-vd" placeholder="Tell your story *"></textarea>
+							<textarea  name="story" id="" required = "true" class="acct-text-area input-vd" placeholder="Tell your story *"></textarea>
 							<span class="error-message" id="storyErrorMsg"></span>
 						</div>
 						<select class="acct-select" id="" name ="event">
@@ -84,7 +84,11 @@
 							<input type="date" name="start_date" id="" class="acct-input input-vd" placeholder="Start date   |  End date">
 							<span class="error-message" id="startDate"></span>
 						</div>
-						<input type="date" name="end_date" id="" class="acct-input" placeholder="Start date   |  End date">
+						<div class="pos-rel">
+							<input type="date" name="end_date" id="" class="acct-input" placeholder="Start date   |  End date">
+							<span class="error-message" id="endDate"></span>
+
+						</div>
 						<div class="require-div">
 							<p class="flex gp-10 mac-text-mid fw-600">
 								<span class="highlight-span-clr">*</span>
@@ -110,7 +114,8 @@
 							<div class="acct-input upload-div pos-rel">
 								<label for = "image_upload" class="mac-text-mid">Upload image *</label>
 								<div>
-									<input type="file" name="images" id="image_upload" class="upload-input">
+									<input type="file" name="images" id="image_upload" class="upload-input acct-input">
+									<span class="error-message"></span>
 								</div>
 							</div>
 							<div class="file-info flex-column gp-10 align-start">
@@ -186,7 +191,7 @@
 				</div>
 
 				<div class="launch start-campaign-btn-container">
-                      <button class=" secondary-cta-btn flex-center" type="submit" > launch</button>
+                      <button class="secondary-cta-btn cta-btn submit-btn " type="button">launch</button>
 				</div>
 
 			</form>
