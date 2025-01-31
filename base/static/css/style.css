@@ -672,9 +672,7 @@ footer .footer-links {
 	text-decoration: none;
 }
 
-/* .home.page footer {
-	min-height: 60vh;
-} */
+
 
 footer .campaign-container {
 	top: -62px;
@@ -1815,6 +1813,10 @@ input.search-input {
 	background-color: hsl(0, 0%, 95%);
 }
 
+.feed-payout.page ~ footer{
+	margin-top: 0!important;
+}
+
 .feed-payout.page p,
 .feed-payout.page span {
 	font-family: var(--inter-font);
@@ -2558,7 +2560,8 @@ ul.list {
 	border-radius: 7px;
 	max-height: 90%;
 	overflow-y: auto;
-	width: 70%;
+	width: 95%;
+    max-width: 700px;
 }
 
 #close-popup {
@@ -2636,6 +2639,10 @@ ul.list {
 	padding: 2px;
 	font-weight: bold;
 	color: white;
+}
+
+footer.util-pg-2{
+	padding-top: 30px;
 }
 
 @keyframes moveWidth {

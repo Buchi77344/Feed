@@ -97,14 +97,12 @@ def signup(request):
             return redirect(' admix:signup')
 
         # Check if phone number already exists
-        if CustomUser.objects.filter(phone_number=phone_number).exists():
-            messages.error(request, 'Phone number already exists.')
-            return redirect('signup')
+        
 
         # Check if email already exists
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists.')
-            return redirect('signup')
+            return redirect('admix:signup')
 
         # Create the user
         user = CustomUser.objects.create_user(
@@ -118,7 +116,7 @@ def signup(request):
 
         # Success message and redirect to login
         messages.success(request, 'Account created successfully. You can now log in.')
-        return redirect('login')
+        return redirect('admix:login')
 
     # Render the signup form
     return render(request, 'admin/signup.html')
@@ -182,6 +180,7 @@ def config(request):
             'currency': pay.currency,
         }
     else:
+ 
         context = {
             'paypal_secret_key': 'Enter PayPal Secret Key',
             'paypal_api_key': 'Enter PayPal API Key',
@@ -190,7 +189,51 @@ def config(request):
             'currency': 'currency',
         }
 
+   
     return render(request, 'admin/set.html', context)
+
+def social(request):
+    social ,created = SocialMedia.objects.get_or_create(id=1)
+    if request.method == "POST":
+        social.whatsapp =request.POST.get('whatsapp',social.whatsapp)
+        social.telegram =request.POST.get('telegram',social.telegram)
+        social.linkdin =request.POST.get('linkdin',social.linkdin)
+        social.twitter =request.POST.get('twitter',social.twitter)
+        social.instagram =request.POST.get('instagram',social.instagram)
+        social.facebook =request.POST.get('facebook',social.facebook)
+        social.tiktok =request.POST.get('tiktok',social.tiktok)
+        social.youtube =request.POST.get('youtube',social.youtube)
+
+     
+       
+        social.save()
+        return redirect("admix:social") 
+    if  SocialMedia.objects.exists():
+            social = SocialMedia.objects.first()
+            context = {
+                'whatsapp':social.whatsapp,
+                'telegram' :social.telegram,
+                'linkdin':social.linkdin,
+                'twitter':social.twitter,
+                'instagram':social.instagram,
+                'facebook':social.facebook,
+                'tiktok':social.tiktok,
+                'youtube':social.youtube,
+            }
+    else:
+            context = {
+            'whatsapp': 'Enter Your Whatsapp Link',
+            'telegram': 'Enter Your telegram Link',
+             'linkdin': 'Enter Your linkedin Link',
+            'twitter': 'Enter Your Twitter Link',
+            'instagram': 'Enter Your Instagram Link',
+            'facebook': 'Enter Your Facebook Link',
+            'tiktok': 'Enter Your Tiktok Link',
+            'youtube': 'Enter Your Youtube Link',
+            }
+       
+
+    return render (request, 'admin/social.html',context)
 
 
 from django.http import JsonResponse
@@ -205,3 +248,73 @@ def delete_campaign(request, token):
         campaign.delete()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'fail'}, status=400)
+
+
+def feature(request):
+    feature = Campaign.objects.all()
+    context = {
+        'feature':feature
+    }
+    return render (request,  'admin/feature.html',context)
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
+
+@csrf_exempt
+def update_features(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            features = data.get("features", [])
+
+            # Iterate over the selected features
+            for feature in features:
+                feature_id = feature.get("id")
+
+                # Update the Campaign object based on the feature ID
+                if feature_id:
+                    # Assuming 'Feature' is related to 'Campaign' and 'id' is the primary key for features
+                    # Here you are updating the corresponding campaign with is_featured=True
+                    Campaign.objects.filter(id=feature_id).update(is_featured=True)
+
+            return JsonResponse({"message": "Features updated successfully!"}, status=200)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+@csrf_exempt
+def update_trend(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            features = data.get("features", [])
+
+            # Iterate over the selected features
+            for feature in features:
+                feature_id = feature.get("id")
+
+                # Update the Campaign object based on the feature ID
+                if feature_id:
+                    # Assuming 'Feature' is related to 'Campaign' and 'id' is the primary key for features
+                    # Here you are updating the corresponding campaign with is_featured=True
+                    Campaign.objects.filter(id=feature_id).update(is_trending=True)
+
+            return JsonResponse({"message": "Trending Campaign updated successfully!"}, status=200)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+
+def trending(request):
+    feature = Campaign.objects.all()
+    context = {
+        'feature':feature
+    }
+    return render (request,  'admin/trending.html',context)

@@ -9,17 +9,18 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
-    featured_campaigns = Campaign.objects.all()[:3]
-    
+    featured_campaigns = Campaign.objects.filter(is_featured=True)[:3]
+     
     # Trending Campaigns: Define based on most recent or highest monetary goal
     trending_campaigns = Campaign.objects.filter(
         end_date__gte=datetime.now(),is_launch= True # Campaigns still active
     ).order_by('-monetary')[:3]
 
-    campaigns = Campaign.objects.all() 
+    campaigns = Campaign.objects.all()[:3]
     campaigns_with_percentage = []
+    campaigns_with_percentages = []
     # if Campaign.objects.filter(profile__user =request.user).exists: 
-    for campaign in campaigns:
+    for campaign in featured_campaigns:
         # Calculate total donations for the campaign
        
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
@@ -34,6 +35,22 @@ def index(request):
             'percentage_achieved': percentage_achieved,
             'trending_campaigns':trending_campaigns,
         })
+    for campaign in campaigns:
+        # Calculate total donations for the campaign
+       
+        total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
+
+        # Calculate percentage achieved
+        percentage_achieved = (total_donations / campaign.monetary) * 100 if campaign.monetary > 0 else 0
+
+        # Add campaign data and percentage to the list
+        campaigns_with_percentages.append({
+            'campaign': campaign,
+            'total_donations': total_donations,
+            'percentage_achieved': percentage_achieved,
+            'trending_campaigns':trending_campaigns,
+        })
+    
     
     # Calculate the percentage achieved
     
@@ -45,13 +62,27 @@ def index(request):
             return redirect('index')
         else:
             Newsletter.objects.get_or_create(email=email)
-            messages.error(request, 'email added sucessfully')
+            messages.success(request, 'email added sucessfully')
             return redirect('/')
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
+    campaign = Campaign.objects.all()
+
+ 
+
+    for campaign in campaign :
+        last =  Donation.objects.filter(campaign=campaign).order_by('-created_at').first()
+        
+ 
+    
     context = {
         'featured_campaigns': featured_campaigns,
         'campaigns':campaigns, 
         'trending_campaigns': trending_campaigns,
         'campaigns_with_percentage':campaigns_with_percentage,
+        'campaigns_with_percentages':campaigns_with_percentages,
+        'social':social,
+        'last':last,
     }
     return render (request, 'index.html',context)
 
@@ -296,24 +327,30 @@ def start_campaign(request):
             )
 
             # Return the created campaign's token as JSON response
-            return JsonResponse({'id': campaign.token})
+            return redirect ('profile')
 
         except Exception as e:
+            category = Campaign.CATEGORY_CHOICES
+            event = Campaign.EVENT_CHOICE
             messages.error(request, f"Error creating campaign: {str(e)}")
-            return render(request, 'start_campaign.html', status=400)
+          
+            return redirect ('start_campaign')
 
     # Define category and event choices
+  
     category = Campaign.CATEGORY_CHOICES
     event = Campaign.EVENT_CHOICE
 
     # You need to define the 'countries' variable, either from a model
-  # Example list, replace with actual data
-
+  # Example list, replace with actual dataz
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
+    
     context = {
         'countries': countries,
         'category': category,
         'event': event,
-    }
+        'social':social    }
 
     return render(request, 'start_campaign.html', context)
 
@@ -446,10 +483,13 @@ def profile(request):
         return redirect('profile')  # Redirect to the profile page after saving
 
     # Context to pass to the template
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     context = {
         "campaigns": campaigns,
         "donations": donations,
         "profile": profile,
+        "social": social
     }
     return render(request, 'profile.html', context)
 
@@ -467,9 +507,11 @@ def donate(request, token):
             
 
            
-   
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     context ={
-            'campaign':campaign
+            'campaign':campaign,
+            'social':social
         }
     return render(request, 'donate.html',context)
 from django.http import JsonResponse
@@ -645,12 +687,12 @@ def stripe_payment_link(request, token):
 
 
 
-@login_required(login_url="login")
+
 def find_campaign(request):
     campaigns = Campaign.objects.filter(is_launch=True)
     campaigns_with_percentage = []
-    if Campaign.objects.filter(user =request.user).exists:
-      for campaign in campaigns:
+   
+    for campaign in campaigns:
         # Calculate total donations for the campaign
         total_donations = campaign.donations.aggregate(Sum('amount'))['amount__sum'] or 0
 
@@ -663,8 +705,11 @@ def find_campaign(request):
             'total_donations': total_donations,
             'percentage_achieved': percentage_achieved,
         })
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     context ={
             'campaigns_with_percentage':campaigns_with_percentage,
+            'social':social
         }
     return render (request, 'find_campaign.html',context)
 
@@ -723,30 +768,45 @@ def support(request):
 
 
 
-@login_required(login_url="login")
+
+from django.shortcuts import get_object_or_404, render
+from django.db.models import Sum ,Count
+from decimal import Decimal  # Import Decimal for correct type handling
+
 def details(request, token):
     # Get the specific campaign
     campaign_details = get_object_or_404(Campaign, token=token)
 
+    # Get all donations related to this campaign
     donation = Donation.objects.filter(campaign=campaign_details)
 
     # Calculate total donations for this campaign
-    total_donations = campaign_details.donations.aggregate(Sum('amount'))['amount__sum'] or 0
+    total_donations = donation.aggregate(total=Sum('amount'))['total'] or Decimal(0)
 
-    # Calculate percentage achieved
-    percentage_achieved = (  
-        (total_donations / campaign_details.monetary) * 100
-        if campaign_details.monetary > 0 else 0
-    )
+    # Update the campaign's goal with the total donations (if applicable)
+    campaign_details.goal = total_donations
+    campaign_details.save()
+
+    # Ensure both values are Decimal before performing division
+    if campaign_details.monetary > 0:
+        percentage_achieved = (total_donations / campaign_details.monetary) * Decimal(100)
+    else:
+        percentage_achieved = Decimal(0)
 
     # Pass the campaign details and percentage to the template
+    campaign_with_donations= get_object_or_404(Campaign.objects.annotate(total_donations =Count('donations')),token=token)
+    
+
     context = {
         'campaign_details': campaign_details,
         'total_donations': total_donations,
         'percentage_achieved': percentage_achieved,
-        'donation':donation
+        'donation': donation,
+        'campaign_with_donations':campaign_with_donations
     }
     return render(request, 'details.html', context)
+
+
 
 
 @login_required(login_url="login")
@@ -759,4 +819,12 @@ def preview(request,token):
     return render (request, 'preview.html',context)
 
 def fee_payout(request):
-    return render (request , 'feeds-payout.html')
+    return render (request,'feeds-payout.html')
+
+
+
+
+
+
+
+

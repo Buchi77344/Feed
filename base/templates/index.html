@@ -35,7 +35,7 @@
                     crowfunding platform focus on raising funds for urgent
                     medical emergencies and critical social causes.
                   </p>
-                  <a href="#" class="donate-cta">DONATE NOW</a>
+                  <a href="{% url "login" %}" class="donate-cta">DONATE NOW</a>
                 </div>
 
                 <div class="feature-campaign-item-container">
@@ -53,14 +53,13 @@
                       />
                     </div>
                     <div class="feature-desc-container">
-                      <a href="#">
-                        <h5 class="page-sub-h5-head">
-                         {{ featured_campaigns.campaign.campaign_name}}
-                        </h5>
-                      </a>
+                      <a href="{% url 'details' featured_campaigns.campaign.token %}">
+                      <h5 class="page-sub-h5-head">
+                       {{ featured_campaigns.campaign.campaign_name}}
+                      </h5>
+                    </a>
                       <p class="mac-text-sm my-2">
-                        Helping children to admissions to school getting Helping
-                        children to admissions to school ang getting
+                        {{ featured_campaigns.campaign.story|truncatechars:80}}
                       </p>
 
                       <div class="d-sm-flex justify-content-between">
@@ -352,7 +351,7 @@
                       </svg>
                     </span>
 
-                    <a href="#" class="discover cta-btn">Become a donor</a>
+                    <a href="{% url "find_campaign" %}" class="discover cta-btn">Become a donor</a>
                   </div>
 
                   <div class="discover-item flex-column gp-20">
@@ -371,7 +370,7 @@
                       </svg>
                     </span>
 
-                    <a href="#" class="discover cta-btn">Make a difference</a>
+                    <a href="{% url "find_campaign" %}" class="discover cta-btn">Make a difference</a>
                   </div>
 
                   <span class="long-arrow">
@@ -396,7 +395,7 @@
                     <h4 class="page-sub-head">Trending Campaigns</h4>
                   </div>
                   {% if campaigns_with_percentage %}
-                    {% for campaigns in campaigns_with_percentage  %}
+                    {% for campaigns in campaigns_with_percentages  %}
                     
                   <div class="feature-item d-sm-flex gap-3">
                     <div class="feature-img-container">
@@ -407,14 +406,13 @@
                       />
                     </div>
                     <div class="feature-desc-container">
-                      <a href="#">
-                        <h5 class="page-sub-h5-head">
-                          {{campaigns.campaign.campaign_name}}
-                        </h5>
-                      </a>
+                      <a href="{% url 'details' campaigns.campaign.token %}">
+                      <h5 class="page-sub-h5-head">
+                        {{campaigns.campaign.campaign_name}}
+                      </h5>
+                    </a>
                       <p class="mac-text-sm my-2">
-                        Helping children to admissions to school getting Helping
-                        children to admissions to school ang getting
+                        {{campaigns.campaign.story|truncatechars:70}}
                       </p>
 
                       <div class="d-sm-flex justify-content-between">
@@ -446,9 +444,11 @@
                         </div>
                         <div class="donation-container ps-2">
                           <p class="mac-text-sm">Last donation</p>
+                          
                           <span
                             class="donation-time mac-text-sm highlight-span-clr mt-1"
-                            >{{campaigns.campaign.start_date|timesince}} AGO</span
+                            >{{last|timesince}} AGO</span
+                           
                           >
                         </div>
                       </div>

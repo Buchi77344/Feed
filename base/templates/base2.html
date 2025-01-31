@@ -83,93 +83,76 @@
 
             {% endblock content %}
     
-            <footer class="pos-rel mt-5">
+            <footer class="util-pg-2 pos-rel mt-5">
                     <div class="footer-bottom-wrapper">
                         <div class="w-100">
-                            <ul class="footer-links-container grid">
-                                <li><a href="#" class="footer-links">FAQ</a></li>
-                                <li><a href="#" class="footer-links">Contact us</a></li>
-                                <li>
-                                    <a href="#" class="footer-links">Online fundraising Ideas</a>
-                                </li>
-                                <li><a href="#" class="footer-links">Bitcoin Fundraising</a></li>
-                                <li><a href="#" class="footer-links">Learn More</a></li>
-                                <li><a href="#" class="footer-links">Countries</a></li>
-                                <li><a href="#" class="footer-links">Read Blog</a></li>
-                                <li><a href="#" class="footer-links">How to fundraise</a></li>
-                                <li><a href="#" class="footer-links">Facebook Fundraising</a></li>
-                                <li><a href="#" class="footer-links">Facebook Fundraising</a></li>
-                                <li><a href="#" class="footer-links">About</a></li>
-                                <li><a href="#" class="footer-links">Help center</a></li>
-                            </ul>
-    
                             <div class="flex-wrap gp-20 footer-bottom-link-container mt-5">
                                 <a href="#" class="footer-bottom-link">Privacy Policy</a>
                                 <a href="#" class="footer-bottom-link">Terms & Conditions</a>
                                 <div class="social-media-container flex-wrap">
-                                    <a href="#" class="flex-center">
+                                    <a target = "_blank" href="{{social.facebook}}" class="flex-center">
                                         <img
-                                            class="social-icon"
-                                            src="{% static '../static/img/svg/socials/facebook.svg' %}"
-                                            alt="Facebook icon"
+                                          class="social-icon"
+                                          src="{% static '../static/img/svg/socials/facebook.svg' %}"
+                                          alt="Facebook icon"
                                         />
-                                    </a>
-    
-                                    <a href="#" class="flex-center">
+                                      </a>
+                      
+                                      <a target = "_blank" href="{{social.twitter}}" class="flex-center">
                                         <img
-                                            class="social-icon"
-                                            src="{% static '../static/img/svg/socials/twitter.svg' %}"
-                                            alt="Twitter icon"
+                                          class="social-icon"
+                                          src="{% static '../static/img/svg/socials/twitter.svg' %}"
+                                          alt="Twitter icon"
                                         />
-                                    </a>
-    
-                                    <a href="#" class="flex-center">
+                                      </a>
+                      
+                                      <a target = "_blank" href="{{social.instagram}}" class="flex-center">
                                         <img
-                                            class="social-icon"
-                                            src="{% static '../static/img/svg/socials/instagram.svg' %}"
-                                            alt="Instagram icon"
+                                          class="social-icon"
+                                          src="{% static '../static/img/svg/socials/instagram.svg' %}"
+                                          alt="Instagram icon"
                                         />
-                                    </a>
-    
-                                    <a href="#" class="flex-center">
+                                      </a>
+                      
+                                      <a target = "_blank" href="{{social.linkdin}}" class="flex-center">
                                         <img
-                                            class="social-icon"
-                                            src="{% static '../static/img/svg/socials/linkedIn.svg' %}"
-                                            alt="LinkedIn icon"
+                                          class="social-icon"
+                                          src="{% static '../static/img/svg/socials/linkedIn.svg' %}"
+                                          alt="LinkedIn icon"
                                         />
-                                    </a>
-    
-                                    <a href="#" class="flex-center">
+                                      </a>
+                      
+                                      <a target = "_blank" href="{{social.tiktok}}" class="flex-center">
                                         <img
-                                            class="social-icon"
-                                            src="{% static '../static/img/svg/socials/tiktok.svg' %}"
-                                            alt="Tiktok icon"
+                                          class="social-icon"
+                                          src="{% static '../static/img/svg/socials/tiktok.svg' %}"
+                                          alt="Tiktok icon"
                                         />
-                                    </a>
-    
-                                    <a href="#" class="flex-center">
+                                      </a>
+                      
+                                      <a target = "_blank" href="{{social.whatsapp}}" class="flex-center">
                                         <img
-                                            class="social-icon"
-                                            src="{% static '../static/img/svg/socials/whatsapp.svg' %}"
-                                            alt="Whatsapp icon"
+                                          class="social-icon"
+                                          src="{% static '../static/img/svg/socials/whatsapp.svg' %}"
+                                          alt="Whatsapp icon"
                                         />
-                                    </a>
-    
-                                    <a href="#" class="flex-center">
+                                      </a>
+                      
+                                      <a target = "_blank" href="{{social.telegram}}" class="flex-center">
                                         <img
-                                            class="social-icon"
-                                            src="{% static '../static/img/svg/socials/telegram.svg' %}"
-                                            alt="Telegram icon"
+                                          class="social-icon"
+                                          src="{% static '../static/img/svg/socials/telegram.svg' %}"
+                                          alt="Telegram icon"
                                         />
-                                    </a>
-    
-                                    <a href="#" class="flex-center">
+                                      </a>
+                      
+                                      <a target = "_blank" href="{{social.youtube}}" class="flex-center">
                                         <img
-                                            class="social-icon"
-                                            src="{% static '../static/img/svg/socials/youtube.svg' %}"
-                                            alt="Youtube icon"
+                                          class="social-icon"
+                                          src="{% static '../static/img/svg/socials/youtube.svg' %}"
+                                          alt="Youtube icon"
                                         />
-                                    </a>
+                                      </a>
                                 </div>
                                 <div class="copyright-container pos-rel flex gp-15">
                                     <p class="copyright-text">2024 Feed Needs</p>
@@ -267,5 +250,30 @@
 			});
 		</script>
 		{% endif %}
+
+        <script>
+            if(document.querySelector("#phone")){
+                const phoneInput = document.querySelector("#phone");
+                const iti = window.intlTelInput(phoneInput, {
+                initialCountry: "auto", // Automatically detect user's country
+                geoIpLookup: function(callback) {
+                    fetch('https://ipinfo.io/json?token=YOUR_TOKEN') // Replace YOUR_TOKEN with your IPInfo API token
+                    .then(resp => resp.json())
+                    .then(data => callback(data.country))
+                    .catch(() => callback("us"));
+                },
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/utils.js" // for number formatting/validation
+                });
+        
+                // Example: Get the selected country code
+                phoneInput.addEventListener("blur", () => {
+                const selectedCountryData = iti.getSelectedCountryData();
+                console.log("Selected country: ", selectedCountryData.name);
+                console.log("Dial code: ", selectedCountryData.dialCode);
+                });
+            }
+    
+           
+        </script>
     </body>
 </html>
