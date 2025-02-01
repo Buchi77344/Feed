@@ -60,13 +60,13 @@
 									<div class="donors-details-wrapper px-2">
 										<div class="donors-details-container row">
 											<div class="donor-item pt-3 flex-column justify-center offline col-md-6">
-												<h5>$ 0</h5>
+												<h5>$ {{campaign_with_donations.total_donations}}</h5>
 												<p class="donor-item-text">Offline donations</p>
 											</div>
 
 											<div class="donor-item pt-3 flex-column justify-center unique col-md-6">
-												<h5>50</h5>
-												<p class="donor-item-text">Offline donations</p>
+												<h5>{{campaign_with_donations.total_donations}}</h5>
+												<p class="donor-item-text">unique donations</p>
 											</div>
 										</div>
 									</div>
@@ -123,8 +123,6 @@
 							</div>
 							<div class="mt-3">
 								<p class="">{{campaign_details.story}}</p>
-								
-								</div>
 							</div>
 						</div>
 						<div class="col-lg-6">
@@ -213,7 +211,7 @@
 					</div>
 				</section>
 
-				<section class="make-donation-section">
+				<section class="make-donation-section mt-3">
 					<div class="text-center make-donation-container">
 						<div class="small-circle"></div>
 						<h5 class="support-text mt-2">SUPPORT THIS CAMPAIGN</h5>

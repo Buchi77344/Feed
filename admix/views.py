@@ -97,14 +97,12 @@ def signup(request):
             return redirect(' admix:signup')
 
         # Check if phone number already exists
-        if CustomUser.objects.filter(phone_number=phone_number).exists():
-            messages.error(request, 'Phone number already exists.')
-            return redirect('signup')
+        
 
         # Check if email already exists
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists.')
-            return redirect('signup')
+            return redirect('admix:signup')
 
         # Create the user
         user = CustomUser.objects.create_user(
@@ -118,7 +116,7 @@ def signup(request):
 
         # Success message and redirect to login
         messages.success(request, 'Account created successfully. You can now log in.')
-        return redirect('login')
+        return redirect('admix:login')
 
     # Render the signup form
     return render(request, 'admin/signup.html')

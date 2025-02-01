@@ -1,31 +1,28 @@
-let dropDownHead = document.querySelectorAll(".select-head");
-let selectDropDown = document.querySelectorAll(".select-dropdown");
-console.log(document.querySelector(".profile-util-item-head"));
-console.log(document.querySelector(".nav-util-cta-container .search-icon-btn"));
-
 
 if (document.querySelector(".select-head")) {
+  let dropDownHead = document.querySelectorAll(".select-head");
+  let selectDropDown = document.querySelectorAll(".select-dropdown");
   dropDownHead.forEach((dropHead) => {
     dropHead.addEventListener("click", function () {
       let parent = dropHead.parentElement;
       let selectDropDown = parent.querySelector(".select-dropdown");
       console.log(parent);
       if (selectDropDown.classList.contains("scaleup")) {
-				removePopup(selectDropDown);
-			} else {
-				addPopup(selectDropDown);
-			}
+        removePopup(selectDropDown);
+      } else {
+        addPopup(selectDropDown);
+      }
       allRemovePopup(
         `[data-select = "${parent.dataset.select}"]`,
         selectDropDown
       );
-      const selectAllInput = parent.querySelector(".select-all-input")
-      selectAllInput.addEventListener("change", function(){
-        const allInputs = parent.querySelectorAll(".terms-label input")
-        allInputs.forEach(input => {
-          input.checked = this.checked
-        })
-      })
+      const selectAllInput = parent.querySelector(".select-all-input");
+      selectAllInput.addEventListener("change", function () {
+        const allInputs = parent.querySelectorAll(".terms-label input");
+        allInputs.forEach((input) => {
+          input.checked = this.checked;
+        });
+      });
     });
   });
 }
@@ -109,33 +106,34 @@ if (document.querySelector("main.profile")) {
       ".profile-campaigns-container.down-profile-cta"
     );
 
-
-	
     if (profileCampaignsContainer[0].classList.contains("reveal")) {
-		// console.log(profileCampaignsContainer[0])
-		let viewMoreBtn = profileCampaignsContainer[0].parentElement.querySelector(
-			".my-campaigns.view-more-btn"
-		  );
-      	viewMoreBtn.classList.remove("hidden");
-
+      // console.log(profileCampaignsContainer[0])
+      let viewMoreBtn =
+        profileCampaignsContainer[0].parentElement.querySelector(
+          ".my-campaigns.view-more-btn"
+        );
+      viewMoreBtn.classList.remove("hidden");
     } else {
-		let viewMoreBtn = profileCampaignsContainer[0].parentElement.querySelector(
-			".my-campaigns.view-more-btn"
-		);
+      let viewMoreBtn =
+        profileCampaignsContainer[0].parentElement.querySelector(
+          ".my-campaigns.view-more-btn"
+        );
       viewMoreBtn.classList.add("hidden");
     }
 
-	console.log(mobileProfileCampaignsContainer)
+    console.log(mobileProfileCampaignsContainer);
 
     if (mobileProfileCampaignsContainer[0].classList.contains("slide-down")) {
-		let viewMoreBtn = mobileProfileCampaignsContainer[0].parentElement.querySelector(
-			".my-campaigns.view-more-btn"
-		  );
+      let viewMoreBtn =
+        mobileProfileCampaignsContainer[0].parentElement.querySelector(
+          ".my-campaigns.view-more-btn"
+        );
       viewMoreBtn.classList.remove("hidden");
     } else {
-		let viewMoreBtn = mobileProfileCampaignsContainer[0].parentElement.querySelector(
-			".my-campaigns.view-more-btn"
-		  );
+      let viewMoreBtn =
+        mobileProfileCampaignsContainer[0].parentElement.querySelector(
+          ".my-campaigns.view-more-btn"
+        );
       viewMoreBtn.classList.add("hidden");
     }
   }
@@ -284,20 +282,20 @@ if (document.querySelector(".recurring-btn")) {
 
   donationPrice.forEach((cta) => {
     cta.addEventListener("click", function () {
-			donationPrice.forEach((cta) => cta.classList.remove("active"));
-			this.classList.add("active");
-			let num = this.querySelector(".text").textContent;
-			let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "");
-			// console.log(trimNum);
+      donationPrice.forEach((cta) => cta.classList.remove("active"));
+      this.classList.add("active");
+      let num = this.querySelector(".text").textContent;
+      let trimNum = num.slice(0, num.length - 3).replace(/\s/g, "");
+      // console.log(trimNum);
 
-			donationAmountInput.value = trimNum;
-			console.log(num);
-			donationPriceText.forEach((text) => (text.textContent = num));
-			calcDonateSliderVal();
-			const paymentLink = document.getElementById("payment-link");
-			paymentLink.style.pointerEvents = "auto"; // Enable the link
-			paymentLink.style.opacity = "1"; // Make the link visually active
-		});
+      donationAmountInput.value = trimNum;
+      console.log(num);
+      donationPriceText.forEach((text) => (text.textContent = num));
+      calcDonateSliderVal();
+      const paymentLink = document.getElementById("payment-link");
+      paymentLink.style.pointerEvents = "auto"; // Enable the link
+      paymentLink.style.opacity = "1"; // Make the link visually active
+    });
   });
 
   const sliderContainer = document.querySelector(".slider-container");
@@ -430,70 +428,104 @@ if (document.querySelector(".percent-progress")) {
 }
 
 //Client Side Validation
+// const submitBtn = document.querySelector(".cta-btn.submit-btn");
+// const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
 
-// let inputVd = document.querySelectorAll(".input-vd");
+// const inputs = acctForm.querySelectorAll(".acct-input");
 
-// inputVd.forEach((vd) => {
-//   vd.addEventListener("blur", validateField);
-//   vd.addEventListener("input", clearErrorMessage);
+// Attach event listeners to each input for clearing error messages on focus
+// inputs.forEach((input) => {
+// 	input.addEventListener("focus", clearErrorMessage);
+// 	input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
 // });
 
-function validateField(event) {
-  let input = event.target;
-  console.log(input.checkValidity());
-  if (input.value.trim() == "" || !input.checkValidity()) {
-    showErrorMessage(input, getErrorMessage(input));
-  } else {
-    clearErrorMessage(input);
-  }
+// Validate all fields before form submission
+function validateField(form) {
+  const inputs = form.querySelectorAll(".acct-input");
+  let isValid = true;
+
+  inputs.forEach((input) => {
+    if (input.value.trim() === "" || !input.checkValidity()) {
+      showErrorMessage(input, getErrorMessage(input));
+      isValid = false;
+    }
+  });
+
+  return isValid;
 }
 
+// Get specific error messages based on input validation state
 function getErrorMessage(input) {
   if (input.validity.valueMissing) {
-    return "This Field is required";
+    return "This field is required.";
   }
-
   if (input.validity.typeMismatch) {
-    return "Please enter a valid Value.";
+    if (input.type === "email") {
+      return "Invalid email address.";
+    }
+    return "Please enter a valid value.";
   }
-
   if (input.validity.tooShort) {
     return `Please lengthen this text to ${input.minLength} characters or more.`;
   }
-
-  return `Invalid input.`;
+  return "Invalid input.";
 }
 
+// Show error message below the input
 function showErrorMessage(input, msg) {
   let errorMessage = input.nextElementSibling;
-  console.log(errorMessage);
-  if (!errorMessage || !errorMessage.classList.contains(".error-message")) {
-    errorMessage.textContent = msg;
-    errorMessage.style.display = "block";
+
+  // Create error message element if it doesn't exist
+  if (!errorMessage || !errorMessage.classList.contains("error-message")) {
+    errorMessage = document.createElement("div");
+    errorMessage.className = "error-message";
+    input.parentNode.insertBefore(errorMessage, input.nextSibling);
   }
+
+  errorMessage.textContent = msg;
+  errorMessage.style.display = "block";
 }
 
-function clearErrorMessage(input) {
-  let errorMessage = input.nextElementSibling;
-  console.log(input);
+// Clear error message when user focuses on the input
+function clearErrorMessage(event) {
+  const errorMessage = event.target.nextElementSibling;
+
   if (errorMessage && errorMessage.classList.contains("error-message")) {
-    console.log(errorMessage);
     errorMessage.style.display = "none";
   }
 }
 
+// Validate a single input field dynamically
+function validateSingleField(input) {
+  if (input.value.trim() === "" || !input.checkValidity()) {
+    showErrorMessage(input, getErrorMessage(input));
+  } else {
+    clearErrorMessage({ target: input });
+  }
+}
+
+// Handle form submission
+// if (submitBtn && acctForm) {
+//   submitBtn.addEventListener("click", function (e) {
+//     e.preventDefault(); // Prevent default form submission
+//     if (validateField(acctForm)) {
+//       acctForm.submit(); // Submit form only if all inputs are valid
+//     }
+//   });
+// }
+
 // File Upload Script
-const fileInfo = document.querySelector(".fileInfo");
+const utilFileInfo = document.querySelector(".file-info");
 const fileInput = document.querySelector("#image_upload");
 const fileName = document.querySelector(".fileName");
 const fileSize = document.querySelector(".fileSize");
 const imgPreview = document.querySelector(".filePreview");
 
-if (document.querySelector(".fileInfo")) {
+if (document.querySelector(".file-info")) {
   fileInput.addEventListener("change", function (event) {
     const file = event.target.files[0];
     if (file) {
-      fileInfo.style.display = "flex";
+		utilFileInfo.style.display = "flex";
 
       fileName.textContent = `File Name : ${file.name}`;
 
@@ -560,26 +592,77 @@ if (document.querySelector(".my-campaigns.view-more-btn")) {
 
 console.log(document.querySelector(".nav-util-cta-container .search-icon-btn"));
 
-if (document.querySelector(".nav-util-cta-container .search-icon-btn")) {
+if (document.querySelector(".nav-util-cta-container .search-icon-btn") && document.querySelector(".mobile-search-btn")) {
   const items = ["Laptop", "Monitor", "Keyboard", "Mouse", "Headphones"];
 
-	const searchIconBtn = document.querySelector(
-		".nav-util-cta-container .search-icon-btn"
-	);
-	const searchBar = document.querySelector(".search-bar-util-search");
-  const searchFuncDiv = document.querySelector(".search-func-div")
-  const searchUtilInput = document.querySelector(".search-bar-util-search input");
+  const searchIconBtn = document.querySelector(
+    ".nav-util-cta-container .search-icon-btn"
+  );
+  const searchBar = document.querySelector(".search-bar-util-search");
+  const searchFuncDiv = document.querySelector(".search-func-div");
+  const searchUtilInput = document.querySelector(
+    ".search-bar-util-search input"
+  );
+  const mobileSearchBtn = document.querySelector(".mobile-search-btn");
 
-	searchIconBtn.addEventListener("click", () => {
-		console.log("Search functioality");
-    searchFuncDiv.classList.toggle("reveal")
+  const keywordItems = document.querySelectorAll(".keyword-item");
+  const pageEl = document.querySelector(".page");
+
+  searchIconBtn.addEventListener("click", () => {
+    console.log("Search functioality");
+    searchFuncDiv.classList.toggle("reveal");
     setTimeout(() => {
       searchBar.classList.toggle("active");
-    }, 500)
-	});
+    }, 500);
+  });
 
-  searchUtilInput.addEventListener("input", function(){
-    
-  })
+  
+  mobileSearchBtn.addEventListener("click", highlightText);
 
+  searchUtilInput.addEventListener("keypress", function (e) {
+    if (e.key == "Enter") {
+      highlightText();
+    }
+  });
+
+  function highlightText() {
+    const searchUtilInputValue = searchUtilInput.value.trim();
+    removeHighlights(pageEl);
+    if (searchUtilInputValue === "") return;
+    const elements = pageEl.querySelectorAll(
+      "p, h1, h2, h3, h4, h5, h6, a, button"
+    );
+
+    elements.forEach((element) => {
+      highlightElement(element, searchUtilInputValue);
+    });
+  }
+
+  function highlightElement(element, searchInput) {
+    const regex = new RegExp(`(${searchInput})`, "gi");
+    if (element.childNodes.length > 0) {
+      element.childNodes.forEach((child) => {
+        if (child.nodeType === 3 && regex.test(child.nodeValue)) {
+          const span = document.createElement("span");
+          span.innerHTML = child.nodeValue.replace(
+            regex,
+            `<span class = "highlight">$1</span>`
+          );
+          child.replaceWith(...span.childNodes);
+        }
+      });
+    }
+  }
+
+  function removeHighlights(container) {
+    container.querySelectorAll(".highlight").forEach((span) => {
+      span.replaceWith(document.createTextNode(span.textContent));
+    });
+  }
+
+  keywordItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      searchUtilInput.value = this.textContent.trim();
+    });
+  });
 }

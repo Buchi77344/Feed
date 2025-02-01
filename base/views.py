@@ -66,13 +66,23 @@ def index(request):
             return redirect('/')
     if SocialMedia.objects.exists():
         social = get_object_or_404(SocialMedia)
+    campaign = Campaign.objects.all()
+
+ 
+
+    for campaign in campaign :
+        last =  Donation.objects.filter(campaign=campaign).order_by('-created_at').first()
+        
+ 
+    
     context = {
         'featured_campaigns': featured_campaigns,
         'campaigns':campaigns, 
         'trending_campaigns': trending_campaigns,
         'campaigns_with_percentage':campaigns_with_percentage,
         'campaigns_with_percentages':campaigns_with_percentages,
-        'social':social
+        'social':social,
+        'last':last,
     }
     return render (request, 'index.html',context)
 
@@ -320,20 +330,27 @@ def start_campaign(request):
             return redirect ('profile')
 
         except Exception as e:
+            category = Campaign.CATEGORY_CHOICES
+            event = Campaign.EVENT_CHOICE
             messages.error(request, f"Error creating campaign: {str(e)}")
-            return render(request, 'start_campaign.html', status=400)
+          
+            return redirect ('start_campaign')
 
     # Define category and event choices
+  
     category = Campaign.CATEGORY_CHOICES
     event = Campaign.EVENT_CHOICE
 
     # You need to define the 'countries' variable, either from a model
-  # Example list, replace with actual data
+  # Example list, replace with actual dataz
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     
     context = {
         'countries': countries,
         'category': category,
         'event': event,
+        'social':social
     }
 
     return render(request, 'start_campaign.html', context)
@@ -467,10 +484,13 @@ def profile(request):
         return redirect('profile')  # Redirect to the profile page after saving
 
     # Context to pass to the template
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     context = {
         "campaigns": campaigns,
         "donations": donations,
         "profile": profile,
+        "social": social
     }
     return render(request, 'profile.html', context)
 
@@ -488,9 +508,11 @@ def donate(request, token):
             
 
            
-   
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     context ={
-            'campaign':campaign
+            'campaign':campaign,
+            'social':social
         }
     return render(request, 'donate.html',context)
 from django.http import JsonResponse
@@ -684,8 +706,11 @@ def find_campaign(request):
             'total_donations': total_donations,
             'percentage_achieved': percentage_achieved,
         })
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
     context ={
             'campaigns_with_percentage':campaigns_with_percentage,
+            'social':social
         }
     return render (request, 'find_campaign.html',context)
 
@@ -746,7 +771,7 @@ def support(request):
 
 
 from django.shortcuts import get_object_or_404, render
-from django.db.models import Sum
+from django.db.models import Sum ,Count
 from decimal import Decimal  # Import Decimal for correct type handling
 
 def details(request, token):
@@ -770,11 +795,15 @@ def details(request, token):
         percentage_achieved = Decimal(0)
 
     # Pass the campaign details and percentage to the template
+    campaign_with_donations= get_object_or_404(Campaign.objects.annotate(total_donations =Count('donations')),token=token)
+    
+
     context = {
         'campaign_details': campaign_details,
         'total_donations': total_donations,
         'percentage_achieved': percentage_achieved,
-        'donation': donation
+        'donation': donation,
+        'campaign_with_donations':campaign_with_donations
     }
     return render(request, 'details.html', context)
 
