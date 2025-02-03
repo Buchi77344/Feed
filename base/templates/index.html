@@ -67,7 +67,7 @@
                       </h5>
                     </a>
                       <p class="mac-text-sm my-2">
-                        {{ featured_campaigns.campaign.story|truncatechars:80}}
+                        {{ featured_campaigns.campaign.story|truncatechars:80|safe}}
                       </p>
 
                       <div class="d-sm-flex justify-content-between">
@@ -98,7 +98,7 @@
                           </div>
                         </div>
                         <div class="donation-container ps-2">
-                          <p class="mac-text-sm">Last donation</p>
+                          <p class="mac-text-sm">Created</p>
                           <span
                             class="donation-time mac-text-sm highlight-span-clr mt-1"
                             >{{featured_campaigns.campaign.start_date|timesince}} AGO</span
@@ -408,7 +408,7 @@
                   <div class="head-div">
                     <h4 class="page-sub-head">Trending Campaigns</h4>
                   </div>
-                  {% if campaigns_with_percentage %}
+                  {% if campaigns %}
                     {% for campaigns in campaigns_with_percentages  %}
                     
                   <div class="feature-item d-sm-flex gap-3">
@@ -434,7 +434,7 @@
                       </h5>
                       </a>
                       <p class="mac-text-sm my-2">
-                        {{campaigns.campaign.story|truncatechars:70}}
+                        {{campaigns.campaign.story|safe|truncatechars:70}}
                       </p>
 
                       <div class="d-sm-flex justify-content-between">
@@ -465,7 +465,7 @@
                           </div>
                         </div>
                         <div class="donation-container ps-2">
-                          <p class="mac-text-sm">Last donation</p>
+                          <p class="mac-text-sm">Created</p>
                           
                           <span
                             class="donation-time mac-text-sm highlight-span-clr mt-1"

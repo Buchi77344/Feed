@@ -436,8 +436,8 @@ console.log(inputs)
 
 // Attach event listeners to each input for clearing error messages on focus
 inputs.forEach((input) => {
-  input.addEventListener("focus", clearErrorMessage);
-  input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
+  // input.addEventListener("focus", clearErrorMessage);
+  // input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
 });
 
 // Validate all fields before form submission
@@ -554,13 +554,13 @@ function validateSingleField(input) {
 
 // Handle form submission
 if (submitBtn && acctForm) {
-  submitBtn.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevent default form submission
-    if (validateField(acctForm)) {
-      console.log(validateField(acctForm))
-      acctForm.submit(); // Submit form only if all inputs are valid
-    }
-  });
+  // submitBtn.addEventListener("click", function (e) {
+  //   e.preventDefault(); // Prevent default form submission
+  //   if (validateField(acctForm)) {
+  //     console.log(validateField(acctForm))
+  //     acctForm.submit(); // Submit form only if all inputs are valid
+  //   }
+  // });
 }
 // File Upload Script
 const utilFileInfo = document.querySelector(".file-info");

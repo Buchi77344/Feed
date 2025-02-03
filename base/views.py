@@ -14,7 +14,7 @@ def index(request):
      
     
     trending_campaigns = Campaign.objects.filter(
-        end_date__gte=datetime.now(),is_launch= True # Campaigns still active
+        end_date__gte=datetime.now(),is_launch= True,is_trending=True # Campaigns still active
     ).order_by('-monetary')[:3]
 
     campaigns = Campaign.objects.all()[:3]
@@ -137,13 +137,13 @@ def login (request):
 
         if user is not None:
             auth.login(request,user)
-            messages.success(request, 'login sucessfully')
-            return redirect('/')
+            messages.success(request, f'welcome {user.first_name} {user.last_name}')
+            return redirect('profile')
 
         else:
             messages.error(request, 'invalid Credentials')
             return redirect('login')
-    else:
+    else:   
 
        return render (request, 'login.html')
     
@@ -274,31 +274,66 @@ from django_countries import countries
 def start_campaign(request):
     if request.method == 'POST':
         try:
-            # Extract data directly from request.POST and request.FILES
-            campaign_name = request.POST.get('campaign_name')
-            monetary = request.POST.get('monetary')
-            category = request.POST.get('category')
-            story = request.POST.get('story')
-            event = request.POST.get('event') 
+            # Extract data from request.POST and request.FILES
+            campaign_name = request.POST.get('campaign_name', '').strip()
+            monetary = request.POST.get('monetary', '').strip()
+            category = request.POST.get('category', '').strip()
+            story = request.POST.get('story', '').strip()
+            event = request.POST.get('event', '').strip()
             images = request.FILES.get('images')
-            video_url = request.POST.get('video_url')
-            social_link = request.POST.get('social_link')
-            address = request.POST.get('address')
-            address1 = request.POST.get('address1')
-            city = request.POST.get('city')
-            state = request.POST.get('state')
-            country = request.POST.get('country')
-            start_date = request.POST.get('start_date')
-            end_date = request.POST.get('end_date')
-            
-            # Check if 'is_emergency' checkbox is checked (True) or not (False)
+            video_url = request.POST.get('video_url', '').strip()
+            social_link = request.POST.get('social_link', '').strip()
+            address = request.POST.get('address', '').strip()
+            address1 = request.POST.get('address1', '').strip()
+            city = request.POST.get('city', '').strip()
+            state = request.POST.get('state', '').strip()
+            country = request.POST.get('country', '').strip()
+            start_date = request.POST.get('start_date', '').strip()
+            end_date = request.POST.get('end_date', '').strip()
             is_emergency = 'is_emergency' in request.POST
 
-            # Validate required fields here, for example:
-            # if not all([campaign_name, monetary, category, story, event, start_date, end_date]):
-            #     raise ValueError("Please fill in all required fields.")
+            # Validation
+            errors = {}
 
-            # Create and save the campaign object
+            if not campaign_name:
+                errors['campaign_name'] = "Campaign name is required."
+            
+            if not monetary or not monetary.isdigit() or int(monetary) <= 0:
+                errors['monetary'] = "Valid monetary target is required."
+            
+            if not category:
+                errors['category'] = "Please select a category."
+            
+            if not story:
+                errors['story'] = "Campaign story is required."
+            
+            if not event:
+                errors['event'] = "Please select an event type."
+
+            if not start_date:
+                errors['start_date'] = "Start date is required."
+            
+            if not end_date:
+                errors['end_date'] = "End date is required."
+            
+            if video_url and not video_url.startswith("http"):
+                errors['video_url'] = "Enter a valid video URL."
+
+            if errors:
+                messages.error(request, "Please correct the errors below.")
+                category = Campaign.CATEGORY_CHOICES
+                event = Campaign.EVENT_CHOICE
+                social = get_object_or_404(SocialMedia) if SocialMedia.objects.exists() else None
+                
+                return render(request, 'start_campaign.html', {
+                    'errors': errors,
+                    'countries': countries,
+                    'category': category,
+                    'event': event,
+                    'social': social
+                })
+
+            # Save the campaign
             campaign = Campaign.objects.create(
                 campaign_name=campaign_name,
                 monetary=monetary,
@@ -311,43 +346,34 @@ def start_campaign(request):
                 address=address,
                 address1=address1,
                 city=city,
-                state=state, 
+                state=state,
                 country=country,
                 start_date=start_date,
-                end_date=end_date, 
+                end_date=end_date,
                 user=request.user,
                 is_status=True,
-                is_emergency=is_emergency  # Directly set the boolean value for is_emergency
+                is_emergency=is_emergency
             )
 
-            # Return the created campaign's token as JSON response
-            return redirect ('profile')
+            messages.success(request, "Campaign created successfully!")
+            return redirect('profile')
 
         except Exception as e:
-            category = Campaign.CATEGORY_CHOICES
-            event = Campaign.EVENT_CHOICE
             messages.error(request, f"Error creating campaign: {str(e)}")
-          
-            return redirect ('start_campaign')
+            return redirect('start_campaign')
 
-    # Define category and event choices
-  
+    # Context variables
     category = Campaign.CATEGORY_CHOICES
     event = Campaign.EVENT_CHOICE
+    social = get_object_or_404(SocialMedia) if SocialMedia.objects.exists() else None
 
-    # You need to define the 'countries' variable, either from a model
-  # Example list, replace with actual dataz
-    if SocialMedia.objects.exists():
-        social = get_object_or_404(SocialMedia)
-    
-    context = {
+    return render(request, 'start_campaign.html', {
         'countries': countries,
         'category': category,
         'event': event,
-        'social':social if social else None
-    }
+        'social': social
+    })
 
-    return render(request, 'start_campaign.html', context)
 
 
 from django.http import JsonResponse
