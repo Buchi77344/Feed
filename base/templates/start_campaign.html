@@ -27,12 +27,12 @@
 					<p class="mac-text-mid highlight-span-clr fw-600">Campaign details</p>
 					<div class="acct-form mt-3">
 						<div class="pos-rel">
-							<input type="text" name="campaign_name" id=""  class="acct-input input-vd" placeholder="Campaign name *">
+							<input type="text" required name="campaign_name" id=""  class="acct-input input-vd" placeholder="Campaign name *">
 							<span class="error-message" id="campaignName"></span>
 						</div>
 
 						<div class="pos-rel">
-							<input type="number" name="monetary" id="" class="acct-input input-vd" placeholder="Monetary target *">
+							<input type="number" required name="monetary" id="" class="acct-input input-vd" placeholder="Monetary target *">
 							<span class="error-message" id="monetaryTarget"></span>
 						</div>
 
@@ -80,16 +80,16 @@
 							{% endfor %}
 						</select>
 						<div class="pos-rel">
-							<textarea class="acct-text-area acct-input" placeholder="Thank you message to donors *" name="thanks_message" id=""></textarea>
+							<textarea class="acct-text-area acct-input val-input" placeholder="Thank you message to donors *" name="thanks_message" id=""></textarea>
 							<span class = "error-message" id = "thanksMsg"></span>
 						</div>
 						<div class="pos-rel">
-							<input type="date" name="start_date" id="" class="acct-input input-vd" placeholder="Start date   |  End date">
+							<input type="date" name="start_date" id="" class="acct-input val-input input-vd" placeholder="Start date   |  End date">
 							<span class="error-message" id="startDate"></span>
 						</div>
 
 						<div class="pos-rel">
-							<input type="date" name="end_date" id="" class="acct-input" placeholder="Start date   |  End date">
+							<input type="date" name="end_date" id="" class="acct-input val-input" placeholder="Start date   |  End date">
 							<span class = "error-message" id = "endDate"></span>
 						</div>
 						<div class="require-div">
@@ -113,13 +113,12 @@
 					</p>
 					<div class="acct-form mt-4">
 						
-						<div class="control-large">
+						<div class="control-large ">
 							<div class="acct-input upload-div pos-rel">
 								<label for = "image_upload" class="mac-text-mid">Upload image *</label>
-								<div class = "pos-rel">
-									<input type="file" name="images" id="image_upload" class="upload-input acct-input">
-									<span class="error-message" id = "fileInputUtil"></span>
-								</div>
+								
+								<input type="file" name="images" id="image_upload" class="upload-input acct-input val-input">
+								<span class="error-message" id = "fileInputUtil"></span>
 							</div>
 							<div class="file-info flex-column gp-10 align-start">
 								<p class="fileName"></p>
@@ -127,8 +126,8 @@
 								<img src="" alt="Image preview" class="filePreview" style="display: none;">
 							</div>
 						</div>
-						<input type="text" name="video_url" id="" class="acct-input" placeholder="Paste video link *">
-						<input type="text" name="social_link" id="" class="acct-input" placeholder="Paste social media link *">
+						<input type="text" name="video_url" id="" class="acct-input" placeholder="Paste video link">
+						<input type="text" name="social_link" id="" class="acct-input" placeholder="Paste social media link">
 					</div>
 					<div class="require-div mt-5 w-50 ">
 						<p class="flex justify-content-center gp-10 mac-text-mid fw-600">
@@ -146,21 +145,21 @@
 						</p>
 						<div class="acct-form mt-3">
 							<div class="pos-rel">
-								<input type="text" name="address" id="" class="acct-input input-vd" placeholder="Add address 1 *">
+								<input type="text" name="address" id="" class="acct-input input-vd val-input" placeholder="Add address 1 *">
 							</div>
 
 							<div class="pos-rel">
-								<input type="text" name="address1" id="" class="acct-input input-vd" placeholder="Add address 2 *">
+								<input type="text" name="address1" id="" class="acct-input input-vd val-input" placeholder="Add address 2 *">
 								<span class="error-message" id="address2Msg"></span>
 							</div>
 
 							<div class="pos-rel">
-								<input type="text" name="city" id="" class="acct-input input-vd" placeholder="City/town *">
+								<input type="text" name="city" id="" class="acct-input input-vd val-input" placeholder="City/town *">
 								<span class="error-message" id="cityErrorMsg"></span>
 							</div>
 
 							<div class="pos-rel">
-								<input type="text" name="state" id="" class="acct-input input-vd" placeholder="State *">
+								<input type="text" name="state" id="" class="acct-input input-vd val-input" placeholder="State *">
 								<span class="error-message" id="stateErrorMsg"></span>
 							</div>
 							<select class="acct-select" id="" name = "country">
@@ -206,19 +205,21 @@
 
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
-	document.querySelectorAll('textarea#message').forEach((textarea) => {
-		ClassicEditor
-			.create(textarea, {
-			  // Custom configuration
-			  toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'],
-			  language: 'en', // Optional: Set the language
-			  height: '200px', // Optional: Set a fixed height
-			  // Add other custom config options here as needed
-			})
-			.catch(error => {
-			  console.error(error);
-			});
-	  });
+	document.querySelectorAll("textarea#message").forEach((textarea) => {
+  ClassicEditor.create(textarea, {
+    toolbar: ["bold", "italic", "link", "bulletedList", "numberedList", "blockQuote", "undo", "redo"],
+    language: "en",
+    height: "200px",
+  })
+  .then(editor => {
+    window.ckEditorInstance = editor; // Store the instance globally
+  })
+  .catch(error => {
+    console.error(error);
+  });
+});
+
+
 </script>
 <script>
 	// Get the 'SAVE & PREVIEW' link and form element

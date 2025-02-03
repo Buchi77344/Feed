@@ -434,7 +434,7 @@ const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
 const inputs = acctForm.querySelectorAll("input.acct-input, textarea.acct-input");
 console.log(inputs)
 
-// Attach event listeners to each input for clearing error messages on focus
+// Attach event listeners to each input for clearing error messagegits on focus
 inputs.forEach((input) => {
   // input.addEventListener("focus", clearErrorMessage);
   // input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
@@ -445,50 +445,174 @@ function validateField(form) {
   const inputs = form.querySelectorAll(".acct-input");
   let isValid = true;
 
+if(document.querySelector("[data-attr = 'acct-form-el']")){
+  const submitBtn = document.querySelector(".cta-btn.submit-btn");
+  const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
+  
+  const inputs = acctForm.querySelectorAll("input.val-input, textarea.val-input");
+  console.log(inputs)
+  
+  // Attach event listeners to each input for clearing error messages on focus
   inputs.forEach((input) => {
-    if (
-      input.type === "file" && !input.files.length // Check if it's a file input and no file is selected
-    ) {
-      showErrorMessage(input, "Please upload a file.");
-      isValid = false;
-    } else if (input.value == "" || !input.checkValidity() || !isValidName(input)) {
-      showErrorMessage(input, getErrorMessage(input));
-      isValid = false;
-    }
+    input.addEventListener("focus", clearErrorMessage);
+    input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
   });
-
-  return isValid;
-}
-
-
-// Get specific error messages based on input validation state
-
-function getErrorMessage(input) {
-  const namePattern = /^[A-Za-z]+$/; // Allows only alphabets
-  if (input.validity.valueMissing) {
-    return "This field is required.";
-  }
-  if (input.validity.typeMismatch) {
-    if (input.type === "email") {
-      return "Invalid email address.";
+  
+  // Validate all fields before form submission
+  function validateField(form) {
+    const inputs = form.querySelectorAll("input.val-input, textarea.val-input");
+    let isValid = true;
+    let firstInvalidInput = null;
+  
+    inputs.forEach((input) => {
+      if (input.type === "file" && !input.files.length) {
+        showErrorMessage(input, "Please upload a file.");
+        isValid = false;
+        if (!firstInvalidInput) firstInvalidInput = input;
+      } else if (input.value == "" || !isValidName(input)) {
+        showErrorMessage(input, getErrorMessage(input));
+        isValid = false;
+        if (!firstInvalidInput) firstInvalidInput = input;
+      }
+    });
+  
+    // Validate CKEditor instance
+    if (window.ckEditorInstance) {
+      const editorData = window.ckEditorInstance.getData().trim(); // Get CKEditor content
+  
+      if (editorData === "") {
+        showErrorMessage(
+          document.querySelector("#message"),
+          "This field is required."
+        );
+        isValid = false;
+        if (!firstInvalidInput)
+          firstInvalidInput = document.querySelector("#message");
+      }
     }
-    return "Please enter a valid value.";
-  }
-  if (input.validity.tooShort) {
-    return `Please lengthen this text to ${input.minLength} characters or more.`;
-  }
-  if (input.classList.contains("name-input")) {
-    if (!namePattern.test(input.value)) {
-      return "Names should not contain numbers, special characters, or emails.";
+  
+    // Scroll to first invalid input
+    if (firstInvalidInput) {
+      firstInvalidInput.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-    if (/\S+@\S+\.\S+/.test(input.value)) {
-      return "Names should not contain an email address.";
+  
+    return isValid;
+  }
+  
+  
+  
+  
+  // Get specific error messages based on input validation state
+  
+  function getErrorMessage(input) {
+    const namePattern = /^[A-Za-z]+$/; // Allows only alphabets
+    if (input.validity.valueMissing) {
+      return "This field is required.";
+    }
+    if (input.validity.typeMismatch) {
+      if (input.type === "email") {
+        return "Invalid email address.";
+      }
+      return "Please enter a valid value.";
+    }
+    if (input.validity.tooShort) {
+      return `Please lengthen this text to ${input.minLength} characters or more.`;
+    }
+    if (input.classList.contains("name-input")) {
+      if (!namePattern.test(input.value)) {
+        return "Names should not contain numbers, special characters, or emails.";
+      }
+      if (/\S+@\S+\.\S+/.test(input.value)) {
+        return "Names should not contain an email address.";
+      }
+    }
+  
+    // Handling file input validation
+    if (input.type === "file" && !input.files.length) {
+      return "Please upload a file.";
+    }
+  
+    if (input.id === "mobile" && /\D/.test(input.value)) {
+      return "Please enter a valid phone number.";
+    }
+    return "Invalid input.";
+  }
+  
+  
+  // Show error message below the input
+  function showErrorMessage(input, msg) {
+    let errorMessage = input.nextElementSibling;
+  
+    // Create error message element if it doesn't exist
+    if (
+      !errorMessage ||
+      !errorMessage.classList.contains("error-message")
+    ) {
+      errorMessage = document.createElement("div");
+      errorMessage.className = "error-message";
+      input.parentNode.insertBefore(errorMessage, input.nextSibling);
+    }
+  
+    errorMessage.textContent = msg;
+    errorMessage.style.display = "block";
+  }
+  
+  // Clear error message when user focuses on the input
+  function clearErrorMessage(event) {
+    const errorMessage = event.target.nextElementSibling;
+  
+    if (errorMessage && errorMessage.classList.contains("error-message")) {
+      errorMessage.style.display = "none";
     }
   }
-
-  // Handling file input validation
-  if (input.type === "file" && !input.files.length) {
-    return "Please upload a file.";
+  
+  // Validate if name fields contain special characters or email
+  function isValidName(input) {
+    if (input.classList.contains("name-input")) {
+      const namePattern = /^[A-Za-z]+$/; // Only alphabets allowed
+      if (!namePattern.test(input.value) || /\S+@\S+\.\S+/.test(input.value)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  // Validate if name fields contain special characters or email
+  function isValidName(input) {
+    if (input.classList.contains("name-input")) {
+      const namePattern = /^[A-Za-z]+$/; // Only alphabets allowed
+      if (
+        !namePattern.test(input.value) ||
+        /\S+@\S+\.\S+/.test(input.value)
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  // Validate a single input field dynamically
+  function validateSingleField(input) {
+    if (
+      input.value == "" ||
+      !input.checkValidity() ||
+      !isValidName(input)
+    ) {
+      showErrorMessage(input, getErrorMessage(input));
+    } else {
+      clearErrorMessage({ target: input });
+    }
+  }
+  
+  // Handle form submission
+  if (submitBtn && acctForm) {
+    submitBtn.addEventListener("click", function (e) {
+      e.preventDefault(); // Prevent default form submission
+      if (validateField(acctForm)) {
+        console.log(validateField(acctForm))
+        acctForm.submit(); // Submit form only if all inputs are valid
+      }
+    });
   }
 
   if (input.id === "mobile" && /\D/.test(input.value)) {
@@ -610,30 +734,35 @@ if (document.querySelector(".drop-down-circle.mc-cta")) {
   });
 }
 
-if (document.querySelector(".my-campaigns.view-more-btn")) {
-  const viewMoreBtn = document.querySelectorAll(".my-campaigns.view-more-btn");
-  const popup = document.getElementById("popup");
-  const closePopup = document.getElementById("close-popup");
+if (
+	document.querySelector(".view-more-btn") ||
+	document.querySelector("#view-more-btn")
+) {
+	const viewMoreBtn = document.querySelectorAll(
+		".view-more-btn, #view-more-btn"
+	);
+	const popup = document.getElementById("popup");
+	const closePopup = document.getElementById("close-popup");
 
-  // Show popup on "View More" button click
-  viewMoreBtn.forEach((btn) =>
-    btn.addEventListener("click", function () {
-      console.log(viewMoreBtn);
-      popup.classList.add("show");
-    })
-  );
+	// Show popup on "View More" button click
+	viewMoreBtn.forEach((btn) =>
+		btn.addEventListener("click", function () {
+			console.log(viewMoreBtn);
+			popup.classList.add("show");
+		})
+	);
 
-  // Hide popup on close button click
-  closePopup.addEventListener("click", function () {
-    popup.classList.remove("show");
-  });
+	// Hide popup on close button click
+	closePopup.addEventListener("click", function () {
+		popup.classList.remove("show");
+	});
 
-  // Hide popup when clicking outside the content
-  popup.addEventListener("click", function (event) {
-    if (event.target === popup) {
-      popup.classList.remove("show");
-    }
-  });
+	// Hide popup when clicking outside the content
+	popup.addEventListener("click", function (event) {
+		if (event.target === popup) {
+			popup.classList.remove("show");
+		}
+	});
 }
 
 // Search functionaliy
@@ -713,4 +842,51 @@ if (document.querySelector(".nav-util-cta-container .search-icon-btn") && docume
       searchUtilInput.value = this.textContent.trim();
     });
   });
+}
+
+// Details sort functionality
+if (document.getElementById("sortButton")) {
+	let container = document.querySelector(".user-donation-container");
+	let originalOrder = Array.from(container.children); // Store original order
+
+	document.getElementById("sortButton").addEventListener("click", () => {
+		let donations = Array.from(
+			document.querySelectorAll(".user-donation-item")
+		);
+
+		donations.sort((a, b) => {
+			let amountA = extractAmount(a);
+			let amountB = extractAmount(b);
+			return amountB - amountA; // Sort descending
+		});
+
+		// Append sorted elements back
+		donations.forEach((item) => container.appendChild(item));
+
+		setActiveButton("sortButton");
+	});
+
+	document.getElementById("allButton").addEventListener("click", () => {
+		// Restore original order
+		originalOrder.forEach((item) => container.appendChild(item));
+
+		setActiveButton("allButton");
+	});
+
+	function extractAmount(element) {
+		let text = element.querySelector(".price > span").textContent;
+		let match = text.match(/[\d,]+/);
+		return match ? parseInt(match[0].replace(/,/g, ""), 10) : 0;
+	}
+
+	function setActiveButton(activeId) {
+		document.querySelectorAll(".category-btn.donation").forEach((btn) => {
+			btn.classList.remove("active"); // Remove 'active' class
+		});
+		document.getElementById(activeId).classList.add("active"); // Add to clicked button
+	}
+}
+
+
+
 }
