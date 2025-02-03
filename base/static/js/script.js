@@ -428,16 +428,17 @@ if (document.querySelector(".percent-progress")) {
 }
 
 //Client Side Validation
-// const submitBtn = document.querySelector(".cta-btn.submit-btn");
-// const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
+const submitBtn = document.querySelector(".cta-btn.submit-btn");
+const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
 
-// const inputs = acctForm.querySelectorAll(".acct-input");
+const inputs = acctForm.querySelectorAll("input.acct-input, textarea.acct-input");
+console.log(inputs)
 
 // Attach event listeners to each input for clearing error messages on focus
-// inputs.forEach((input) => {
-// 	input.addEventListener("focus", clearErrorMessage);
-// 	input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
-// });
+inputs.forEach((input) => {
+  input.addEventListener("focus", clearErrorMessage);
+  input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
+});
 
 // Validate all fields before form submission
 function validateField(form) {
@@ -445,7 +446,12 @@ function validateField(form) {
   let isValid = true;
 
   inputs.forEach((input) => {
-    if (input.value.trim() === "" || !input.checkValidity()) {
+    if (
+      input.type === "file" && !input.files.length // Check if it's a file input and no file is selected
+    ) {
+      showErrorMessage(input, "Please upload a file.");
+      isValid = false;
+    } else if (input.value == "" || !input.checkValidity() || !isValidName(input)) {
       showErrorMessage(input, getErrorMessage(input));
       isValid = false;
     }
@@ -454,8 +460,11 @@ function validateField(form) {
   return isValid;
 }
 
+
 // Get specific error messages based on input validation state
+
 function getErrorMessage(input) {
+  const namePattern = /^[A-Za-z]+$/; // Allows only alphabets
   if (input.validity.valueMissing) {
     return "This field is required.";
   }
@@ -468,15 +477,36 @@ function getErrorMessage(input) {
   if (input.validity.tooShort) {
     return `Please lengthen this text to ${input.minLength} characters or more.`;
   }
+  if (input.classList.contains("name-input")) {
+    if (!namePattern.test(input.value)) {
+      return "Names should not contain numbers, special characters, or emails.";
+    }
+    if (/\S+@\S+\.\S+/.test(input.value)) {
+      return "Names should not contain an email address.";
+    }
+  }
+
+  // Handling file input validation
+  if (input.type === "file" && !input.files.length) {
+    return "Please upload a file.";
+  }
+
+  if (input.id === "mobile" && /\D/.test(input.value)) {
+    return "Please enter a valid phone number.";
+  }
   return "Invalid input.";
 }
+
 
 // Show error message below the input
 function showErrorMessage(input, msg) {
   let errorMessage = input.nextElementSibling;
 
   // Create error message element if it doesn't exist
-  if (!errorMessage || !errorMessage.classList.contains("error-message")) {
+  if (
+    !errorMessage ||
+    !errorMessage.classList.contains("error-message")
+  ) {
     errorMessage = document.createElement("div");
     errorMessage.className = "error-message";
     input.parentNode.insertBefore(errorMessage, input.nextSibling);
@@ -495,9 +525,27 @@ function clearErrorMessage(event) {
   }
 }
 
+// Validate if name fields contain special characters or email
+function isValidName(input) {
+  if (input.classList.contains("name-input")) {
+    const namePattern = /^[A-Za-z]+$/; // Only alphabets allowed
+    if (
+      !namePattern.test(input.value) ||
+      /\S+@\S+\.\S+/.test(input.value)
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
 // Validate a single input field dynamically
 function validateSingleField(input) {
-  if (input.value.trim() === "" || !input.checkValidity()) {
+  if (
+    input.value == "" ||
+    !input.checkValidity() ||
+    !isValidName(input)
+  ) {
     showErrorMessage(input, getErrorMessage(input));
   } else {
     clearErrorMessage({ target: input });
@@ -505,15 +553,15 @@ function validateSingleField(input) {
 }
 
 // Handle form submission
-// if (submitBtn && acctForm) {
-//   submitBtn.addEventListener("click", function (e) {
-//     e.preventDefault(); // Prevent default form submission
-//     if (validateField(acctForm)) {
-//       acctForm.submit(); // Submit form only if all inputs are valid
-//     }
-//   });
-// }
-
+if (submitBtn && acctForm) {
+  submitBtn.addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent default form submission
+    if (validateField(acctForm)) {
+      console.log(validateField(acctForm))
+      acctForm.submit(); // Submit form only if all inputs are valid
+    }
+  });
+}
 // File Upload Script
 const utilFileInfo = document.querySelector(".file-info");
 const fileInput = document.querySelector("#image_upload");

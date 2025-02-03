@@ -49,7 +49,7 @@
                 <li><a href="{% url 'about' %}" class="mobile-nav-link">About</a></li>
                 <li><a href="{% url 'faq' %}" class="mobile-nav-link">FAQ</a></li>
                 <li><a href="{% url 'fee_payout' %}" class="mobile-nav-link">Fees & Payment</a></li>
-                <li><a href="#" class="mobile-nav-link">Support</a></li>
+             
 			</ul>
         </div>
 
@@ -60,12 +60,14 @@
                             <img class="logo-img" src="{% static '../static/img/Feed-logo.png' %}" alt="logo img" />
                         </a>
                     <div class="nav-util-cta-container d-flex align-items-center gap-4 ms-sm-0 ms-auto me-sm-0 me-2">
+                      <a href="{% url 'find_campaign' %}">
                         <button
                             class="search-icon-btn"
                             >
                             <img class="search-icon"  src="{% static '../static/img/svg/search-icon.svg' %}"
                             alt="search icon">
                         </button>
+                      </a>
                         <a href="{% url 'start_campaign' %}" class="start-camp-cta">START CAMPAIGN</a>
                     </div>
                     <div class="hamburger">
@@ -171,8 +173,6 @@
 			const cancelIcon = document.querySelector(".mobile-nav .cancel-icon");
 			const overlay = document.querySelector(".overlay");
 			const mobileNav = document.querySelector(".mobile-nav");
-			const submitBtn = document.querySelector(".cta-btn.submit-btn");
-			const acctForm = document.querySelector(".acct-form");
 			if (hamburger) {
 				hamburger.addEventListener("click", function () {
 					overlay.classList.add("visible");
@@ -190,11 +190,7 @@
 					}),
 				];
 
-			if (submitBtn && acctForm) {
-				submitBtn.addEventListener("click", function () {
-					acctForm.submit();
-				});
-			}
+			
 		</script>
 
         <!-- Toastify script -->

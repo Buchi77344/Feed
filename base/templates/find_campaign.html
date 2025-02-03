@@ -164,11 +164,19 @@
 						{% for campaigns in campaigns_with_percentage  %}
 						<div class="find-campaign-item">
 							<a  href="{% url 'details' campaigns.campaign.token %}" class="find_campaign-item-link">
+								{% if campaigns.campaign.images %}
 								<img
 								class="feature-img mt-2"
 								src="{{campaigns.campaign.images.url}}"
 								alt="feature image"
 								/>
+								{% else %}
+								<img
+								class="feature-img mt-2"
+								src="../static/img/hero-banner-(1).jpeg"
+								alt="feature image"
+								/>
+								{% endif %}
 							</a>
 							<div class="feature-desc-container">
 								<a href="{% url 'details' campaigns.campaign.token %}">

@@ -76,7 +76,11 @@
 
 						<div class="col-lg-6 details graphics-div">
 							<div class="img-container">
+								{% if campaign_details.images %}
 								<img class="details-img " src="{{campaign_details.images.url}}" alt="Details picture">
+								{% else %}
+								<img class="details-img " src="/static/img/hero-banner-(1).jpeg" alt="Details picture">
+								{% endif %}
 							</div>
 							<div class="row mt-3">
 								<div class="col-sm-6 text-center details-location-container">
