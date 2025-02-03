@@ -18,228 +18,220 @@
 	/>
 	<title>Find campaign</title>
 </head>
+	<div id="popup" class="popup hidden">
+		<div class="popup-content">
+			<span id="close-popup">&times;</span>
+			{%  for donation in donation %}
+			<div class="user-donation-item flex-between gp-15">
+				<div class="price">
+					<span class="fw-700 highlight-span-clr">$ {{donation.amount}}</span>
+				</div>
 
-		<main class="light-bg-clr pd-down">
-			<span class="page-highlight-span">DETAILS</span>
-			<div class="details-wrapper">
-				<section>
-					<div class="row details-hero-section">
-						<div class="col-lg-6 content-div">
-							<div class="details-title-container">
-								<h1 class="details-title-text">{{campaign_details.campaign_name}}</h2>
-							</div>
-							<span class="details smaller-text fw-400 mt-2">Started {{campaign_details.start_date|timesince}} ago</span>
-							<span class="details smaller-text fw-700">Open end-date</span>
-							<div class="details-donation-cta-section my-3 px-md-3">
-								<div class="util-box-container">
-									<h3 class="text-center donation-price-head-text page-sub-head fw-700">$ {{campaign_details.goal}} </h3>
-									<div data-percent="{{ percentage_achieved|floatformat:0 }}" class="percent-bar my-3 percent-progress">
-										<span class="percent-val percent-progress-bar flex-center">{{ percentage_achieved|floatformat:0 }}%</span>
-									</div>
-									<p class="text-center donation-price-text">of $ {{campaign_details.monetary}} goal</p>
-									<div class="btn-container flex-center gp-10 my-3">
-										<a href="{% url 'donate' campaign_details.token  %}"><button class="donate-btn flex gp-5">
-											<span class="text">Donate</span>
-											<span class="icon flex-center">
-												<img src="{% static '../static/img/svg/love-icon.svg' %}" alt="love icon by svgrepo">
-											</span>
-										</button>
-									</a>
+				<div class="details-container">
+					<div class="flex-wrap justify-between gp-7">
+						<span class="fw-700">{{donation.user.first_name}}</span>
+						<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
+						<span>{{donation.created_at|date}}</span>
+					</div>
 
-										<button id = "share-button" class="share-btn flex gp-5">
-											<span class="text">Share</span>
-											<span class="icon">
-												<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<g id="Communication / Share_iOS_Export">
-													<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-													</g>
-												</svg>
-											</span>
-										</button>
-									</div>
-									<div class="donors-details-wrapper px-2">
-										<div class="donors-details-container row">
-											<div class="donor-item pt-3 flex-column justify-center offline col-md-6">
-												<h5>$ {{campaign_with_donations.total_donations}}</h5>
-												<p class="donor-item-text">Offline donations</p>
-											</div>
+					<div>
+						<p>{{donation.campaign.campaign_name}}</p>
+					</div>
+				</div>
+			</div>
+			{%endfor%}
+		</div>
+	</div>
 
-											<div class="donor-item pt-3 flex-column justify-center unique col-md-6">
-												<h5>{{campaign_with_donations.total_donations}}</h5>
-												<p class="donor-item-text">unique donations</p>
-											</div>
+	<main class="light-bg-clr pd-down">
+		<span class="page-highlight-span">DETAILS</span>
+		<div class="details-wrapper">
+			<section>
+				<div class="row details-hero-section">
+					<div class="col-lg-6 content-div">
+						<div class="details-title-container">
+							<h1 class="details-title-text">{{campaign_details.campaign_name}}</h2>
+						</div>
+						<span class="details smaller-text fw-400 mt-2">Started {{campaign_details.start_date|timesince}} ago</span>
+						<span class="details smaller-text fw-700">Open end-date</span>
+						<div class="details-donation-cta-section my-3 px-md-3">
+							<div class="util-box-container">
+								<h3 class="text-center donation-price-head-text page-sub-head fw-700">$ {{campaign_details.goal}} </h3>
+								<div data-percent="{{ percentage_achieved|floatformat:0 }}" class="percent-bar my-3 percent-progress">
+									<span class="percent-val percent-progress-bar flex-center">{{ percentage_achieved|floatformat:0 }}%</span>
+								</div>
+								<p class="text-center donation-price-text">of $ {{campaign_details.monetary}} goal</p>
+								<div class="btn-container flex-center gp-10 my-3">
+									<a href="{% url 'donate' campaign_details.token  %}"><button class="donate-btn flex gp-5">
+										<span class="text">Donate</span>
+										<span class="icon flex-center">
+											<img src="{% static '../static/img/svg/love-icon.svg' %}" alt="love icon by svgrepo">
+										</span>
+									</button>
+								</a>
+
+									<button id = "share-button" class="share-btn flex gp-5">
+										<span class="text">Share</span>
+										<span class="icon">
+											<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g id="Communication / Share_iOS_Export">
+												<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+												</g>
+											</svg>
+										</span>
+									</button>
+								</div>
+								<div class="donors-details-wrapper px-2">
+									<div class="donors-details-container row">
+										<div class="donor-item pt-3 flex-column justify-center offline col-md-6">
+											<h5>$ {{campaign_with_donations.total_donations}}</h5>
+											<p class="donor-item-text">Offline donations</p>
+										</div>
+
+										<div class="donor-item pt-3 flex-column justify-center unique col-md-6">
+											<h5>{{campaign_with_donations.total_donations}}</h5>
+											<p class="donor-item-text">unique donations</p>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-lg-6 details graphics-div">
-							<div class="img-container">
-								<img class="details-img " src="{{campaign_details.images.url}}" alt="Details picture">
-							</div>
-							<div class="row mt-3">
-								<div class="col-sm-6 text-center details-location-container">
-									<span class="icon flex-center mx-auto">
-										<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										</svg>
-									</span>
-									<h5 class="page-micro-head my-2">{{campaign_details.city}}</h5>
-									<p class="smaller-text">{{campaign_details.country.name}}</p>
-								</div>	
-								<div class="col-sm-6 text-center details-manage-container">
-									<span class="icon flex-center mx-auto">
-										<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-										<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="hsl(0,0%,80%)"/>
-										</svg>
-									</span>
-									<h5 class="page-micro-head my-2">Self-managed</h5>
-									<p class="smaller-text">Funds go to campaign creator</p>
 								</div>
 							</div>
 						</div>
 					</div>
-				</section>
 
-				<section>
-					<div class="row about-section-wrapper">
-						<div class="col-lg-6 about-content-container">
-							<h5 class="about-campaign page-micro-head highlight-span-clr">STORY</h5>
-							<div class="details-title-container">
-								<h3 class="about-campaign details-title-text">About This Campaign</h3>
-							</div>
-							<div class="flex gp-10">
-								<img class="about-campaign profile-img" src="{% static '../static/img/profile-img.png' %}" alt="">
-								<div class="about-campaign-profile-content flex-column align-start py-2 ">
-									<p class="profile-name highlight-span-clr fw-600 mb-0">{{campaign_details.user.first_name|capfirst}} {{campaign_details.user.last_name|capfirst}}</p>
-									<div class="flex gp-5">
-										<span class="about-campaign title-span">Organiser</span>
-										<span class="smallest-text">1 Feed campaign</span>
-									</div>
-								</div>
-							</div>
-							<div class="mt-3">
-								<p class="">{{campaign_details.story}}</p>
-							</div>
+					<div class="col-lg-6 details graphics-div">
+						<div class="img-container">
+							{% if campaign_details.images %}
+							<img class="details-img " src="{{campaign_details.images.url}}" alt="Details picture">
+							{% else %}
+							<img class="details-img " src="/static/img/hero-banner-(1).jpeg" alt="Details picture">
+							{% endif %}
 						</div>
-						<div class="col-lg-6">
-							<div class="about-campaign-donation util-box-container">
-								<div class="about-campaign-donation details-title-container">
-									<h3 class="about-campaign details-title-text text-center">Donations</h3>
-								</div>
-
-								<div class="flex-between mt-2">
-									<span>Showing:</span>
-									<div class="category-btn-container flex gp-15">
-										<button class="category-btn active">ALL</button>
-										<button class="category-btn">TOP</button>
-									</div>
-								</div>
-
-								<div class="user-donation-container mt-3">
-								    {% if donation  %}
-									{%  for donation in donation %}
-									<div class="user-donation-item flex-between gp-15">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">$ {{donation.amount}}</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-wrap justify-between gp-7">
-												<span class="fw-700">{{donation.user.first_name}}</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>{{donation.created_at|date}}</span>
-											</div>
-
-											<div>
-												<p>{{donation.campaign.campaign_name}}</p>
-											</div>
-										</div>
-									</div>
-                                    {%endfor%}
-								   {% else %}
-								
-									<div class="user-donation-item flex-between gp-15">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">R 2 000</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-wrap justify-between gp-7">
-												<span class="fw-700">Anonymous</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>1 Jan '25</span>
-											</div>
-
-											<div>
-												<p>Blessings for healing Marlee</p>
-											</div>
-										</div>
-									</div>
-
-
-						
-
-									<div class="user-donation-item flex-between gp-15">
-										<div class="price">
-											<span class="fw-700 highlight-span-clr">US$500</span>
-										</div>
-
-										<div class="details-container">
-											<div class="flex-wrap justify-between gp-7">
-												<span class="fw-700">Anonymous</span>
-												<img title="Platform fee covered" class="donation-icon" src="{% static 'img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
-												<span>31 Dec '24</span>
-											</div>
-
-											<div>
-												<p>With love and prayers from your Swedish friends. May 2025 bring healing and restoration 🙏❤️</p>
-											</div>
-										</div>
-									</div>
-								  {% endif %}
-								</div>
-
-								<div class="view-more-container text-center mt-3">
-									<span class="view-more-text">View More</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-
-				<section class="make-donation-section mt-3">
-					<div class="text-center make-donation-container">
-						<div class="small-circle"></div>
-						<h5 class="support-text mt-2">SUPPORT THIS CAMPAIGN</h5>
-						<h3 class="page-sub-head mt-2">Make Your Donation</h3>
-						<p class="bold-p mt-2">Kindness can transform the world around us. Amazing things happen when people come together! Make a donation to this cause, share it with people you know, and you may ignite the generosity in others.</p>
-						<div class="flex-column gp-15 align-center mt-3">
-							<button class="donate-btn flex gp-5">
-								<a href="{% url 'donate' campaign_details.token  %}"><span class="text">Donate</span></a>
-								<span class="icon flex-center">
-									<img src="{% static '../static/img/svg/love-icon.svg' %}" alt="love icon by svgrepo">
-								</span>
-							</button>
-
-							<button id = "share-button" class="share-btn flex gp-5">
-								<span class="text">Share</span>
-								<span class="icon">
+						<div class="row mt-3">
+							<div class="col-sm-6 text-center details-location-container">
+								<span class="icon flex-center mx-auto">
 									<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<g id="Communication / Share_iOS_Export">
-										<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										</g>
+									<path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 									</svg>
 								</span>
-							</button>
+								<h5 class="page-micro-head my-2">{{campaign_details.city}}</h5>
+								<p class="smaller-text">{{campaign_details.country.name}}</p>
+							</div>	
+							<div class="col-sm-6 text-center details-manage-container">
+								<span class="icon flex-center mx-auto">
+									<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+									<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="hsl(0,0%,80%)"/>
+									</svg>
+								</span>
+								<h5 class="page-micro-head my-2">Self-managed</h5>
+								<p class="smaller-text">Funds go to campaign creator</p>
+							</div>
 						</div>
 					</div>
-				</section>
-			</div>
-		</main>
+				</div>
+			</section>
+
+			<section>
+				<div class="row about-section-wrapper">
+					<div class="col-lg-6 about-content-container">
+						<h5 class="about-campaign page-micro-head highlight-span-clr">STORY</h5>
+						<div class="details-title-container">
+							<h3 class="about-campaign details-title-text">About This Campaign</h3>
+						</div>
+						<div class="flex gp-10">
+							<img class="about-campaign profile-img" src="{% static '../static/img/profile-img.png' %}" alt="">
+							<div class="about-campaign-profile-content flex-column align-start py-2 ">
+								<p class="profile-name highlight-span-clr fw-600 mb-0">{{campaign_details.user.first_name|capfirst}} {{campaign_details.user.last_name|capfirst}}</p>
+								<div class="flex gp-5">
+									<span class="about-campaign title-span">Organiser</span>
+									<span class="smallest-text">1 Feed campaign</span>
+								</div>
+							</div>
+						</div>
+						<div class="mt-3">
+							<p class="">{{campaign_details.story}}</p>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="about-campaign-donation util-box-container">
+							<div class="about-campaign-donation details-title-container">
+								<h3 class="about-campaign details-title-text text-center">Donations</h3>
+							</div>
+
+							{% if donation  %}	
+							<div class="flex-between mt-2">
+								<span>Showing:</span>
+								<div class="category-btn-container flex gp-15">
+									<button id = "allButton" class="category-btn donation active">ALL</button>
+									<button id = "sortButton" class="category-btn donation ">TOP</button>
+								</div>
+							</div>
+
+							<div class="user-donation-container mt-3">
+								{%  for donation in donation %}
+								<div class="user-donation-item flex-between gp-15">
+									<div class="price">
+										<span class="fw-700 highlight-span-clr">$ {{donation.amount}}</span>
+									</div>
+
+									<div class="details-container">
+										<div class="flex-wrap justify-between gp-7">
+											<span class="fw-700">{{donation.user.first_name}}</span>
+											<img title="Platform fee covered" class="donation-icon" src="{% static '../static/img/heart-with-ribbon.png' %}" alt="Heart with ribbon from svgrepo">
+											<span>{{donation.created_at|date}}</span>
+										</div>
+
+										<div>
+											<p>{{donation.campaign.campaign_name}}</p>
+										</div>
+									</div>
+								</div>
+								{%endfor%}
+							</div>
+
+							<div class="view-more-container text-center mt-3">
+								<button id="view-more-btn" class=""><span class="view-more-text">View More</span></button>
+							</div>
+
+							{% else %}
+							
+							<h4 class="fs-34 fw-600 mt-4">No Donations Yet</h4>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="make-donation-section mt-3">
+				<div class="text-center make-donation-container">
+					<div class="small-circle"></div>
+					<h5 class="support-text mt-2">SUPPORT THIS CAMPAIGN</h5>
+					<h3 class="page-sub-head mt-2">Make Your Donation</h3>
+					<p class="bold-p mt-2">Kindness can transform the world around us. Amazing things happen when people come together! Make a donation to this cause, share it with people you know, and you may ignite the generosity in others.</p>
+					<div class="flex-column gp-15 align-center mt-3">
+						<button class="donate-btn flex gp-5">
+							<a href="{% url 'donate' campaign_details.token  %}"><span class="text">Donate</span></a>
+							<span class="icon flex-center">
+								<img src="{% static '../static/img/svg/love-icon.svg' %}" alt="love icon by svgrepo">
+							</span>
+						</button>
+
+						<button id = "share-button" class="share-btn flex gp-5">
+							<span class="text">Share</span>
+							<span class="icon">
+								<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<g id="Communication / Share_iOS_Export">
+									<path id="Vector" d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486 10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681 4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905 5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21 18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20 18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448 19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									</g>
+								</svg>
+							</span>
+						</button>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
 
 <script>
 document.querySelectorAll("#share-button").forEach(btn => btn.addEventListener("click", async () => {

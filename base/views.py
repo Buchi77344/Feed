@@ -7,11 +7,12 @@ from  base.models  import *
 from django.db.models import Sum
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-# Create your views here.
+
+
 def index(request):
     featured_campaigns = Campaign.objects.filter(is_featured=True)[:3]
      
-    # Trending Campaigns: Define based on most recent or highest monetary goal
+    
     trending_campaigns = Campaign.objects.filter(
         end_date__gte=datetime.now(),is_launch= True # Campaigns still active
     ).order_by('-monetary')[:3]
@@ -66,14 +67,6 @@ def index(request):
             return redirect('/')
     if SocialMedia.objects.exists():
         social = get_object_or_404(SocialMedia)
-    campaign = Campaign.objects.all()
-
- 
-
-    for campaign in campaign :
-        last =  Donation.objects.filter(campaign=campaign).order_by('-created_at').first()
-        
- 
     
     context = {
         'featured_campaigns': featured_campaigns,
@@ -82,9 +75,10 @@ def index(request):
         'campaigns_with_percentage':campaigns_with_percentage,
         'campaigns_with_percentages':campaigns_with_percentages,
         'social':social if  social else None,
-        'last':last.created_at if last else None, 
+         
     }
     return render (request, 'index.html',context)
+
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -715,7 +709,12 @@ def find_campaign(request):
     return render (request, 'find_campaign.html',context)
 
 def about(request):
-    return render (request, 'about.html')
+    if SocialMedia.objects.exists():
+        social = get_object_or_404(SocialMedia)
+        context ={
+            'social':social  if social else None
+        }
+    return render (request, 'about.html',context)
 def faq(request):
     return render (request, 'faq.html')
 from django.http import JsonResponse

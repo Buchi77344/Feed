@@ -27,12 +27,12 @@
 					<p class="mac-text-mid highlight-span-clr fw-600">Campaign details</p>
 					<div class="acct-form mt-3">
 						<div class="pos-rel">
-							<input type="text" required name="campaign_name" id=""  class="acct-input input-vd" placeholder="Campaign name *">
+							<input type="text" required name="campaign_name" id=""  class="acct-input val-input" placeholder="Campaign name *">
 							<span class="error-message" id="campaignName"></span>
 						</div>
 
 						<div class="pos-rel">
-							<input type="text" required name="monetary" id="" class="acct-input input-vd" placeholder="Monetary target *">
+							<input type="number" required name="monetary" id="" class="acct-input val-input" placeholder="Monetary target *">
 							<span class="error-message" id="monetaryTarget"></span>
 						</div>
 
@@ -70,7 +70,7 @@
 					</p>
 					<div class="acct-form mt-5">
 						<div class="pos-rel control-large">
-							<textarea  name="story" id="" required = "true" class="acct-text-area input-vd" placeholder="Tell your story *"></textarea>
+							<textarea data-attr = "story-textarea" id = "message" name="story" id="" class="acct-text-area input-vd" placeholder="Tell your story *"></textarea>
 							<span class="error-message" id="storyErrorMsg"></span>
 						</div>
 						<select class="acct-select" id="" name ="event">
@@ -79,15 +79,18 @@
 							<option value="{{value}}"> {{value}} </option>
 							{% endfor %}
 						</select>
-						<textarea class="acct-text-area" placeholder="Thank you message to donors *" name="thanks_message" id=""></textarea>
 						<div class="pos-rel">
-							<input type="date" name="start_date" id="" class="acct-input input-vd" placeholder="Start date   |  End date">
-							<span class="error-message" id="startDate"></span>
+							<textarea class="acct-text-area acct-input val-input" placeholder="Thank you message to donors *" name="thanks_message" id=""></textarea>
+							<span class = "error-message" id = "thanksMsg"></span>
 						</div>
 						<div class="pos-rel">
-							<input type="date" name="end_date" id="" class="acct-input" placeholder="Start date   |  End date">
-							<span class="error-message" id="endDate"></span>
+							<input type="date" name="start_date" id="" class="acct-input val-input input-vd" placeholder="Start date   |  End date">
+							<span class="error-message" id="startDate"></span>
+						</div>
 
+						<div class="pos-rel">
+							<input type="date" name="end_date" id="" class="acct-input val-input" placeholder="Start date   |  End date">
+							<span class = "error-message" id = "endDate"></span>
 						</div>
 						<div class="require-div">
 							<p class="flex gp-10 mac-text-mid fw-600">
@@ -110,13 +113,12 @@
 					</p>
 					<div class="acct-form mt-4">
 						
-						<div class="control-large">
+						<div class="control-large ">
 							<div class="acct-input upload-div pos-rel">
 								<label for = "image_upload" class="mac-text-mid">Upload image *</label>
-								<div>
-									<input type="file" name="images" id="image_upload" class="upload-input acct-input">
-									<span class="error-message"></span>
-								</div>
+								
+								<input type="file" name="images" id="image_upload" class="upload-input acct-input val-input">
+								<span class="error-message" id = "fileInputUtil"></span>
 							</div>
 							<div class="file-info flex-column gp-10 align-start">
 								<p class="fileName"></p>
@@ -124,8 +126,8 @@
 								<img src="" alt="Image preview" class="filePreview" style="display: none;">
 							</div>
 						</div>
-						<input type="text" name="video_url" id="" class="acct-input" placeholder="Paste video link *">
-						<input type="text" name="social_link" id="" class="acct-input" placeholder="Paste social media link *">
+						<input type="text" name="video_url" id="" class="acct-input" placeholder="Paste video link">
+						<input type="text" name="social_link" id="" class="acct-input" placeholder="Paste social media link">
 					</div>
 					<div class="require-div mt-5 w-50 ">
 						<p class="flex justify-content-center gp-10 mac-text-mid fw-600">
@@ -143,22 +145,21 @@
 						</p>
 						<div class="acct-form mt-3">
 							<div class="pos-rel">
-								<input type="text" name="address" id="" class="acct-input input-vd" placeholder="Add address 1 *">
-								<span class="error-message" id="address1Msg"></span>
+								<input type="text" name="address" id="" class="acct-input input-vd val-input" placeholder="Add address 1 *">
 							</div>
 
 							<div class="pos-rel">
-								<input type="text" name="address1" id="" class="acct-input input-vd" placeholder="Add address 2 *">
+								<input type="text" name="address1" id="" class="acct-input input-vd val-input" placeholder="Add address 2 *">
 								<span class="error-message" id="address2Msg"></span>
 							</div>
 
 							<div class="pos-rel">
-								<input type="text" name="city" id="" class="acct-input input-vd" placeholder="City/town *">
+								<input type="text" name="city" id="" class="acct-input input-vd val-input" placeholder="City/town *">
 								<span class="error-message" id="cityErrorMsg"></span>
 							</div>
 
 							<div class="pos-rel">
-								<input type="text" name="state" id="" class="acct-input input-vd" placeholder="State *">
+								<input type="text" name="state" id="" class="acct-input input-vd val-input" placeholder="State *">
 								<span class="error-message" id="stateErrorMsg"></span>
 							</div>
 							<select class="acct-select" id="" name = "country">
@@ -191,7 +192,7 @@
 				</div>
 
 				<div class="launch start-campaign-btn-container">
-                      <button class="secondary-cta-btn cta-btn submit-btn " type="button">launch</button>
+                      <button class="cta-btn submit-btn secondary-cta-btn flex-center" type="button" >launch</button>
 				</div>
 
 			</form>
@@ -201,6 +202,25 @@
 	</main>
 
 </main>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script>
+	document.querySelectorAll("textarea#message").forEach((textarea) => {
+  ClassicEditor.create(textarea, {
+    toolbar: ["bold", "italic", "link", "bulletedList", "numberedList", "blockQuote", "undo", "redo"],
+    language: "en",
+    height: "200px",
+  })
+  .then(editor => {
+    window.ckEditorInstance = editor; // Store the instance globally
+  })
+  .catch(error => {
+    console.error(error);
+  });
+});
+
+
+</script>
 			
 			
 {% endblock content %}

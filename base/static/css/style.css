@@ -2315,23 +2315,27 @@ ul.list {
 }
 
 .error-message {
-	color: rgb(128, 3, 3);
-	display: none;
-	font-weight: 500;
-	/* position: absolute; */
-	padding-left: 5px;
-	padding-top: 10px;
-	align-self: flex-start;
-	text-align: left;
+    color: rgb(128, 3, 3);
+    display: none;
+    font-weight: 500;
+    /* position: absolute; */
+    width: fit-content;
+    border-radius: 5px;
+    padding: 7px 12px;
+    margin-top: 10px;
+    align-self: flex-start;
+    text-align: left;
+    background-color: #dda2a2;
+	margin-bottom : 4px;
 }
 
-.fileInfo {
+.file-info {
 	display: none;
 	margin-top: 5px;
 	/* position: absolute; */
 }
 
-.fileInfo p {
+.file-info p {
 	margin-bottom: 0;
 	font-size: 1.2rem;
 }
