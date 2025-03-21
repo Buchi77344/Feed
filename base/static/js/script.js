@@ -428,23 +428,6 @@ if (document.querySelector(".percent-progress")) {
 }
 
 //Client Side Validation
-const submitBtn = document.querySelector(".cta-btn.submit-btn");
-const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
-
-const inputs = acctForm.querySelectorAll("input.acct-input, textarea.acct-input");
-console.log(inputs)
-
-// Attach event listeners to each input for clearing error messagegits on focus
-inputs.forEach((input) => {
-  // input.addEventListener("focus", clearErrorMessage);
-  // input.addEventListener("input", () => validateSingleField(input)); // Validate on user input
-});
-
-// Validate all fields before form submission
-function validateField(form) {
-  const inputs = form.querySelectorAll(".acct-input");
-  let isValid = true;
-
 if(document.querySelector("[data-attr = 'acct-form-el']")){
   const submitBtn = document.querySelector(".cta-btn.submit-btn");
   const acctForm = document.querySelector("[data-attr = 'acct-form-el']");
@@ -479,31 +462,33 @@ if(document.querySelector("[data-attr = 'acct-form-el']")){
     // Validate CKEditor instance
     if (window.ckEditorInstance) {
       const editorData = window.ckEditorInstance.getData().trim(); // Get CKEditor content
-  
+    
       if (editorData === "") {
         showErrorMessage(
           document.querySelector("#message"),
           "This field is required."
         );
         isValid = false;
-        if (!firstInvalidInput)
-          firstInvalidInput = document.querySelector("#message");
+        if (!firstInvalidInput) firstInvalidInput = document.querySelector("#message");
+      } else if (editorData.length < 80) {
+        showErrorMessage(
+          document.querySelector("#message"),
+          "The story must be at least 80 characters long."
+        );
+        isValid = false;
+        if (!firstInvalidInput) firstInvalidInput = document.querySelector("#message");
       }
     }
-  
+    
     // Scroll to first invalid input
     if (firstInvalidInput) {
       firstInvalidInput.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-  
+    
     return isValid;
-  }
-  
-  
-  
-  
+  }    
+
   // Get specific error messages based on input validation state
-  
   function getErrorMessage(input) {
     const namePattern = /^[A-Za-z]+$/; // Allows only alphabets
     if (input.validity.valueMissing) {
@@ -538,7 +523,6 @@ if(document.querySelector("[data-attr = 'acct-form-el']")){
     return "Invalid input.";
   }
   
-  
   // Show error message below the input
   function showErrorMessage(input, msg) {
     let errorMessage = input.nextElementSibling;
@@ -564,17 +548,6 @@ if(document.querySelector("[data-attr = 'acct-form-el']")){
     if (errorMessage && errorMessage.classList.contains("error-message")) {
       errorMessage.style.display = "none";
     }
-  }
-  
-  // Validate if name fields contain special characters or email
-  function isValidName(input) {
-    if (input.classList.contains("name-input")) {
-      const namePattern = /^[A-Za-z]+$/; // Only alphabets allowed
-      if (!namePattern.test(input.value) || /\S+@\S+\.\S+/.test(input.value)) {
-        return false;
-      }
-    }
-    return true;
   }
   
   // Validate if name fields contain special characters or email
@@ -615,76 +588,7 @@ if(document.querySelector("[data-attr = 'acct-form-el']")){
     });
   }
 
-  if (input.id === "mobile" && /\D/.test(input.value)) {
-    return "Please enter a valid phone number.";
-  }
-  return "Invalid input.";
-}
 
-
-// Show error message below the input
-function showErrorMessage(input, msg) {
-  let errorMessage = input.nextElementSibling;
-
-  // Create error message element if it doesn't exist
-  if (
-    !errorMessage ||
-    !errorMessage.classList.contains("error-message")
-  ) {
-    errorMessage = document.createElement("div");
-    errorMessage.className = "error-message";
-    input.parentNode.insertBefore(errorMessage, input.nextSibling);
-  }
-
-  errorMessage.textContent = msg;
-  errorMessage.style.display = "block";
-}
-
-// Clear error message when user focuses on the input
-function clearErrorMessage(event) {
-  const errorMessage = event.target.nextElementSibling;
-
-  if (errorMessage && errorMessage.classList.contains("error-message")) {
-    errorMessage.style.display = "none";
-  }
-}
-
-// Validate if name fields contain special characters or email
-function isValidName(input) {
-  if (input.classList.contains("name-input")) {
-    const namePattern = /^[A-Za-z]+$/; // Only alphabets allowed
-    if (
-      !namePattern.test(input.value) ||
-      /\S+@\S+\.\S+/.test(input.value)
-    ) {
-      return false;
-    }
-  }
-  return true;
-}
-
-// Validate a single input field dynamically
-function validateSingleField(input) {
-  if (
-    input.value == "" ||
-    !input.checkValidity() ||
-    !isValidName(input)
-  ) {
-    showErrorMessage(input, getErrorMessage(input));
-  } else {
-    clearErrorMessage({ target: input });
-  }
-}
-
-// Handle form submission
-if (submitBtn && acctForm) {
-  // submitBtn.addEventListener("click", function (e) {
-  //   e.preventDefault(); // Prevent default form submission
-  //   if (validateField(acctForm)) {
-  //     console.log(validateField(acctForm))
-  //     acctForm.submit(); // Submit form only if all inputs are valid
-  //   }
-  // });
 }
 // File Upload Script
 const utilFileInfo = document.querySelector(".file-info");
@@ -847,28 +751,28 @@ if (document.querySelector(".nav-util-cta-container .search-icon-btn") && docume
 // Details sort functionality
 if (document.getElementById("sortButton")) {
 	let container = document.querySelector(".user-donation-container");
-	let originalOrder = Array.from(container.children); // Store original order
+	let originalOrder = Array.from(container.children).map((item) => item.cloneNode(true)); // Store original clones
 
 	document.getElementById("sortButton").addEventListener("click", () => {
-		let donations = Array.from(
-			document.querySelectorAll(".user-donation-item")
-		);
+		let donations = Array.from(container.querySelectorAll(".user-donation-item"));
 
 		donations.sort((a, b) => {
 			let amountA = extractAmount(a);
 			let amountB = extractAmount(b);
-			return amountB - amountA; // Sort descending
+			return amountB - amountA; // Sort in descending order
 		});
 
-		// Append sorted elements back
+		// Clear and re-append sorted elements
+		container.innerHTML = "";
 		donations.forEach((item) => container.appendChild(item));
 
 		setActiveButton("sortButton");
 	});
 
 	document.getElementById("allButton").addEventListener("click", () => {
-		// Restore original order
-		originalOrder.forEach((item) => container.appendChild(item));
+		// Restore original order without duplication
+		container.innerHTML = "";
+		originalOrder.forEach((item) => container.appendChild(item.cloneNode(true)));
 
 		setActiveButton("allButton");
 	});
@@ -883,10 +787,11 @@ if (document.getElementById("sortButton")) {
 		document.querySelectorAll(".category-btn.donation").forEach((btn) => {
 			btn.classList.remove("active"); // Remove 'active' class
 		});
-		document.getElementById(activeId).classList.add("active"); // Add to clicked button
+		document.getElementById(activeId).classList.add("active"); // Add 'active' class to clicked button
 	}
 }
 
 
 
-}
+
+

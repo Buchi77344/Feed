@@ -178,14 +178,14 @@
 								/>
 								{% endif %}
 							</a>
-							<div class="feature-desc-container">
+							<div class="feature-desc-container mt-3">
 								<a href="{% url 'details' campaigns.campaign.token %}">
 								<h5 class="page-sub-h5-head">
 									{{campaigns.campaign.campaign_name}}
 								</h5>
 							</a>
 								<p class="mac-text-sm my-2">
-									{{campaigns.campaign.story|safe|truncatechars:100}}
+									{{campaigns.campaign.story|striptags|truncatechars:50}}
 								</p>
 
 								<div class="">

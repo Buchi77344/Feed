@@ -37,8 +37,8 @@
 	<div id="popup" class="popup hidden">
 		<div class="popup-content">
 			<span id="close-popup">&times;</span>
-			{% for campaign in campaigns %}
-				<div data-profile_category="my-campaigns" style = "{% if forloop.counter > 2 %}display: none;{% endif %}" class="info-item profile-campaigns-container text-center w-100 bd mt-4 p-4 br-10">
+			{% for campaign in campaigns reversed %}
+				<div data-profile_category="my-campaigns"  class="info-item profile-campaigns-container text-center w-100 bd mt-4 p-4 br-10">
 					<div class="flex-column align-start gp-10">
 						<h5 class="fs-20 highlight-span-clr">My campaigns</h5>
 
@@ -250,7 +250,7 @@
 					</div>
 
 					{% if campaigns %}
-						{% for campaign in campaigns  %}
+						{% for campaign in campaigns reversed  %}
 						<div data-profile_category="my-campaigns" style = "{% if forloop.counter > 1 %}display: none!important;{% endif %}" class="info-item profile-campaigns-container down-profile-cta mobile text-center w-100 bd mt-4 p-4 br-10">
 							<div class="flex-column align-start gp-10">
 								<h5 class="fs-20 highlight-span-clr">My campaigns</h5>
@@ -582,7 +582,7 @@
 				<!--Laptop View For profile stuff-->
 
 				{% if campaigns %}
-					{% for campaign in campaigns  %}
+					{% for campaign in campaigns reversed %}
 					<div data-profile_category="my-campaigns" style = "{% if forloop.counter > 1 %}display: none!important;{% endif %}" class="info-item profile-campaigns-container text-center w-100 bd mt-4 p-4 br-10">
 						<div class="flex-column align-start gp-10">
 							<h5 class="fs-20 highlight-span-clr">My campaigns</h5>

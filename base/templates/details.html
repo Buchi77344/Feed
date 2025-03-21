@@ -98,26 +98,13 @@
 						</div>
 					</div>
 
-				<section>
-					<div class="row about-section-wrapper">
-						<div class="col-lg-6 about-content-container">
-							<h5 class="about-campaign page-micro-head highlight-span-clr">STORY</h5>
-							<div class="details-title-container">
-								<h3 class="about-campaign details-title-text">About This Campaign</h3>
-							</div>
-							<div class="flex gp-10">
-								<img class="about-campaign profile-img" src="{% static '../static/img/profile-img.png' %}" alt="">
-								<div class="about-campaign-profile-content flex-column align-start py-2 ">
-									<p class="profile-name highlight-span-clr fw-600 mb-0">{{campaign_details.user.first_name|capfirst}} {{campaign_details.user.last_name|capfirst}}</p>
-									<div class="flex gp-5">
-										<span class="about-campaign title-span">Organiser</span>
-										<span class="smallest-text">1 Feed campaign</span>
-									</div>
-								</div>
-							</div>
-							<div class="mt-3">
-								<p class="">{{campaign_details.story|safe}}</p>
-							</div>
+					<div class="col-lg-6 details graphics-div">
+						<div class="img-container">
+							{% if campaign_details.images %}
+							<img class="details-img " src="{{campaign_details.images.url}}" alt="Details picture">
+							{% else %}
+							<img class="details-img " src="/static/img/hero-banner-(1).jpeg" alt="Details picture">
+							{% endif %}
 						</div>
 						<div class="row mt-3">
 							<div class="col-sm-6 text-center details-location-container">
@@ -163,7 +150,7 @@
 							</div>
 						</div>
 						<div class="mt-3">
-							<p class="">{{campaign_details.story}}</p>
+							<p class="">{{campaign_details.story|safe}}</p>
 						</div>
 					</div>
 					<div class="col-lg-6">

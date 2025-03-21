@@ -27,12 +27,12 @@
 					<p class="mac-text-mid highlight-span-clr fw-600">Campaign details</p>
 					<div class="acct-form mt-3">
 						<div class="pos-rel">
-							<input type="text" required name="campaign_name" id=""  class="acct-input input-vd" placeholder="Campaign name *">
+							<input type="text" required name="campaign_name" id=""  class="acct-input input-vd val-input" placeholder="Campaign name *">
 							<span class="error-message" id="campaignName"></span>
 						</div>
 
 						<div class="pos-rel">
-							<input type="number" required name="monetary" id="" class="acct-input input-vd" placeholder="Monetary target *">
+							<input type="number" required name="monetary" id="" class="acct-input input-vd val-input" placeholder="Monetary target *">
 							<span class="error-message" id="monetaryTarget"></span>
 						</div>
 
@@ -84,11 +84,13 @@
 							<span class = "error-message" id = "thanksMsg"></span>
 						</div>
 						<div class="pos-rel">
+							<label class = "ps-1 mb-2 fs-20 fw-500" for="">Start Date:</label>
 							<input type="date" name="start_date" id="" class="acct-input val-input input-vd" placeholder="Start date   |  End date">
 							<span class="error-message" id="startDate"></span>
 						</div>
 
 						<div class="pos-rel">
+							<label class = "ps-1 mb-2 fs-20 fw-500" for="">End Date:</label>
 							<input type="date" name="end_date" id="" class="acct-input val-input" placeholder="Start date   |  End date">
 							<span class = "error-message" id = "endDate"></span>
 						</div>
@@ -260,11 +262,11 @@
 					window.location.href = `/preview/${id}/`; // Redirect
 				} else {
 					const errorMessage = await response.text();
-					alert('Error saving data: ' + errorMessage);
+				
 				}
 			} catch (error) {
 				console.error('Error during fetch request:', error);
-				alert('An error occurred while submitting the form.');
+				
 			} finally {
 				hideLoading(); // Always hide the spinner, even on error
 			}

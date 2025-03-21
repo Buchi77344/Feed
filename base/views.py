@@ -470,7 +470,7 @@ from .models import Campaign, Donation, Profile
 @login_required(login_url="login")
 def profile(request):
     # Fetch the user's campaigns, limiting to the first 2
-    campaigns = Campaign.objects.filter(user=request.user)[:2]
+    campaigns = Campaign.objects.filter(user=request.user)
     
     # Fetch the user's profile
     profile = get_object_or_404(Profile, user=request.user)
@@ -851,7 +851,8 @@ def fee_payout(request):
 
 
 
-
+def donate(request):
+    return render (request,'dote.html')
 
 
 

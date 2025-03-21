@@ -45,7 +45,7 @@
                   {% if  featured_campaigns %}
                   {% for featured_campaigns in  campaigns_with_percentage %}
                   <div class="feature-item d-sm-flex gap-3">
-                    <div class="feature-img-container">
+                    <a href = "{% url 'details' featured_campaigns.campaign.token %}" class="feature-img-container">
                       {%  if featured_campaigns.campaign.images %}
                       <img
                         class="feature-img"
@@ -59,15 +59,15 @@
                       alt="feature image"
                     />
                       {% endif %}
-                    </div>
+                    </a>
                     <div class="feature-desc-container">
                       <a href="{% url 'details' featured_campaigns.campaign.token %}">
-                      <h5 class="page-sub-h5-head">
-                       {{ featured_campaigns.campaign.campaign_name}}
-                      </h5>
-                    </a>
+                        <h5 class="page-sub-h5-head">
+                        {{ featured_campaigns.campaign.campaign_name}}
+                        </h5>
+                      </a>
                       <p class="mac-text-sm my-2">
-                        {{ featured_campaigns.campaign.story|truncatechars:80|safe}}
+                        {{featured_campaigns.campaign.story|striptags|truncatechars:80}}
                       </p>
 
                       <div class="d-sm-flex justify-content-between">
@@ -126,7 +126,7 @@
                         children to admissions to school ang getting
                       </p>
 
-                      <div class="d-sm-flex justify-content-between">
+                      <div class="d-sm-flex">
                         <div class="location-container pe-2">
                           <div class="location-val-container d-flex gap-2">
                             <img
@@ -410,76 +410,74 @@
                   </div>
                   {% if campaigns %}
                     {% for campaigns in campaigns_with_percentages  %}
-                    
-                  <div class="feature-item d-sm-flex gap-3">
-                    <div class="feature-img-container">
-                      {% if campaigns.campaign.images %}
-                      <img
+                    <div class="feature-item d-sm-flex gap-3">
+                      <div class="feature-img-container">
+                        {% if campaigns.campaign.images %}
+                        <img
+                          class="feature-img"
+                          src="{{campaigns.campaign.images.url}}"
+                          alt="feature image"
+                        />
+                        {% else %}
+                        <img
                         class="feature-img"
-                        src="{{campaigns.campaign.images.url}}"
+                        src="../static/img/hero-banner-(1).jpeg"
                         alt="feature image"
                       />
-                      {% else %}
-                      <img
-                      class="feature-img"
-                      src="../static/img/hero-banner-(1).jpeg"
-                      alt="feature image"
-                    />
-                      {% endif %}
-                    </div>
-                    <div class="feature-desc-container">
-                      <a href="{% url 'details' campaigns.campaign.token %}">
-                      <h5 class="page-sub-h5-head">
-                        {{campaigns.campaign.campaign_name}}
-                      </h5>
-                      </a>
-                      <p class="mac-text-sm my-2">
-                        {{campaigns.campaign.story|safe|truncatechars:70}}
-                      </p>
+                        {% endif %}
+                      </div>
+                      <div class="feature-desc-container">
+                        <a href="{% url 'details' campaigns.campaign.token %}">
+                        <h5 class="page-sub-h5-head">
+                          {{campaigns.campaign.campaign_name}}
+                        </h5>
+                        </a>
+                        <p class="mac-text-sm my-2">
+                          {{campaigns.campaign.story|striptags|truncatechars:70}}
+                        </p>
 
-                      <div class="d-sm-flex justify-content-between">
-                        <div class="location-container pe-2">
-                          <div class="location-val-container d-flex gap-2">
-                            <img
-                              class="location-icon"
-                              src="../static/img/location-icon.png"
-                              alt="location icon"
-                            />
-                            <p class="location-name page-mini-head d-flex">
-                              <span class="highlight-span-clr me-1"
-                                >{{campaigns.campaign.country}},</span
-                              >
-                              {{campaigns.campaign.country.name}}
-                            </p>
-                          </div>
+                        <div class="d-sm-flex justify-content-between">
+                          <div class="location-container pe-2">
+                            <div class="location-val-container d-flex gap-2">
+                              <img
+                                class="location-icon"
+                                src="../static/img/location-icon.png"
+                                alt="location icon"
+                              />
+                              <p class="location-name page-mini-head d-flex">
+                                <span class="highlight-span-clr me-1"
+                                  >{{campaigns.campaign.country}},</span
+                                >
+                                {{campaigns.campaign.country.name}}
+                              </p>
+                            </div>
 
-                          <div data-percent="{{campaigns.percentage_achieved|floatformat:0}}" class="percent-progress">
-                            <div class="percent-progress-bar"></div>
-                          </div>
+                            <div data-percent="{{campaigns.percentage_achieved|floatformat:0}}" class="percent-progress">
+                              <div class="percent-progress-bar"></div>
+                            </div>
 
-                          <div class="mt-3">
-                            <p class="bold-p">${{campaigns.campaign.monetary|floatformat:0}}</p>
-                            <span class="bold-p highlight-span-clr">
-                              {{campaigns.percentage_achieved|floatformat:0}}% FUNDED
-                            </span>
+                            <div class="mt-3">
+                              <p class="bold-p">${{campaigns.campaign.monetary|floatformat:0}}</p>
+                              <span class="bold-p highlight-span-clr">
+                                {{campaigns.percentage_achieved|floatformat:0}}% FUNDED
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="donation-container ps-2">
-                          <p class="mac-text-sm">Created</p>
-                          
-                          <span
-                            class="donation-time mac-text-sm highlight-span-clr mt-1"
-                            >{{last|timesince}} AGO</span
-                           
-                          >
+                          <div class="donation-container ps-2">
+                            <p class="mac-text-sm">Created</p>
+                            
+                            <span
+                              class="donation-time mac-text-sm highlight-span-clr mt-1"
+                              >{{campaigns.campaign.start_date|timesince}} AGO</span
+                            
+                            >
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  {% endfor %}
+                    {% endfor %}
 
                   {% else %}
-                 
                   <div class="feature-item d-sm-flex gap-3">
                     <div class="feature-img-container">
                       <img
@@ -534,7 +532,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="feature-item d-sm-flex gap-3">
                     <div class="feature-img-container">
                       <img

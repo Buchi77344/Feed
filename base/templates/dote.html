@@ -1,0 +1,511 @@
+{% extends "base2.html" %} {% block content %} {% load static %}
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap"
+		rel="stylesheet"
+	/>
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+		crossorigin="anonymous"
+	/>
+	<title>Donate</title>
+</head>
+<main class="light-bg-clr">
+	<span class="page-highlight-span">Donate</span>
+	<section class="make-donation-section">
+		<div class="container">
+			<div class="make-donation-wrapper row justify-center">
+				<div class="col-lg-6">
+					<h1 class="mt-3 fs-44 text-center">Make Your Donation</h1>
+					<p class="mt-3 fs-20 text-center">
+						Thank you for choosing to back a buddy! Please fill in the sections
+						below to complete your donation.
+					</p>
+
+					<div class="mt-4 box-sh">
+						<h5 class="fs-20 mb-2 highlight-span-clr">Your donation</h5>
+						<div class="flex gp-10 mt-3">
+							<button class="make-donation-cta-black one-off-btn">
+								ONCE OFF
+							</button>
+							<button class="make-donation-cta-black recurring-btn">
+								RECURRING
+							</button>
+						</div>
+						<div class="flex-wrap mt-4 gp-10">
+							<button class="make-donation-cta-primary">
+								<span class="curr-span highlight-span-clr">$ </span
+								><span class="text highlight-span-clr">200.00</span>
+							</button>
+							<button class="make-donation-cta-primary">
+								<span class="curr-span highlight-span-clr">$ </span
+								><span class="text highlight-span-clr">500.00</span>
+							</button>
+							<button class="make-donation-cta-primary">
+								<span class="curr-span highlight-span-clr">$</span
+								><span class="text highlight-span-clr">1000.00</span>
+							</button>
+							<button class="make-donation-cta-primary">
+								<span class="curr-span highlight-span-clr">$</span
+								><span class="text highlight-span-clr">2000.00</span>
+							</button>
+							<button class="make-donation-cta-primary">
+								<span class="curr-span highlight-span-clr">$</span
+								><span class="text highlight-span-clr">5000.00</span>
+							</button>
+							<button class="make-donation-cta-primary">
+								<span class="curr-span highlight-span-clr">$</span
+								><span class="text highlight-span-clr">10 000.00</span>
+							</button>
+						</div>
+						<div class="amount-input-wrapper mt-3 flex-between">
+							<input
+								type="number"
+								min="0"
+								class="donation-amount-input"
+								name="donation_amount"
+								placeholder="Enter amount *"
+								id="donation_amount"
+								
+							/>
+							<div class="curr-container pos-rel">
+								<button class="dropdown-util-btn fw-500">USD</button>
+								<div class="dropdown-util">
+									<span class="dropdown-util-item">CD</span>
+									<span class="dropdown-util-item">USD</span>
+								</div>
+							</div>
+						</div>
+						<div class="mt-3 recurring-select-container row">
+							<div class="col-lg-6">
+								<select name="term" id="" class="recurring-select">
+									<option value="">Term *</option>
+									<option value="">2 month term</option>
+									<option value="">3 month term</option>
+									<option value="">6 month term</option>
+									<option value="">12 month term</option>
+									<option value="">24 month term</option>
+									<option value="indefinite">Indefinite</option>
+								</select>
+							</div>
+
+							<div class="col-lg-6">
+								<select name="deduction_day" id="" class="recurring-select">
+									<option value="">Deduction day *</option>
+									<option value="">1st of the month</option>
+									<option value="">15th of the month</option>
+									<option value="">25th of the month</option>
+								</select>
+							</div>
+						</div>
+						<div class="mt-4">
+							<div class="flex">
+								<h5 class="highlight-span-clr">optional tip</h5>
+								<img
+									class="tip-icon"
+									src="{% static 'img/heart-with-ribbon.png' %}"
+									alt="Heart with ribbon"
+								/>
+							</div>
+							<p class="mt-1">
+								BackaBuddy has a 0% platform fee for this campaign. Adding a
+								contribution on top of your donation means we can continue to
+								help more people.
+							</p>
+
+							<div class="mt-5">
+								<div class="slider-container">
+									<div class="slider-bar"></div>
+									<div class="slider-handle"></div>
+									<div class="slider-marks"></div>
+									<div class="donate-bar-calculation-container">
+										<span class="donate-bar-percent fs-14 fw-600">0%</span>
+										<span class="fs-14 fw-600">-</span>
+										<span class="donate-bar-calc-val fs-14 fw-600"
+											><span class="curr-span"></span>-</span
+										>
+									</div>
+								</div>
+							</div>
+
+							<div class="mt-5">
+								<h5 class="highlight-span-clr fs-16">Donation visibility</h5>
+								<div class="flex gp-10">
+									<label for="switch-input" class="donation switch">
+										<input
+											class="switch-input"
+											id="switch-input"
+											type="checkbox"
+										/>
+										<span class="slider"></span>
+									</label>
+									<p class="mb-0 fw-600">I'd like to remain anonymous</p>
+								</div>
+								<form class="flex-column align-stretch mt-4 gp-10" action="">
+									<input
+										type="text"
+										placeholder="Display name (optional)"
+										name="donation_name"
+										required
+										id=""
+										class="form-br-el donation-name-input"
+									/>
+									<textarea
+										name="donation_message"
+										placeholder="Add a message to your message (optional)"
+										id=""
+										required
+										class="form-br-el"
+									></textarea>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-4 box-sh">
+						<div class="flex gp-5">
+							<h5 class="fs-20 highlight-span-clr mb-0">Personal details</h5>
+							<div class="tooltip-trigger">
+								<img
+									class="tooltip-img"
+									src="{% static 'img/svg/info-circle-primary.svg' %}"
+									alt="info icon"
+								/>
+								<div class="tooltip-box">
+									<p>
+										The contact details provided here (email & mobile) are only
+										used for internal record keeping within Feed Needs, and will
+										not be visible to the public.
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<form class="flex-column align-stretch mt-4 gp-10" action="">
+							<input
+								type="text"
+								placeholder="First name *"
+								name="personal_details_first_name"
+								id=""
+								required
+								class="form-br-el"
+							/>
+							<input
+								type="text"
+								placeholder="Surname *"
+								name="personal_details_surname"
+								id=""
+								required
+								class="form-br-el"
+							/>
+							<input
+								type="text"
+								placeholder="Email *"
+								name="personal_details_email"
+								id=""
+								required
+								class="form-br-el donation-name-input"
+							/>
+						</form>
+					</div>
+
+					<div class="mt-4 box-sh">
+						<div class="pb-2 br-b">
+							<h5 class="highlight-span-clr">Donation Summary</h5>
+						</div>
+
+						<div class="py-3 flex-column gp-20 align-start br-b">
+							<div class="flex-wrap justify-between gp-10 w-100 ">
+								<p class="fs-16 mb-0 fw-500">Campaign:</p>
+								<p class="fs-16 mb-0 fw-700">
+									Donate to Feed Needs
+								</p>
+							</div>
+
+							<div class="flex-wrap justify-between gp-10 w-100">
+								<p class="fs-16 mb-0 fw-500">Your donation:</p>
+								<p class="fs-16 mb-0 fw-600 donation-price-text">$ 0.00</p>
+							</div>
+
+							<div class="flex-wrap justify-between gp-10 w-100">
+								<p class="fs-16 mb-0 fw-500">Feed Needs tip:</p>
+								<p class="fs-16 mb-0 fw-600">-</p>
+							</div>
+						</div>
+
+						<div class="pt-3 pb-4 flex-column align-start gp-20 br-b">
+							<div class="flex-between w-100">
+								<p class="fs-16 fw-500">Total to pay:</p>
+								<p class="fs-16 fw-600 donation-price-text">$ 0.00</p>
+							</div>
+						</div>
+
+						<div class="pt-3 pd-4 flex-column gp-20 align-start gap-15 br">
+							<div class="flex-wrap justify-between gp-10 w-100">
+								<p class="fs-16 fw-500 mb-0">Display Name:</p>
+								<p class="fs-16 fw-600 mb-0 donation-name-input-val"></p>
+							</div>
+
+							<div class="flex-wrap justify-between gp-10 w-100">
+								<p class="fs-16 mb-0 fw-500">Message:</p>
+								<p class="fs-16 mb-0 fw-600 donation-message-input-val"></p>
+							</div>
+						</div>
+					</div>
+
+					<div class="payment-gateway mt-5">
+						<h5 class="fs-30 mb-3 fw-600 text-center">Donations</h5>
+						<div class="flex-column align-stretch gp-15">
+							<a href = "#" style="pointer-events: none; opacity: 0.5;"  class="payment-link pp flex-center" id="payment-link">
+								<img
+									src="{% static 'img/paypal.png' %}"
+									alt=""
+								/>
+							</a>
+
+							<a href = "#" class="payment-link sp flex-center">
+								<img
+									src="{% static 'img/svg/stripe-svgrepo-com.svg' %}"
+									alt=""
+								/>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<script>
+	function checkAmount() {
+        const donationInput = document.getElementById("donation_amount"); // Input field
+        const paymentLink = document.getElementById("payment-link"); // Payment link
+
+        // Get the input value
+        const rawValue = donationInput.value;
+        console.log("Raw input value:", rawValue);
+
+        // Convert the value to a float or default to 0
+        const amount = parseFloat(rawValue) || 0;
+        console.log("Converted amount:", amount);
+
+        // Condition to check if amount is greater than 0
+        if (amount > 0) {
+            console.log("Valid amount entered, enabling the link.");
+            paymentLink.style.pointerEvents = "auto"; // Enable the link
+            paymentLink.style.opacity = "1"; // Make the link visually active
+        } else {
+            console.log("Invalid or empty amount, disabling the link.");
+            paymentLink.style.pointerEvents = "none"; // Disable the link
+            paymentLink.style.opacity = "0.5"; // Make the link visually inactive
+        }
+    }
+
+    // Add event listener for real-time input changes
+    const donationInput = document.getElementById("donation_amount");
+    donationInput.addEventListener("input", checkAmount);
+
+    // Initial state check on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("Page loaded. Running initial check.");
+        checkAmount();
+    });
+</script>
+
+<script>
+
+	
+	document.querySelector('.payment-link').addEventListener('click', function (event) {
+		event.preventDefault(); // Prevent the default link behavior
+	
+		// Show a Bootstrap loading spinner
+		showLoading();
+	
+		const token = "{{ campaign.token }}"; // Replace with the actual campaign token dynamically
+		// Extract the amount from the element
+		const amountText = document.querySelector('.donation-price-text').textContent.trim();
+		// Parse the amount and remove the dollar sign, then convert to a number
+		const amount = parseFloat(amountText.replace('$', '').trim()) || 0; // Default to 0 if no valid amount
+	
+		const message = 'Thank you for your support'; // Optional message
+	
+		// Perform a POST request to initiate the payment
+		fetch(`/paypal_payment_link/${token}/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': getCookie('csrftoken') // Include CSRF token if needed
+			},
+			body: JSON.stringify({
+				amount: amount,
+				message: message
+			})
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.success) {
+					window.location.href = data.approval_url; // Redirect to PayPal approval URL
+				} else {
+					alert(`Error: ${data.error}`);
+					hideLoading(); // Hide loading spinner if an error occurs
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('An error occurred while processing the payment. Please try again.');
+				hideLoading(); // Hide loading spinner if an error occurs
+			});
+	});
+	
+	// Utility function to retrieve a specific cookie by name
+	function getCookie(name) {
+		const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+		for (const cookie of cookies) {
+			if (cookie.startsWith(`${name}=`)) {
+				return decodeURIComponent(cookie.substring(name.length + 1));
+			}
+		}
+		return null;
+	}
+	
+	
+	// Function to show a Bootstrap loading spinner
+	function showLoading() {
+		const loadingDiv = document.createElement('div');
+		loadingDiv.id = 'loading-spinner';
+		loadingDiv.style.position = 'fixed';
+		loadingDiv.style.top = '0';
+		loadingDiv.style.left = '0';
+		loadingDiv.style.width = '100%';
+		loadingDiv.style.height = '100%';
+		loadingDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+		loadingDiv.style.display = 'flex';
+		loadingDiv.style.justifyContent = 'center';
+		loadingDiv.style.alignItems = 'center';
+		loadingDiv.style.zIndex = '1000';
+		loadingDiv.innerHTML = `
+			<div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		`;
+		document.body.appendChild(loadingDiv);
+	}
+	
+	// Function to hide the loading spinner
+	function hideLoading() {
+		const loadingDiv = document.getElementById('loading-spinner');
+		if (loadingDiv) {
+			document.body.removeChild(loadingDiv);
+		}
+	}
+	
+
+	document.querySelector('.payment-link.sp.flex-center').addEventListener('click', function (event) {
+		event.preventDefault(); // Prevent the default link behavior
+	
+		// Show a Bootstrap loading spinner
+		showLoading();
+	
+		const token = "{{ campaign.token }}"; // Replace with the actual campaign token dynamically
+		const amount = 10; // Replace with the actual amount (could be dynamically retrieved)
+		const message = 'Thank you for your support'; // Optional message
+	
+		// Perform a POST request to initiate the payment
+		fetch(`/stripe_payment_link/${token}/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': getCookie('csrftoken') // Include CSRF token if needed
+			},
+			body: JSON.stringify({
+				amount: amount,
+				message: message
+			})
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.success) {
+					const stripe = Stripe('your_stripe_publishable_key'); // Replace with your Stripe publishable key
+					stripe.confirmCardPayment(data.client_secret)
+						.then(result => {
+							if (result.error) {
+								alert(`Payment failed: ${result.error.message}`);
+							} else {
+								alert("Payment succeeded!");
+								// Redirect or show a success message
+							}
+							hideLoading(); // Hide the loading spinner after processing
+						});
+				} else {
+					alert(`Error: ${data.error}`);
+					hideLoading(); // Hide loading spinner if an error occurs
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('An error occurred while processing the payment. Please try again.');
+				hideLoading(); // Hide loading spinner if an error occurs
+			});
+	});
+	
+	// Utility function to retrieve a specific cookie by name
+	function getCookie(name) {
+		const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+		for (const cookie of cookies) {
+			if (cookie.startsWith(`${name}=`)) {
+				return decodeURIComponent(cookie.substring(name.length + 1));
+			}
+		}
+		return null;
+	}
+	
+	// Function to show a Bootstrap loading spinner
+	function showLoading() {
+		const loadingDiv = document.createElement('div');
+		loadingDiv.id = 'loading-spinner';
+		loadingDiv.style.position = 'fixed';
+		loadingDiv.style.top = '0';
+		loadingDiv.style.left = '0';
+		loadingDiv.style.width = '100%';
+		loadingDiv.style.height = '100%';
+		loadingDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+		loadingDiv.style.display = 'flex';
+		loadingDiv.style.justifyContent = 'center';
+		loadingDiv.style.alignItems = 'center';
+		loadingDiv.style.zIndex = '1000';
+		loadingDiv.innerHTML = `
+			<div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		`;
+		document.body.appendChild(loadingDiv);
+	}
+	
+	// Function to hide the loading spinner
+	function hideLoading() {
+		const loadingDiv = document.getElementById('loading-spinner');
+		if (loadingDiv) {
+			document.body.removeChild(loadingDiv);
+		}
+	}
+	
+	
+</script>
+{% endblock content %}
+
