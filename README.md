@@ -87,9 +87,8 @@ This project contains several core views that manage user authentication and the
 * `SocialMedia` – Stores social media links related to the platform.
 
 ---
-Thank you for the clarification!
 
-## Below is a **comprehensive documentation** for the code you posted, broken down by functionality:
+
 
 ## 📧 **Password Reset Functionality**
 
@@ -223,7 +222,6 @@ Provides an **API-style endpoint** (likely used via AJAX/JavaScript frontend) to
 
 ---
 
-Here's the **documentation-style explanation** for the relevant Django views and functionality in your provided code, written in a clear and professional way for developers or contributors to understand.
 
 ---
 
