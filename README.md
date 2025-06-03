@@ -399,7 +399,180 @@ Creates a **Stripe PaymentIntent** for the campaign donation. Expects a `POST` r
 * Replace placeholder API keys (`stripe.api_key`) with secure environment variables in production.
 * Make sure `countries` is defined and passed in `edit_campaign`.
 
+
+
+## 🔍 `find_campaign(request)`
+
+**Purpose**: Display all active (launched) campaigns with total donations and funding percentage.
+
+**Logic**:
+
+* Filters campaigns with `is_launch=True`.
+* For each campaign:
+
+  * Calculates total donations.
+  * Computes percentage of goal achieved.
+* Optionally gets social media data.
+* Renders the `find_campaign.html` template.
+
+**Context Data**:
+
+```python
+{
+  "campaigns_with_percentage": [
+    {
+      "campaign": <Campaign>,
+      "total_donations": <int>,
+      "percentage_achieved": <float>
+    },
+    ...
+  ],
+  "social": <SocialMedia|None>
+}
+```
+
 ---
+
+## ℹ️ `about(request)`
+
+**Purpose**: Render the About page with optional social media links.
+
+**Context Data**:
+
+```python
+{
+  "social": <SocialMedia|None>
+}
+```
+
+---
+
+## ❓ `faq(request)`
+
+**Purpose**: Renders the FAQ page.
+
+**Template**: `faq.html`
+
+---
+
+## 🔍 `search_campaigns(request)`
+
+**Method**: POST
+**Purpose**: Allows frontend search via AJAX by keyword, category, or sector.
+
+**Input (JSON POST body)**:
+
+```json
+{
+  "keyword": "education",
+  "categories": ["health"],
+  "sectors": ["ngo"]
+}
+```
+
+**Logic**:
+
+* Validates if at least one filter is provided.
+* Filters campaigns based on provided criteria.
+
+**Returns**: A JSON list of matching campaigns:
+
+```json
+[
+  {
+    "campaign_name": "...",
+    "country": "...",
+    "story": "...",
+    "category": "...",
+    "sector": "...",
+    "start_date": "...",
+    "end_date": "..."
+  },
+  ...
+]
+```
+
+**Error**: Returns JSON error on failure or wrong method.
+
+---
+
+## 🤝 `support(request)`
+
+**Purpose**: Renders the support/help page.
+
+**Template**: `support.html`
+
+---
+
+## 📄 `details(request, token)`
+
+**Purpose**: Show the detail view of a campaign identified by a unique `token`.
+
+**Logic**:
+
+* Fetch campaign and related donations.
+* Calculate total donations and percentage funded.
+* Save goal progress.
+* Get donation count.
+* Get social media details.
+
+**Context Data**:
+
+```python
+{
+  "campaign_details": <Campaign>,
+  "total_donations": <Decimal>,
+  "percentage_achieved": <Decimal>,
+  "donation": <QuerySet of Donation>,
+  "campaign_with_donations": <Campaign with annotated count>,
+  "social": <SocialMedia|None>
+}
+```
+
+---
+
+## 🖼 `preview(request, token)`
+
+**Decorator**: `@login_required`
+
+**Purpose**: Allows a logged-in user to preview a campaign before publishing.
+
+**Context Data**:
+
+```python
+{
+  "campaign_details": <Campaign>
+}
+```
+
+**Redirects**: To login if user is not authenticated.
+
+---
+
+## 💰 `fee_payout(request)`
+
+**Purpose**: Renders a page about platform fees and payout structure.
+
+**Template**: `feeds-payout.html`
+
+---
+
+## ❤️ `donate(request)`
+
+**Purpose**: Renders the donation landing page.
+
+**Template**: `dote.html` (possibly a typo: should it be `donate.html`?)
+
+---
+
+## 🧾 Notes
+
+* Be sure to include `Donation` model where used (e.g., in `details()`).
+* Check for undefined variables (e.g., `social` might not exist if the condition is false).
+* Improve performance with `.select_related()` or `.prefetch_related()` if needed in views with multiple DB hits.
+* Consistently use `get_object_or_404` only when expecting one item, and guard against missing objects gracefully.
+
+
 
 
 
