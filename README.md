@@ -223,6 +223,187 @@ Provides an **API-style endpoint** (likely used via AJAX/JavaScript frontend) to
 
 ---
 
+Here's the **documentation-style explanation** for the relevant Django views and functionality in your provided code, written in a clear and professional way for developers or contributors to understand.
+
+---
+
+## 📄 `edit_campaign` View
+
+### URL Pattern
+
+```python
+path('campaign/edit/<str:token>/', views.edit_campaign, name='edit_campaign')
+```
+
+### Description
+
+This view allows a logged-in user to **edit an existing campaign**. The campaign is identified by a unique token. It supports both `GET` and `POST` methods.
+
+* **GET**: Renders a pre-filled form (`edit_campaign.html`) with the current campaign details.
+* **POST**: Updates the campaign with the submitted form data.
+
+### Imports Used
+
+```python
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import Campaign
+```
+
+### Parameters
+
+* `request`: Django `HttpRequest` object.
+* `token`: Unique token that identifies the campaign.
+
+### Behavior
+
+* Ensures user is authenticated.
+* Retrieves the `Campaign` object using the token.
+* If the method is `POST`, it updates the campaign fields with form values.
+* On success, returns a JSON response containing the campaign's token.
+* On `GET`, renders the form with current values.
+
+### Response
+
+* **POST**: `JsonResponse({'token': campaign.token})`
+* **GET**: Renders `edit_campaign.html` template with:
+
+  * `campaign`: The campaign object
+  * `category`: Category choices from model
+  * `event`: Event choices from model
+  * `countries`: Presumed list (make sure it's defined)
+
+---
+
+## 📄 `profile` View
+
+### URL Pattern
+
+```python
+path('profile/', views.profile, name='profile')
+```
+
+### Description
+
+Displays the **user’s profile page**, listing their campaigns, donation data, and profile details. Also allows **profile updates** via `POST`.
+
+### Behavior
+
+* Retrieves all campaigns owned by the user.
+* Aggregates total donations per campaign.
+* Updates user and profile data on `POST`.
+* Fetches optional social media data if available.
+* Renders `profile.html` with relevant context.
+
+### Context Passed to Template
+
+* `campaigns`: Campaigns owned by user
+* `donations`: Donations made to user's campaigns
+* `profile`: User’s profile object
+* `social`: (optional) SocialMedia object
+
+---
+
+## 📄 `donate` View
+
+### URL Pattern
+
+```python
+path('donate/<str:token>/', views.donate, name='donate')
+```
+
+### Description
+
+Displays the donation page for a specific campaign. This is a **GET-only** view.
+
+### Behavior
+
+* Retrieves campaign using token.
+* Optionally includes `SocialMedia` object if it exists.
+* Renders `donate.html`.
+
+---
+
+## 📄 `paypal_payment_link` View
+
+### URL Pattern
+
+```python
+path('paypal-payment/<str:token>/', views.paypal_payment_link, name='paypal_payment_link')
+```
+
+### Description
+
+Handles **PayPal payment creation** for a campaign donation. Accepts a `POST` request with donation details.
+
+### Request Body (JSON)
+
+```json
+{
+  "amount": "20.00",
+  "message": "Keep up the good work!"
+}
+```
+
+### Response
+
+* On success: JSON with `approval_url` and `campaign_token`
+* On error: JSON error message
+
+### Behavior
+
+* Validates donation amount.
+* Creates a PayPal payment using `paypalrestsdk`.
+* Returns approval URL for user redirection.
+
+---
+
+## 📄 `stripe_payment_link` View
+
+### URL Pattern
+
+```python
+path('stripe-payment/<str:token>/', views.stripe_payment_link, name='stripe_payment_link')
+```
+
+### Description
+
+Creates a **Stripe PaymentIntent** for the campaign donation. Expects a `POST` request with donation data.
+
+### Request Body (JSON)
+
+```json
+{
+  "amount": "25.00",
+  "message": "Happy to help!"
+}
+```
+
+### Response
+
+* On success: JSON with `client_secret` and `campaign_token`
+* On error: JSON error message
+
+### Behavior
+
+* Validates donation amount.
+* Converts amount to cents for Stripe.
+* Creates a `PaymentIntent`.
+* Returns the `client_secret` to frontend for payment completion.
+
+---
+
+## 📝 Notes
+
+* Ensure all models (`Campaign`, `Profile`, `Donation`, `SocialMedia`, `PaymentData`) are correctly defined in `models.py`.
+* Always protect `POST` endpoints with CSRF tokens or `@csrf_exempt` when integrating with JavaScript (if needed).
+* Replace placeholder API keys (`stripe.api_key`) with secure environment variables in production.
+* Make sure `countries` is defined and passed in `edit_campaign`.
+
+---
+
+
 
 
 
